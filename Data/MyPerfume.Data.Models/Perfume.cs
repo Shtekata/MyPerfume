@@ -33,5 +33,11 @@
 
         [Required]
         public string DesignerId { get; set; }
+
+        public Designer Designer { get; set; }
+
+        public string ColorId { get; set; }
+
+        public Color Color { get; set; }
     }
 }
