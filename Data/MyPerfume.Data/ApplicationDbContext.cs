@@ -53,6 +53,10 @@
 
         public DbSet<PerfumeHeartNote> PerfumesHeartNotes { get; set; }
 
+        public DbSet<BaseNote> BaseNotes { get; set; }
+
+        public DbSet<PerfumeBaseNote> PerfumesBaseNotes { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -110,6 +114,11 @@
             builder.Entity<PerfumeHeartNote>(x =>
             {
                 x.HasKey(x => new { x.PerfumeId, x.HeartNoteId });
+            });
+
+            builder.Entity<PerfumeBaseNote>(x =>
+            {
+                x.HasKey(x => new { x.PerfumeId, x.BaseNoteId });
             });
 
             this.ConfigureUserIdentityRelations(builder);
