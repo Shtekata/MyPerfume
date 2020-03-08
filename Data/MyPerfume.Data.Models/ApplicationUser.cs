@@ -4,9 +4,8 @@ namespace MyPerfume.Data.Models
     using System;
     using System.Collections.Generic;
 
-    using MyPerfume.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using MyPerfume.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -33,5 +32,7 @@ namespace MyPerfume.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        //public ICollection<Sale> Sales => new HashSet<Sale>();
     }
 }

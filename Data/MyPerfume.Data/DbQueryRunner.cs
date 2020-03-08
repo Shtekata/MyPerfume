@@ -3,9 +3,8 @@
     using System;
     using System.Threading.Tasks;
 
-    using MyPerfume.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+    using MyPerfume.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

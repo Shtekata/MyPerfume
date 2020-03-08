@@ -2,9 +2,8 @@
 {
     using System.Linq;
 
-    using MyPerfume.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using MyPerfume.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

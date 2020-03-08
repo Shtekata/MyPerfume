@@ -3,9 +3,8 @@ namespace MyPerfume.Data.Models
 {
     using System;
 
-    using MyPerfume.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using MyPerfume.Data.Common.Models;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {

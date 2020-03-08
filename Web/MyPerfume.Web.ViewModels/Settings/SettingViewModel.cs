@@ -1,9 +1,8 @@
 ﻿namespace MyPerfume.Web.ViewModels.Settings
 {
+    using AutoMapper;
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
-
-    using AutoMapper;
 
     public class SettingViewModel : IMapFrom<Setting>, IHaveCustomMappings
     {
