@@ -54,5 +54,7 @@
         public IEnumerable<PerfumeHeartNote> PerfumesHeartNotes => new HashSet<PerfumeHeartNote>();
 
         public IEnumerable<PerfumeBaseNote> PerfumesBaseNotes => new HashSet<PerfumeBaseNote>();
+
+        public ICollection<Product> Products => new HashSet<Product>();
     }
 }

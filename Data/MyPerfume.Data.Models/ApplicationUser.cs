@@ -33,6 +33,6 @@ namespace MyPerfume.Data.Models
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
-        //public ICollection<Sale> Sales => new HashSet<Sale>();
+        public ICollection<Sale> Sales => new HashSet<Sale>();
     }
 }

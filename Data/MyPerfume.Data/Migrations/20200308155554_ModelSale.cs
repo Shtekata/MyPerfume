@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyPerfume.Data.Migrations
+﻿namespace MyPerfume.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class ModelSale : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +19,7 @@ namespace MyPerfume.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     ProductId = table.Column<string>(nullable: true),
                     Discount = table.Column<decimal>(nullable: false),
-                    TimeOfSell = table.Column<DateTime>(nullable: false)
+                    TimeOfSell = table.Column<DateTime>(nullable: false),
                 },
                 constraints: table =>
                 {
