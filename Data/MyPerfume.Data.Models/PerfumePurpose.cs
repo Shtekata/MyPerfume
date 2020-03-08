@@ -5,7 +5,7 @@
     using MyPerfume.Data.Common.Models;
     using MyPerfume.Data.Models.Enums;
 
-    public class PerfumePurpose : BaseDeletableModel<string>
+    public class PerfumePurpose : BaseDeletableModel<int>
     {
         [Key]
         [Required]

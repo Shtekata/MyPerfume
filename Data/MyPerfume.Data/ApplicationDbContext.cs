@@ -37,6 +37,8 @@
 
         public DbSet<PerfumePurpose> PerfumesPurposes { get; set; }
 
+        public DbSet<PerfumePerfumer> PerfumesPerfumers { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -74,6 +76,11 @@
             {
                 x.HasKey(x => new { x.PerfumeId, x.PurposeId });
                 x.Property(x => x.PurposeId).HasConversion<string>();
+            });
+
+            builder.Entity<PerfumePerfumer>(x =>
+            {
+                x.HasKey(x => new { x.PerfumeId, x.PerfumerId });
             });
 
             this.ConfigureUserIdentityRelations(builder);

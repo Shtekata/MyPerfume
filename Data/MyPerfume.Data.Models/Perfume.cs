@@ -48,5 +48,7 @@
         public ICollection<PerfumeSeason> PerfumesSeasons => new HashSet<PerfumeSeason>();
 
         public ICollection<PerfumePurpose> PerfumesPurposes => new HashSet<PerfumePurpose>();
+
+        public ICollection<PerfumePerfumer> PerfumesPerfumers => new HashSet<PerfumePerfumer>();
     }
 }

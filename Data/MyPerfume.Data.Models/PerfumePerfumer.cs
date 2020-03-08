@@ -3,9 +3,8 @@
     using System.ComponentModel.DataAnnotations;
 
     using MyPerfume.Data.Common.Models;
-    using MyPerfume.Data.Models.Enums;
 
-    public class PerfumeSeason : BaseDeletableModel<int>
+    public class PerfumePerfumer : BaseDeletableModel<int>
     {
         [Key]
         [Required]
@@ -15,8 +14,8 @@
 
         [Key]
         [Required]
-        public string SeasonId { get; set; }
+        public string PerfumerId { get; set; }
 
-        public Season Season { get; set; }
+        public Perfumer Perfumer { get; set; }
     }
 }
