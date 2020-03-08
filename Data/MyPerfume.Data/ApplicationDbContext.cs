@@ -37,7 +37,17 @@
 
         public DbSet<PerfumePurpose> PerfumesPurposes { get; set; }
 
+        public DbSet<Perfumer> Perfumers { get; set; }
+
         public DbSet<PerfumePerfumer> PerfumesPerfumers { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+
+        public DbSet<PerfumeCategorie> PerfumesCategories { get; set; }
+
+        public DbSet<TopNote> TopNotes { get; set; }
+
+        public DbSet<PerfumeTopNote> PerfumesTopNotes { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -82,6 +92,17 @@
             {
                 x.HasKey(x => new { x.PerfumeId, x.PerfumerId });
             });
+
+            builder.Entity<PerfumeCategorie>(x =>
+            {
+                x.HasKey(x => new { x.PerfumeId, x.CategoryId });
+            });
+
+            builder.Entity<PerfumeTopNote>(x =>
+            {
+                x.HasKey(x => new { x.PerfumeId, x.TopNoteId });
+            });
+
 
             this.ConfigureUserIdentityRelations(builder);
 

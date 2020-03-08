@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyPerfume.Data;
 
 namespace MyPerfume.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200308142201_ModelPerfumeCategory")]
+    partial class ModelPerfumeCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -544,38 +546,6 @@ namespace MyPerfume.Data.Migrations
                     b.ToTable("PerfumesSeasons");
                 });
 
-            modelBuilder.Entity("MyPerfume.Data.Models.PerfumeTopNote", b =>
-                {
-                    b.Property<string>("PerfumeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("TopNoteId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("PerfumeId", "TopNoteId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("TopNoteId");
-
-                    b.ToTable("PerfumesTopNotes");
-                });
-
             modelBuilder.Entity("MyPerfume.Data.Models.Perfumer", b =>
                 {
                     b.Property<string>("Id")
@@ -633,33 +603,6 @@ namespace MyPerfume.Data.Migrations
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Settings");
-                });
-
-            modelBuilder.Entity("MyPerfume.Data.Models.TopNote", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("TopNotes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -774,21 +717,6 @@ namespace MyPerfume.Data.Migrations
                     b.HasOne("MyPerfume.Data.Models.Perfume", "Perfume")
                         .WithMany("PerfumesSeasons")
                         .HasForeignKey("PerfumeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MyPerfume.Data.Models.PerfumeTopNote", b =>
-                {
-                    b.HasOne("MyPerfume.Data.Models.Perfume", "Perfume")
-                        .WithMany()
-                        .HasForeignKey("PerfumeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("MyPerfume.Data.Models.TopNote", "TopNote")
-                        .WithMany("PerfumesTopNotes")
-                        .HasForeignKey("TopNoteId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
