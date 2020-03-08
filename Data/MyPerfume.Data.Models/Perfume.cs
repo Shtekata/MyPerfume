@@ -21,10 +21,6 @@
         public string Description { get; set; }
 
         [Required]
-        [MaxLength(500)]
-        public string PictureUrl { get; set; }
-
-        [Required]
         public bool Niche { get; set; }
 
         public int? YearOfManifacture { get; set; }
@@ -45,16 +41,18 @@
 
         public Country Country { get; set; }
 
-        public ICollection<PerfumeSeason> PerfumesSeasons => new HashSet<PerfumeSeason>();
+        public IEnumerable<PictureUrl> PictureUrls => new HashSet<PictureUrl>();
 
-        public ICollection<PerfumePurpose> PerfumesPurposes => new HashSet<PerfumePurpose>();
+        public IEnumerable<PerfumeSeason> PerfumesSeasons => new HashSet<PerfumeSeason>();
 
-        public ICollection<PerfumePerfumer> PerfumesPerfumers => new HashSet<PerfumePerfumer>();
+        public IEnumerable<PerfumePurpose> PerfumesPurposes => new HashSet<PerfumePurpose>();
 
-        public ICollection<PerfumeCategorie> PerfumesCategories => new HashSet<PerfumeCategorie>();
+        public IEnumerable<PerfumePerfumer> PerfumesPerfumers => new HashSet<PerfumePerfumer>();
 
-        public ICollection<PerfumeHeartNote> PerfumesHeartNotes => new HashSet<PerfumeHeartNote>();
+        public IEnumerable<PerfumeCategorie> PerfumesCategories => new HashSet<PerfumeCategorie>();
 
-        public ICollection<PerfumeBaseNote> PerfumesBaseNotes => new HashSet<PerfumeBaseNote>();
+        public IEnumerable<PerfumeHeartNote> PerfumesHeartNotes => new HashSet<PerfumeHeartNote>();
+
+        public IEnumerable<PerfumeBaseNote> PerfumesBaseNotes => new HashSet<PerfumeBaseNote>();
     }
 }

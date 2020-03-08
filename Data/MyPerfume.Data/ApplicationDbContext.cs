@@ -57,6 +57,8 @@
 
         public DbSet<PerfumeBaseNote> PerfumesBaseNotes { get; set; }
 
+        public DbSet<Product> Products { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -120,6 +122,9 @@
             {
                 x.HasKey(x => new { x.PerfumeId, x.BaseNoteId });
             });
+
+            builder.Entity<Product>()
+                .Property(x => x.PerfumeType).HasConversion<string>();
 
             this.ConfigureUserIdentityRelations(builder);
 

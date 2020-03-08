@@ -14,6 +14,6 @@
 
         public string Name { get; set; }
 
-        public ICollection<PerfumeTopNote> PerfumesTopNotes => new HashSet<PerfumeTopNote>();
+        public IEnumerable<PerfumeTopNote> PerfumesTopNotes => new HashSet<PerfumeTopNote>();
     }
 }
