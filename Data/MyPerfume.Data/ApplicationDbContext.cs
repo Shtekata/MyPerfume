@@ -33,6 +33,8 @@
 
         public DbSet<Country> Countries { get; set; }
 
+        public DbSet<PerfumeSeason> PerfumesSeasons { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -56,6 +58,15 @@
         {
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
+
+            builder.Entity<Perfume>()
+                .Property(x => x.CustomerType).HasConversion<string>();
+
+            builder.Entity<PerfumeSeason>(x =>
+            {
+                x.HasKey(x => new { x.PerfumeId, x.SeasonId });
+                x.Property(x => x.SeasonId).HasConversion<string>();
+            });
 
             this.ConfigureUserIdentityRelations(builder);
 

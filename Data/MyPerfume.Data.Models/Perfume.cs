@@ -1,6 +1,7 @@
 ﻿namespace MyPerfume.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using MyPerfume.Data.Common.Models;
@@ -43,5 +44,7 @@
         public string CountryId { get; set; }
 
         public Country Country { get; set; }
+
+        public ICollection<PerfumeSeason> PerfumesSeasons => new HashSet<PerfumeSeason>();
     }
 }
