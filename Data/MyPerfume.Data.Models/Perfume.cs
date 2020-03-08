@@ -30,5 +30,8 @@
 
         [Required]
         public CustomerType CustomerType { get; set; }
+
+        [Required]
+        public string DesignerId { get; set; }
     }
 }
