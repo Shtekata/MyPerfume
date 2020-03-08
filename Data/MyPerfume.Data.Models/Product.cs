@@ -38,6 +38,6 @@
 
         public IEnumerable<PictureUrl> PictureUrls => new List<PictureUrl>();
 
-        //public ICollection<Sale> Sales => new HashSet<Sale>();
+        public IEnumerable<Sale> Sales => new HashSet<Sale>();
     }
 }
