@@ -39,5 +39,9 @@
         public string ColorId { get; set; }
 
         public Color Color { get; set; }
+
+        public string CountryId { get; set; }
+
+        public Country Country { get; set; }
     }
 }
