@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyPerfume.Data.Migrations
+﻿namespace MyPerfume.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class ModelPerfume : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,7 +21,7 @@ namespace MyPerfume.Data.Migrations
                     Description = table.Column<string>(maxLength: 5000, nullable: true),
                     PictureUrl = table.Column<string>(maxLength: 500, nullable: false),
                     Niche = table.Column<bool>(nullable: false),
-                    YearOfManifacture = table.Column<int>(nullable: true)
+                    YearOfManifacture = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {

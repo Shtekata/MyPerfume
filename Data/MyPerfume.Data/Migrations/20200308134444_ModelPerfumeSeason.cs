@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyPerfume.Data.Migrations
+﻿namespace MyPerfume.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class ModelPerfumeSeason : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,12 +21,12 @@ namespace MyPerfume.Data.Migrations
                 {
                     PerfumeId = table.Column<string>(nullable: false),
                     SeasonId = table.Column<string>(nullable: false),
-                    Id = table.Column<string>(nullable: true),
+                    Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Season = table.Column<int>(nullable: false)
+                    Season = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {

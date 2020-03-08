@@ -46,5 +46,7 @@
         public Country Country { get; set; }
 
         public ICollection<PerfumeSeason> PerfumesSeasons => new HashSet<PerfumeSeason>();
+
+        public ICollection<PerfumePurpose> PerfumesPurposes => new HashSet<PerfumePurpose>();
     }
 }

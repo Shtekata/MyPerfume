@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyPerfume.Data;
 
 namespace MyPerfume.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200308134444_ModelPerfumeSeason")]
+    partial class ModelPerfumeSeason
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -387,39 +389,6 @@ namespace MyPerfume.Data.Migrations
                     b.ToTable("Perfumes");
                 });
 
-            modelBuilder.Entity("MyPerfume.Data.Models.PerfumePurpose", b =>
-                {
-                    b.Property<string>("PerfumeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("PurposeId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Purpose")
-                        .HasColumnType("int");
-
-                    b.HasKey("PerfumeId", "PurposeId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("PerfumesPurposes");
-                });
-
             modelBuilder.Entity("MyPerfume.Data.Models.PerfumeSeason", b =>
                 {
                     b.Property<string>("PerfumeId")
@@ -549,15 +518,6 @@ namespace MyPerfume.Data.Migrations
                     b.HasOne("MyPerfume.Data.Models.Designer", "Designer")
                         .WithMany("Perfumes")
                         .HasForeignKey("DesignerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MyPerfume.Data.Models.PerfumePurpose", b =>
-                {
-                    b.HasOne("MyPerfume.Data.Models.Perfume", "Perfume")
-                        .WithMany("PerfumesPurposes")
-                        .HasForeignKey("PerfumeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

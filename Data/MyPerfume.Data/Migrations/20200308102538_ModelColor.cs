@@ -1,8 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyPerfume.Data.Migrations
+﻿namespace MyPerfume.Data.Migrations
 {
+    using System;
+
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class ModelColor : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +22,7 @@ namespace MyPerfume.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
