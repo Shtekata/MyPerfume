@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using MyPerfume.Data.Common.Models;
+    using MyPerfume.Data.Models.Enums;
 
     public class Perfume : BaseDeletableModel<string>
     {
@@ -26,5 +27,8 @@
         public bool Niche { get; set; }
 
         public int? YearOfManifacture { get; set; }
+
+        [Required]
+        public CustomerType CustomerType { get; set; }
     }
 }
