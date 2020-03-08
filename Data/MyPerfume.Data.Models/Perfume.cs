@@ -52,5 +52,8 @@
         public ICollection<PerfumePerfumer> PerfumesPerfumers => new HashSet<PerfumePerfumer>();
 
         public ICollection<PerfumeCategorie> PerfumesCategories => new HashSet<PerfumeCategorie>();
+
+        public ICollection<PerfumeHeartNote> PerfumesHeartNotes => new HashSet<PerfumeHeartNote>();
+
     }
 }
