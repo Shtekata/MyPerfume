@@ -110,7 +110,7 @@
                 type: "nvarchar(500)",
                 maxLength: 500,
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
         }
     }
 }

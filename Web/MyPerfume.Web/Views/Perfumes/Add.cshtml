@@ -1,0 +1,73 @@
+﻿@using MyPerfume.Common
+@using MyPerfume.Web.ViewModels.Perfums.InputModels
+@using MyPerfume.Data.Models.Enums
+@model CreatePerfumInputModel
+@{
+    this.ViewData["Title"] = "Add Perfume";
+}
+
+<h1>Candidate for Junior Software Developer</h1>
+
+@*action="/Perfumes/Add"*@
+<form asp-controller="Perfumes" asp-action="Add" method="post" enctype="multipart/form-data">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Niche"></label>
+        <input type="checkbox" asp-for="Niche" class="form-control" />
+        <span asp-validation-for="Niche" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="YearOfManifacture"></label>
+        <input asp-for="YearOfManifacture" class="form-control" />
+        <span asp-validation-for="YearOfManifacture" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CustomerType"></label>
+        <select asp-for="CustomerType" class="form-control" asp-items="@Html.GetEnumSelectList<CustomerType>()">
+            @*<option value="1">Junior Developer</option>
+                <option value="2">Regular Developer</option>
+                <option value="3">Senior Developer</option>
+                <option value="4">JuniorQA Developer</option>*@
+        </select>
+        <span asp-validation-for="CustomerType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Designers"></label>
+        <select asp-for="Designers" class="form-control" asp-items="Model.Designers"></select>
+        <span asp-validation-for="Designers" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Colors"></label>
+        <select asp-for="Colors" class="form-control" asp-items="Model.Colors"></select>
+        <span asp-validation-for="Colors" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Countries"></label>
+        <select asp-for="Countries" class="form-control" asp-items="Model.Countries"></select>
+        <span asp-validation-for="Countries" class="text-danger"></span>
+    </div>
+
+    <hr />
+
+    <input type="submit" value="Candidate" class="btn-primary" />
+</form>
+

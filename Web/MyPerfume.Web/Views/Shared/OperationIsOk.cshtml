@@ -1,0 +1,14 @@
+﻿@{
+    this.ViewData["Title"] = "It is Ok!";
+}
+
+<h1>Operation you made is ok!</h1>
+
+<form asp-controller="Designers" asp-action="Add" method="post" enctype="multipart/form-data">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <a href="/Designers/Add" class="btn btn-primary btn-group-sm text-uppercase">Back</a>
+
+</form>
+

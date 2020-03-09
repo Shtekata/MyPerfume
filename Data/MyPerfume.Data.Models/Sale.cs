@@ -1,6 +1,7 @@
 ﻿namespace MyPerfume.Data.Models
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
 
     using MyPerfume.Data.Common.Models;
 
@@ -11,10 +12,12 @@
             this.Id = Guid.NewGuid().ToString();
         }
 
+        [Required]
         public string ProductId { get; set; }
 
         public Product Product { get; set; }
 
+        [Required]
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }

@@ -12,7 +12,7 @@
                 name: "DesignerId",
                 table: "Perfumes",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: string.Empty);
 
             migrationBuilder.CreateTable(
                 name: "Designers",
