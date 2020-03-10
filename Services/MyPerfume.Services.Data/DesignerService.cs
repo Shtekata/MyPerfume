@@ -1,10 +1,14 @@
 ﻿namespace MyPerfume.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using MyPerfume.Data.Common.Repositories;
     using MyPerfume.Data.Models;
+    using MyPerfume.Services.Mapping;
+    using MyPerfume.Web.ViewModels.Designers.InputModels;
     using MyPerfume.Web.ViewModels.Dto;
 
     public class DesignerService : IDesignerService
@@ -16,7 +20,7 @@
             this.deletableEntityRepository = deletableEntityRepository;
         }
 
-        public async Task AddAsync(DesignerDto input)
+        public async Task AddAsync(CreateDesignerInputModel input)
         {
             var designer = new Designer { Name = input.Name };
             await this.deletableEntityRepository.AddAsync(designer);
@@ -29,7 +33,7 @@
             return designer;
         }
 
-        public bool Exists(DesignerDto input)
+        public bool Exists(CreateDesignerInputModel input)
         {
             var designer = this.deletableEntityRepository.AllAsNoTrackingWithDeleted()
                 .FirstOrDefault(x => x.Name == input.Name);
@@ -42,5 +46,8 @@
                 return false;
             }
         }
+
+        public async Task<IEnumerable<T>> GetAllDesigners<T>()
+       => await this.deletableEntityRepository.AllAsNoTracking().To<T>().ToArrayAsync();
     }
 }

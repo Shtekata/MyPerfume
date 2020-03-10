@@ -1,12 +1,13 @@
 ﻿namespace MyPerfume.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using MyPerfume.Data.Common.Repositories;
     using MyPerfume.Data.Models;
+    using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dto;
 
     public class PerfumeService : IPerfumeService
@@ -53,5 +54,8 @@
             var countries = this.perfumeRepository.AllAsNoTracking().Select(x => x.Country).ToList();
             return countries;
         }
+
+        public async Task<ICollection<T>> All<T>()
+         => await this.perfumeRepository.AllAsNoTracking().To<T>().ToArrayAsync();
     }
 }

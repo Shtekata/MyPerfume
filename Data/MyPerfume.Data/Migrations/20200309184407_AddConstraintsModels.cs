@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace MyPerfume.Data.Migrations
+﻿namespace MyPerfume.Data.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+
     public partial class AddConstraintsModels : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

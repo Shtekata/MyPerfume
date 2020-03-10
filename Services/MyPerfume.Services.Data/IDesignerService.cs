@@ -4,14 +4,17 @@
     using System.Threading.Tasks;
 
     using MyPerfume.Data.Models;
+    using MyPerfume.Web.ViewModels.Designers.InputModels;
     using MyPerfume.Web.ViewModels.Dto;
 
     public interface IDesignerService
     {
-        Task AddAsync(DesignerDto input);
+        Task AddAsync(CreateDesignerInputModel input);
 
         Task<Designer> GetByIdWithDeletedAsync(DesignerDto input);
 
-        bool Exists(DesignerDto input);
+        bool Exists(CreateDesignerInputModel input);
+
+        Task<IEnumerable<T>> GetAllDesigners<T>();
     }
 }

@@ -4,8 +4,8 @@
 
     using Microsoft.AspNetCore.Mvc;
     using MyPerfume.Services.Data;
-    using MyPerfume.Web.ViewModels.Dto;
-    using MyPerfume.Web.ViewModels.Perfums.InputModels;
+    using MyPerfume.Web.ViewModels.Designers.InputModels;
+    using MyPerfume.Web.ViewModels.Designers.ViewModels;
 
     public class DesignersController : BaseController
     {
@@ -29,13 +29,12 @@
                 return this.View();
             }
 
-            var designerDto = new DesignerDto { Name = input.Name };
-            if (this.designerService.Exists(designerDto))
+            if (this.designerService.Exists(input))
             {
                 return this.Redirect("/Designers/Exists");
             }
 
-            await this.designerService.AddAsync(designerDto);
+            await this.designerService.AddAsync(input);
             return this.Redirect("/Designers/OperationIsOk");
         }
 
@@ -47,6 +46,13 @@
         public IActionResult OperationIsOk()
         {
             return this.View();
+        }
+
+        public async Task<IActionResult> All()
+        {
+            var allDesigners = await this.designerService.GetAllDesigners<DesignerViewModel>();
+
+            return this.View(allDesigners);
         }
     }
 }

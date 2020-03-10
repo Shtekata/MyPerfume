@@ -10,6 +10,8 @@
     {
         Task AddAsync(PerfumDto input);
 
+        Task<ICollection<T>> All<T>();
+
         IEnumerable<Designer> GetAllDesigners();
 
         IEnumerable<Color> GetAllColors();
