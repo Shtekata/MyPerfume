@@ -26,20 +26,20 @@
         public int? YearOfManifacture { get; set; }
 
         [Required]
-        public CustomerType CustomerType { get; set; }
+        public virtual CustomerType CustomerType { get; set; }
 
         [Required]
         public string DesignerId { get; set; }
 
-        public Designer Designer { get; set; }
+        public virtual Designer Designer { get; set; }
 
         public string ColorId { get; set; }
 
-        public Color Color { get; set; }
+        public virtual Color Color { get; set; }
 
         public string CountryId { get; set; }
 
-        public Country Country { get; set; }
+        public virtual Country Country { get; set; }
 
         public IEnumerable<PictureUrl> PictureUrls => new HashSet<PictureUrl>();
 

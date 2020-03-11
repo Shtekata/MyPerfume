@@ -18,10 +18,10 @@
 
         public string PerfumeId { get; set; }
 
-        public Perfume Perfume { get; set; }
+        public virtual Perfume Perfume { get; set; }
 
         public string ProductId { get; set; }
 
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

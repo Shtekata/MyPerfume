@@ -10,12 +10,12 @@
         [Required]
         public string PerfumeId { get; set; }
 
-        public Perfume Perfume { get; set; }
+        public virtual Perfume Perfume { get; set; }
 
         [Key]
         [Required]
         public string PerfumerId { get; set; }
 
-        public Perfumer Perfumer { get; set; }
+        public virtual Perfumer Perfumer { get; set; }
     }
 }

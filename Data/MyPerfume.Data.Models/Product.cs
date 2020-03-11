@@ -17,7 +17,7 @@
         [Required]
         public string PerfumeId { get; set; }
 
-        public Perfume Perfume { get; set; }
+        public virtual Perfume Perfume { get; set; }
 
         [MaxLength(5000)]
         public string Description { get; set; }
@@ -29,7 +29,7 @@
         public decimal Price { get; set; }
 
         [Required]
-        public PerfumeType PerfumeType { get; set; }
+        public virtual PerfumeType PerfumeType { get; set; }
 
         [Range(1800, 2200)]
         public int Year { get; set; }
