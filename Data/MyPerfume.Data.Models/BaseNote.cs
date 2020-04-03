@@ -11,12 +11,13 @@
         public BaseNote()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.PerfumesBaseNotes = new HashSet<PerfumeBaseNote>();
         }
 
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
 
-        public IEnumerable<PerfumeBaseNote> PerfumesBaseNotes => new HashSet<PerfumeBaseNote>();
+        public virtual IEnumerable<PerfumeBaseNote> PerfumesBaseNotes { get; set; }
     }
 }

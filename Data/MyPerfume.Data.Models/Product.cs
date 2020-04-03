@@ -12,6 +12,8 @@
         public Product()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.PictureUrls = new List<PictureUrl>();
+            this.Sales = new HashSet<Sale>();
         }
 
         [Required]
@@ -36,8 +38,8 @@
 
         public bool InStock { get; set; }
 
-        public IEnumerable<PictureUrl> PictureUrls => new List<PictureUrl>();
+        public virtual IEnumerable<PictureUrl> PictureUrls { get; set; }
 
-        public IEnumerable<Sale> Sales => new HashSet<Sale>();
+        public virtual IEnumerable<Sale> Sales { get; set; }
     }
 }

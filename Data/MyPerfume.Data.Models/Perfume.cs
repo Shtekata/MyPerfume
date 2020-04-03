@@ -12,6 +12,14 @@
         public Perfume()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.PictureUrls = new HashSet<PictureUrl>();
+            this.PerfumesSeasons = new HashSet<PerfumeSeason>();
+            this.PerfumesPurposes = new HashSet<PerfumePurpose>();
+            this.PerfumesPerfumers = new HashSet<PerfumePerfumer>();
+            this.PerfumesCategories = new HashSet<PerfumeCategorie>();
+            this.PerfumesHeartNotes = new HashSet<PerfumeHeartNote>();
+            this.PerfumesBaseNotes = new HashSet<PerfumeBaseNote>();
+            this.Products = new HashSet<Product>();
         }
 
         [Required]
@@ -41,20 +49,20 @@
 
         public virtual Country Country { get; set; }
 
-        public IEnumerable<PictureUrl> PictureUrls => new HashSet<PictureUrl>();
+        public virtual IEnumerable<PictureUrl> PictureUrls { get; set; }
 
-        public IEnumerable<PerfumeSeason> PerfumesSeasons => new HashSet<PerfumeSeason>();
+        public virtual IEnumerable<PerfumeSeason> PerfumesSeasons { get; set; }
 
-        public IEnumerable<PerfumePurpose> PerfumesPurposes => new HashSet<PerfumePurpose>();
+        public virtual IEnumerable<PerfumePurpose> PerfumesPurposes { get; set; }
 
-        public IEnumerable<PerfumePerfumer> PerfumesPerfumers => new HashSet<PerfumePerfumer>();
+        public virtual IEnumerable<PerfumePerfumer> PerfumesPerfumers { get; set; }
 
-        public IEnumerable<PerfumeCategorie> PerfumesCategories => new HashSet<PerfumeCategorie>();
+        public virtual IEnumerable<PerfumeCategorie> PerfumesCategories { get; set; }
 
-        public IEnumerable<PerfumeHeartNote> PerfumesHeartNotes => new HashSet<PerfumeHeartNote>();
+        public virtual IEnumerable<PerfumeHeartNote> PerfumesHeartNotes { get; set; }
 
-        public IEnumerable<PerfumeBaseNote> PerfumesBaseNotes => new HashSet<PerfumeBaseNote>();
+        public virtual IEnumerable<PerfumeBaseNote> PerfumesBaseNotes { get; set; }
 
-        public ICollection<Product> Products => new HashSet<Product>();
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
