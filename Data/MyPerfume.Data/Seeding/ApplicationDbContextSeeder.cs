@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore.Internal;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
@@ -27,6 +28,7 @@
                           {
                               new RolesSeeder(),
                               new SettingsSeeder(),
+                              new DesignersSeeder(),
                           };
 
             foreach (var seeder in seeders)
