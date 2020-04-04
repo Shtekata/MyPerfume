@@ -31,6 +31,7 @@
                               new DesignersSeeder(),
                               new TopNotesSeeder(),
                               new HeartNotesSeeder(),
+                              new BaseNotesSeeder(),
                           };
 
             foreach (var seeder in seeders)
