@@ -33,6 +33,8 @@
 
         public DbSet<Country> Countries { get; set; }
 
+        public DbSet<PictureUrl> PicturesUrls { get; set; }
+
         public DbSet<PerfumeSeason> PerfumesSeasons { get; set; }
 
         public DbSet<PerfumePurpose> PerfumesPurposes { get; set; }

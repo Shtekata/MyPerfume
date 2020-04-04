@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyPerfume.Data;
 
 namespace MyPerfume.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200404170827_AddDesignerAndPerfumNamesToPictures")]
+    partial class AddDesignerAndPerfumNamesToPictures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -835,7 +837,7 @@ namespace MyPerfume.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("PicturesUrls");
+                    b.ToTable("PictureUrl");
                 });
 
             modelBuilder.Entity("MyPerfume.Data.Models.Product", b =>

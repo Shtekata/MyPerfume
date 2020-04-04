@@ -16,6 +16,12 @@
         [MaxLength(500)]
         public string Url { get; set; }
 
+        [Required]
+        [MaxLength(100)]
+        public string DesignerAndPerfumeNames { get; set; }
+
+        public int PictureNumber { get; set; }
+
         public string PerfumeId { get; set; }
 
         public virtual Perfume Perfume { get; set; }
