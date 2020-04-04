@@ -34,6 +34,7 @@
                               new BaseNotesSeeder(),
                               new AromaticGroupsSeeder(),
                               new CountriesSeeder(),
+                              new ColorsSeeder(),
                           };
 
             foreach (var seeder in seeders)
