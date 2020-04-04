@@ -29,6 +29,7 @@
                               new RolesSeeder(),
                               new SettingsSeeder(),
                               new DesignersSeeder(),
+                              new TopNotesSeeder(),
                           };
 
             foreach (var seeder in seeders)
