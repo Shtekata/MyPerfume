@@ -57,6 +57,10 @@
 
         public DbSet<PerfumeBaseNote> PerfumesBaseNotes { get; set; }
 
+        public DbSet<AromaticGroup> AromaticGroups { get; set; }
+
+        public DbSet<PerfumeAromaticGroup> PerfumesAromaticGroups { get; set; }
+
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Sale> Sales { get; set; }
@@ -123,6 +127,11 @@
             builder.Entity<PerfumeBaseNote>(x =>
             {
                 x.HasKey(x => new { x.PerfumeId, x.BaseNoteId });
+            });
+
+            builder.Entity<PerfumeAromaticGroup>(x =>
+            {
+                x.HasKey(x => new { x.PerfumeId, x.AromaticGroupId });
             });
 
             builder.Entity<Product>()

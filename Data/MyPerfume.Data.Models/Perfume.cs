@@ -19,6 +19,7 @@
             this.PerfumesCategories = new HashSet<PerfumeCategorie>();
             this.PerfumesHeartNotes = new HashSet<PerfumeHeartNote>();
             this.PerfumesBaseNotes = new HashSet<PerfumeBaseNote>();
+            this.PerfumesAromaticGroups = new HashSet<PerfumeAromaticGroup>();
             this.Products = new HashSet<Product>();
         }
 
@@ -62,6 +63,8 @@
         public virtual IEnumerable<PerfumeHeartNote> PerfumesHeartNotes { get; set; }
 
         public virtual IEnumerable<PerfumeBaseNote> PerfumesBaseNotes { get; set; }
+
+        public virtual IEnumerable<PerfumeAromaticGroup> PerfumesAromaticGroups { get; set; }
 
         public virtual ICollection<Product> Products { get; set; }
     }

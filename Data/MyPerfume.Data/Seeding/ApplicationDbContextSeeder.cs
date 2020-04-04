@@ -32,6 +32,7 @@
                               new TopNotesSeeder(),
                               new HeartNotesSeeder(),
                               new BaseNotesSeeder(),
+                              new AromaticGroupsSeeder(),
                           };
 
             foreach (var seeder in seeders)
