@@ -5,7 +5,8 @@
     using MyPerfume.Common;
     using MyPerfume.Web.Controllers;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    //[Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+    [Authorize]
     [Area("Administration")]
     public class AdministrationController : BaseController
     {
