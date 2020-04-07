@@ -6,7 +6,7 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Dto;
 
-    public interface IPerfumeService
+    public interface IPerfumesService
     {
         Task AddAsync(PerfumDto input);
 

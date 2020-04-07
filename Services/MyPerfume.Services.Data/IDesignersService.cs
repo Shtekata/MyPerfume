@@ -7,9 +7,9 @@
     using MyPerfume.Web.ViewModels.Designers.InputModels;
     using MyPerfume.Web.ViewModels.Dto;
 
-    public interface IDesignerService
+    public interface IDesignersService
     {
-        Task AddAsync(CreateDesignerInputModel input);
+        Task AddAsync(DesignerDto input);
 
         Task<Designer> GetByIdWithDeletedAsync(DesignerDto input);
 

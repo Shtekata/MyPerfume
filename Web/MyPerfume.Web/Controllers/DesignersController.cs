@@ -4,14 +4,16 @@
 
     using Microsoft.AspNetCore.Mvc;
     using MyPerfume.Services.Data;
+    using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Designers.InputModels;
     using MyPerfume.Web.ViewModels.Designers.ViewModels;
+    using MyPerfume.Web.ViewModels.Dto;
 
     public class DesignersController : BaseController
     {
-        private readonly IDesignerService designerService;
+        private readonly IDesignersService designerService;
 
-        public DesignersController(IDesignerService designerService)
+        public DesignersController(IDesignersService designerService)
         {
             this.designerService = designerService;
         }
@@ -26,7 +28,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.View();
+                return this.View(input);
             }
 
             if (this.designerService.Exists(input))
@@ -34,7 +36,8 @@
                 return this.Redirect("/Designers/Exists");
             }
 
-            await this.designerService.AddAsync(input);
+            var dtoDesigner = AutoMapperConfig.MapperInstance.Map<DesignerDto>(input);
+            await this.designerService.AddAsync(dtoDesigner);
             return this.Redirect("/Designers/OperationIsOk");
         }
 

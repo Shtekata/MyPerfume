@@ -2,10 +2,10 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
+    using MyPerfume.Web.ViewModels.Dto;
 
-    public class CreateDesignerInputModel : IMapTo<Designer>
+    public class CreateDesignerInputModel : IMapTo<DesignerDto>
     {
         [Required]
         [MaxLength(100)]

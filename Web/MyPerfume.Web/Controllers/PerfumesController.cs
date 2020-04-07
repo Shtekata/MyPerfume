@@ -11,9 +11,9 @@
 
     public class PerfumesController : BaseController
     {
-        private readonly IPerfumeService perfumeService;
+        private readonly IPerfumesService perfumeService;
 
-        public PerfumesController(IPerfumeService perfumeService)
+        public PerfumesController(IPerfumesService perfumeService)
         {
             this.perfumeService = perfumeService;
         }

@@ -11,16 +11,16 @@
     using MyPerfume.Web.ViewModels.Designers.InputModels;
     using MyPerfume.Web.ViewModels.Dto;
 
-    public class DesignerService : IDesignerService
+    public class DesignersService : IDesignersService
     {
         private readonly IDeletableEntityRepository<Designer> deletableEntityRepository;
 
-        public DesignerService(IDeletableEntityRepository<Designer> deletableEntityRepository)
+        public DesignersService(IDeletableEntityRepository<Designer> deletableEntityRepository)
         {
             this.deletableEntityRepository = deletableEntityRepository;
         }
 
-        public async Task AddAsync(CreateDesignerInputModel input)
+        public async Task AddAsync(DesignerDto input)
         {
             var designer = new Designer { Name = input.Name };
             await this.deletableEntityRepository.AddAsync(designer);

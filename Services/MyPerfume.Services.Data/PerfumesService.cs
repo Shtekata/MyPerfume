@@ -10,11 +10,11 @@
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dto;
 
-    public class PerfumeService : IPerfumeService
+    public class PerfumesService : IPerfumesService
     {
         private readonly IDeletableEntityRepository<Perfume> perfumeRepository;
 
-        public PerfumeService(IDeletableEntityRepository<Perfume> perfumeRepository)
+        public PerfumesService(IDeletableEntityRepository<Perfume> perfumeRepository)
         {
             this.perfumeRepository = perfumeRepository;
         }
