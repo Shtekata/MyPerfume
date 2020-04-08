@@ -1,6 +1,7 @@
 ﻿namespace MyPerfume.Services.Data
 {
     using System.Collections;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -38,7 +39,7 @@
             return result;
         }
 
-        public async Task<EditRoleViewModel> EditRole(string id)
+        public async Task<EditRoleViewModel> RoleWithUsers(string id)
         {
             var role = await this.roleManager.FindByIdAsync(id);
 
@@ -61,7 +62,83 @@
 
         public async Task<bool> RoleExists(string id)
         {
-            return await this.roleManager.FindByIdAsync(id) == null;
+            return await this.roleManager.FindByIdAsync(id) != null;
+        }
+
+        public async Task<IdentityResult> EditRole(EditRoleViewModel model)
+        {
+            var role = await this.roleManager.FindByIdAsync(model.Id);
+            role.Name = model.RoleName;
+            var result = await this.roleManager.UpdateAsync(role);
+            return result;
+        }
+
+        public async Task<List<UserRoleViewModel>> UsersInRole(string roleId)
+        {
+            var role = await this.roleManager.FindByIdAsync(roleId);
+
+            var model = new List<UserRoleViewModel>();
+
+            foreach (var user in this.userManager.Users)
+            {
+                var userRoleViewModel = new UserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName,
+                };
+
+                if (await this.userManager.IsInRoleAsync(user, role.Name))
+                {
+                    userRoleViewModel.IsSelected = true;
+                }
+                else
+                {
+                    userRoleViewModel.IsSelected = false;
+                }
+
+                model.Add(userRoleViewModel);
+            }
+
+            return model;
+        }
+
+        public async Task EditUsersInRole(List<UserRoleViewModel> model, string roleId)
+        {
+            var role = await this.roleManager.FindByIdAsync(roleId);
+
+            IdentityResult result = null;
+
+            for (int i = 0; i < model.Count; i++)
+            {
+                var user = await this.userManager.FindByIdAsync(model[i].UserId);
+
+                if (model[i].IsSelected && !(await this.userManager.IsInRoleAsync(user, role.Name)))
+                {
+                    result = await this.userManager.AddToRoleAsync(user, role.Name);
+                }
+                else if (!model[i].IsSelected && await this.userManager.IsInRoleAsync(user, role.Name))
+                {
+                    result = await this.userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+                else
+                {
+                    continue;
+                }
+
+                if (result.Succeeded)
+                {
+                    if (i < model.Count - 1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+
+            return;
         }
     }
 }

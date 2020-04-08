@@ -8,8 +8,7 @@
 
 @if (Model.Any())
 {
-    <a class="btn btn-primary mb-3" style="width:auto"
-       asp-area="Administration" asp-controller="Dashboard" asp-action="CreateRole">
+    <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole">
         Add new role.
     </a>
 
@@ -23,8 +22,7 @@
                 <h5 class="card-title">@role.Name</h5>
             </div>
             <div class="card-footer">
-                <a class="btn btn-primary" 
-                   asp-area="Administration" asp-controller="Dashboard" asp-action="EditRole" asp-route-id="@role.Id">Edit</a>
+                <a class="btn btn-primary" asp-action="EditRole" asp-route-id="@role.Id">Edit</a>
                 <a href="#" class="btn btn-danger">Delete</a>
             </div>
         </div>
@@ -40,8 +38,7 @@ else
             <h5 class="card-title">
                 Use the button bellow to create a role.
             </h5>
-            <a class="btn btn-primary" style="width:auto"
-               asp-area="Administration" asp-controller="Dashboard" asp-action="CreateRole">
+            <a class="btn btn-primary" style="width:auto" asp-action="CreateRole">
                 Create Role
             </a>
         </div>

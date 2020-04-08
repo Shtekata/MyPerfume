@@ -1,6 +1,7 @@
 ﻿namespace MyPerfume.Services.Data
 {
     using System.Collections;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
@@ -15,7 +16,13 @@
 
         Task<bool> RoleExists(string id);
 
-        Task<EditRoleViewModel> EditRole(string id);
+        Task<EditRoleViewModel> RoleWithUsers(string id);
+
+        Task<IdentityResult> EditRole(EditRoleViewModel model);
+
+        Task<List<UserRoleViewModel>> UsersInRole(string roleId);
+
+        Task EditUsersInRole(List<UserRoleViewModel> model, string roleId);
 
         Task AddAdmin();
     }
