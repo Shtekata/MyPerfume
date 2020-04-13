@@ -20,6 +20,8 @@
 
         Task<IdentityResult> EditRole(EditRoleViewModel model);
 
+        Task<IdentityResult> DeleteRole(EditRoleViewModel model);
+
         Task<List<UserRoleViewModel>> UsersInRole(string roleId);
 
         Task EditUsersInRole(List<UserRoleViewModel> model, string roleId);

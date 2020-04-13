@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Administration.Roles;
     using MyPerfume.Web.ViewModels.Dto;
@@ -70,6 +71,22 @@
             var role = await this.roleManager.FindByIdAsync(model.Id);
             role.Name = model.RoleName;
             var result = await this.roleManager.UpdateAsync(role);
+            return result;
+        }
+
+        public async Task<IdentityResult> DeleteRole(EditRoleViewModel model)
+        {
+            var role = await this.roleManager.FindByIdAsync(model.Id);
+            if (model.Users.Count > 0)
+            {
+                foreach (var userName in model.Users)
+                {
+                    var user = await this.userManager.FindByNameAsync(userName);
+                    await this.userManager.RemoveFromRoleAsync(user, role.Name);
+                }
+            }
+
+            var result = await this.roleManager.DeleteAsync(role);
             return result;
         }
 

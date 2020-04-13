@@ -107,6 +107,46 @@
             }
         }
 
+        public async Task<IActionResult> DeleteRole(string id)
+        {
+            var roleExists = await this.rolesService.RoleExists(id);
+            if (!roleExists)
+            {
+                this.ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found.";
+            }
+
+            var model = await this.rolesService.RoleWithUsers(id);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteRole(EditRoleViewModel model)
+        {
+            var roleExists = await this.rolesService.RoleExists(model.Id);
+            if (!roleExists)
+            {
+                this.ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found.";
+                return this.View("NotFound");
+            }
+            else
+            {
+                var result = await this.rolesService.DeleteRole(model);
+
+                if (result.Succeeded)
+                {
+                    return this.RedirectToAction("AllRoles");
+                }
+
+                foreach (var error in result.Errors)
+                {
+                    this.ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                return this.Redirect("AllRoles");
+            }
+        }
+
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
             this.ViewData["RoleId"] = roleId;
