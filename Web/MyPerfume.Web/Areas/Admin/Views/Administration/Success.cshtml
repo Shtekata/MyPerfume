@@ -1,0 +1,15 @@
+﻿@model string 
+@{
+    ViewBag.Title = "Successully update user.";
+}
+
+<h1>Successully update user.</h1>
+<div class="row">
+    <div class="col-md-12">
+        <form method="get">
+            <a class="btn btn-primary" asp-action="EditUser" asp-route-id="@Model">
+                Back to @User.Identity.Name!
+            </a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,146 @@
+﻿@model EditUserViewModel
+@{
+    ViewData["Title"] = "EditUser";
+}
+
+<h1>EditUser</h1>
+
+<form method="post" class="mt-5">
+    <a class="btn btn-primary" asp-action="AllUsers">Back</a>
+    <button type="submit" class="btn btn-success">Submit</button>
+    <div class="form-group row">
+        <label asp-for="Id" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Id" disabled class="form-control" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="UserName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="UserName" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="NormalizedUserName" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="NormalizedUserName" disabled class="form-control" />
+            <span asp-validation-for="NormalizedUserName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="CreatedOn" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="CreatedOn" disabled class="form-control" />
+            <span asp-validation-for="CreatedOn" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="ModifiedOn" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="ModifiedOn" disabled class="form-control" />
+            <span asp-validation-for="ModifiedOn" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="IsDeleted" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="IsDeleted" disabled class="form-control" />
+            <span asp-validation-for="IsDeleted" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="DeletedOn" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="DeletedOn" disabled class="form-control" />
+            <span asp-validation-for="DeletedOn" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="NormalizedEmail" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="NormalizedEmail" disabled class="form-control" />
+            <span asp-validation-for="NormalizedEmail" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="EmailConfirmed" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="EmailConfirmed" class="form-control" />
+            <span asp-validation-for="EmailConfirmed" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="PhoneNumber" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="PhoneNumberConfirmed" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="PhoneNumberConfirmed" class="form-control" />
+            <span asp-validation-for="PhoneNumberConfirmed" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="PasswordHash" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="PasswordHash" class="form-control" />
+            <span asp-validation-for="PasswordHash" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="SecurityStamp" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="SecurityStamp" disabled class="form-control" />
+            <span asp-validation-for="SecurityStamp" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="ConcurrencyStamp" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="ConcurrencyStamp" disabled class="form-control" />
+            <span asp-validation-for="ConcurrencyStamp" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="TwoFactorEnabled" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="TwoFactorEnabled" class="form-control" />
+            <span asp-validation-for="TwoFactorEnabled" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="LockoutEnabled" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="LockoutEnabled" class="form-control" />
+            <span asp-validation-for="LockoutEnabled" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="AccessFailedCount" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="AccessFailedCount" class="form-control" />
+            <span asp-validation-for="AccessFailedCount" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="LockoutEnd" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="LockoutEnd" class="form-control" />
+            <span asp-validation-for="LockoutEnd" class="text-danger"></span>
+        </div>
+    </div>
+</form>
+
+
+

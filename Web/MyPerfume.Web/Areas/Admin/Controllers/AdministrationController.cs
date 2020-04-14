@@ -35,6 +35,69 @@
             return this.View(users);
         }
 
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var userExists = await this.usersService.UserExists(id);
+            if (!userExists)
+            {
+                this.ViewData["ErrorMessage"] = $"User with Id ={id} cannot be found.";
+                return this.View("NotFound");
+            }
+
+            var model = this.usersService.GetUserById<EditUserViewModel>(id);
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditUser(EditUserViewModel input)
+        {
+            var userExists = await this.usersService.UserExists(input.Id);
+            if (!userExists)
+            {
+                this.ViewData["ErrorMessage"] = $"User with Id ={input.Id} cannot be found.";
+                return this.View("NotFound");
+            }
+
+            var userDto = AutoMapperConfig.MapperInstance.Map<EditUserDto>(input);
+            await this.usersService.EditUser(userDto);
+
+            return this.RedirectToAction("Success", new { id = input.Id });
+        }
+
+        public async Task<IActionResult> ConfirmDeleteUser(string id)
+        {
+            var userExists = await this.usersService.UserExists(id);
+            if (!userExists)
+            {
+                this.ViewData["ErrorMessage"] = $"User with Id ={id} cannot be found.";
+                return this.View("NotFound");
+            }
+
+            var model = this.usersService.GetUserById<EditUserViewModel>(id);
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmDeleteUser(EditUserViewModel input)
+        {
+            var userExists = await this.usersService.UserExists(input.Id);
+            if (!userExists)
+            {
+                this.ViewData["ErrorMessage"] = $"User with Id ={input.Id} cannot be found.";
+                return this.View("NotFound");
+            }
+
+            var result = await this.usersService.DeleteUserById(input.Id);
+
+            if (result == 0)
+            {
+                this.ViewData["ErrorMessage"] = $"Can not delete user s Id : {input.Id}!";
+                return this.View("NotFound");
+            }
+
+            return this.RedirectToAction("AllUsers");
+        }
+
         public IActionResult CreateRole()
         {
             return this.View();
@@ -73,6 +136,7 @@
             if (!roleExists)
             {
                 this.ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found.";
+                return this.View("NotFound");
             }
 
             var model = await this.rolesService.RoleWithUsers(id);
@@ -89,22 +153,20 @@
                 this.ViewBag.ErrorMessage = $"Role with Id = {model.Id} cannot be found.";
                 return this.View("NotFound");
             }
-            else
+
+            var result = await this.rolesService.EditRole(model);
+
+            if (result.Succeeded)
             {
-                var result = await this.rolesService.EditRole(model);
-
-                if (result.Succeeded)
-                {
-                    return this.RedirectToAction("AllRoles");
-                }
-
-                foreach (var error in result.Errors)
-                {
-                    this.ModelState.AddModelError(string.Empty, error.Description);
-                }
-
-                return this.View(model);
+                return this.RedirectToAction("AllRoles");
             }
+
+            foreach (var error in result.Errors)
+            {
+                this.ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return this.View(model);
         }
 
         public async Task<IActionResult> DeleteRole(string id)
@@ -113,6 +175,7 @@
             if (!roleExists)
             {
                 this.ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found.";
+                return this.View("NotFound");
             }
 
             var model = await this.rolesService.RoleWithUsers(id);
@@ -176,6 +239,11 @@
             await this.rolesService.EditUsersInRole(model, roleId);
 
             return this.RedirectToAction("EditRole", new { Id = roleId });
+        }
+
+        public IActionResult Success(string id)
+        {
+            return this.View("Success", id);
         }
 
         [AllowAnonymous]
