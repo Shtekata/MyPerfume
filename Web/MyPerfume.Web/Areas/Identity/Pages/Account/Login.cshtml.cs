@@ -46,8 +46,7 @@
         public class InputModel
         {
             [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            public string UserNameOrEmail { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -82,16 +81,45 @@
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await this.signInManager.PasswordSignInAsync(this.Input.Email, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
+                Microsoft.AspNetCore.Identity.SignInResult inputUserName;
+                Microsoft.AspNetCore.Identity.SignInResult inputEmail;
+                Microsoft.AspNetCore.Identity.SignInResult result = Microsoft.AspNetCore.Identity.SignInResult.Failed;
+
+                var userByEmail = await this.userManager.FindByEmailAsync(this.Input.UserNameOrEmail);
+                if (userByEmail != null)
+                {
+                    inputEmail = await this.signInManager.PasswordSignInAsync(userByEmail, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
+                    if (inputEmail.Succeeded)
+                    {
+                        result = inputEmail;
+                    }
+                }
+                else
+                {
+                    inputUserName = await this.signInManager.PasswordSignInAsync(this.Input.UserNameOrEmail, this.Input.Password, this.Input.RememberMe, lockoutOnFailure: false);
+                    if (inputUserName.Succeeded)
+                    {
+                        result = inputUserName;
+                    }
+                }
+
                 if (result.Succeeded)
                 {
                     this.logger.LogInformation("User logged in.");
                     return this.LocalRedirect(returnUrl);
                 }
 
-                if (!this.User.Identity.IsAuthenticated)
+                var userWithUsername = await this.userManager.FindByNameAsync(this.Input.UserNameOrEmail);
+                var isPassOk = await this.userManager.CheckPasswordAsync(userWithUsername, this.Input.Password);
+                if (userWithUsername != null && userWithUsername.EmailConfirmed == false && isPassOk)
                 {
-                    return this.RedirectToPage("RegisterConfirmation", new { email = Input.Email });
+                    return this.RedirectToPage("RegisterConfirmation", new { email = userWithUsername.Email });
+                }
+
+                var userWithEmail = await this.userManager.FindByEmailAsync(this.Input.UserNameOrEmail);
+                if (userWithEmail != null && userWithEmail.EmailConfirmed == false && result.Succeeded && isPassOk)
+                {
+                    return this.RedirectToPage("RegisterConfirmation", new { email = userWithEmail.Email });
                 }
 
                 if (result.RequiresTwoFactor)
@@ -104,7 +132,6 @@
                     this.logger.LogWarning("User account locked out.");
                     return this.RedirectToPage("./Lockout");
                 }
-
                 else
                 {
                     this.ModelState.AddModelError(string.Empty, "Invalid login attempt.");
