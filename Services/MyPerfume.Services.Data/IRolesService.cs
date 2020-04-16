@@ -6,7 +6,7 @@
 
     using Microsoft.AspNetCore.Identity;
     using MyPerfume.Web.ViewModels.Administration.Roles;
-    using MyPerfume.Web.ViewModels.Dto;
+    using MyPerfume.Web.ViewModels.Dtos;
 
     public interface IRolesService
     {

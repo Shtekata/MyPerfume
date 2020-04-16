@@ -11,7 +11,7 @@
     using MyPerfume.Data.Common.Repositories;
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
-    using MyPerfume.Web.ViewModels.Dto;
+    using MyPerfume.Web.ViewModels.Dtos;
 
     public class UsersService : IUsersService
     {

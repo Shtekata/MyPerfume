@@ -7,7 +7,7 @@
     using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.InputModels;
 
-    public interface IDesignersService
+    public interface ICountriesService
     {
         Task AddAsync(IdAndNameDto input);
 

@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations;
 
     using MyPerfume.Services.Mapping;
-    using MyPerfume.Web.ViewModels.Dto;
+    using MyPerfume.Web.ViewModels.Dtos;
 
     public class CreateRoleViewModel : IMapTo<CreateRoleDto>
     {

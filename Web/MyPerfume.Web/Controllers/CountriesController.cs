@@ -9,13 +9,13 @@
     using MyPerfume.Web.ViewModels.InputModels;
     using MyPerfume.Web.ViewModels.ViewModels;
 
-    public class DesignersController : BaseController
+    public class CountriesController : BaseController
     {
-        private readonly IDesignersService designerService;
+        private readonly ICountriesService countriesService;
 
-        public DesignersController(IDesignersService designersService)
+        public CountriesController(ICountriesService countriesService)
         {
-            this.designerService = designersService;
+            this.countriesService = countriesService;
         }
 
         public IActionResult Add()
@@ -26,39 +26,39 @@
         [HttpPost]
         public async Task<IActionResult> Add(IdAndNameInputModel input)
         {
-            this.ViewData["ControllerName"] = "Designers";
+            this.ViewData["ControllerName"] = "Countries";
 
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            if (this.designerService.ExistsByName(input.Name))
+            if (this.countriesService.ExistsByName(input.Name))
             {
                 return this.View("Exists");
             }
 
             var dto = AutoMapperConfig.MapperInstance.Map<IdAndNameDto>(input);
-            await this.designerService.AddAsync(dto);
+            await this.countriesService.AddAsync(dto);
             return this.View("OperationIsOk");
         }
 
         public async Task<IActionResult> All()
         {
-            var data = await this.designerService.GetAll<IdNameCreateModViewModel>();
+            var data = await this.countriesService.GetAll<IdNameCreateModViewModel>();
 
             return this.View(data);
         }
 
         public IActionResult Edit(string id)
         {
-            if (!this.designerService.ExistsById(id))
+            if (!this.countriesService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit country with Id : {id}!";
                 return this.View("NotFound");
             }
 
-            var dto = this.designerService.GetById(id);
+            var dto = this.countriesService.GetById(id);
             var model = AutoMapperConfig.MapperInstance.Map<IdAndNameInputModel>(dto);
 
             return this.View(model);
@@ -67,24 +67,24 @@
         [HttpPost]
         public async Task<IActionResult> Edit(IdAndNameInputModel input)
         {
-            this.ViewData["ControllerName"] = "Designers";
+            this.ViewData["ControllerName"] = "Countries";
 
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            if (!this.designerService.ExistsById(input.Id))
+            if (!this.countriesService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit country with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
-            var result = await this.designerService.EditAsync(input);
+            var result = await this.countriesService.EditAsync(input);
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit country with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
@@ -93,13 +93,13 @@
 
         public IActionResult Delete(string id)
         {
-            if (!this.designerService.ExistsById(id))
+            if (!this.countriesService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete designer with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete country with Id : {id}!";
                 return this.View("NotFound");
             }
 
-            var dto = this.designerService.GetById(id);
+            var dto = this.countriesService.GetById(id);
             var model = AutoMapperConfig.MapperInstance.Map<IdAndNameInputModel>(dto);
 
             return this.View(model);
@@ -115,17 +115,17 @@
                 return this.View(input);
             }
 
-            if (!this.designerService.ExistsById(input.Id))
+            if (!this.countriesService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete country with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
-            var result = await this.designerService.DeleteAsync(input);
+            var result = await this.countriesService.DeleteAsync(input);
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit user country Id : {input.Id}!";
                 return this.View("NotFound");
             }
 

@@ -1,12 +1,12 @@
-﻿@using MyPerfume.Web.ViewModels.Designers.InputModels
-@model DesignerInputModel
+﻿@using MyPerfume.Web.ViewModels.InputModels
+@model IdAndNameInputModel
 @{
     this.ViewData["Title"] = "Add Designer";
 }
 
 <h1>Fill the name of designer, please!</h1>
 
-<form asp-controller="Designers" asp-action="Add" method="post" enctype="multipart/form-data">
+<form method="post" enctype="multipart/form-data">
 
     <div asp-validation-summary="All" class="text-danger"></div>
 
@@ -18,7 +18,7 @@
 
     <hr />
 
-    <button type="submit" class="btn btn-primary">Apply</button>
+    <button type="submit" class="btn btn-primary" asp-action="Add">Apply</button>
     <a class="btn btn-primary" asp-action="All">Back</a>
 </form>
 

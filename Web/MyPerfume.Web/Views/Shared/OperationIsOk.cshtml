@@ -1,10 +1,11 @@
-﻿@{
+﻿@model object
+@{
     this.ViewData["Title"] = "It is Ok!";
 }
 
 <h1>Operation you made is ok!</h1>
 
-<form asp-controller="Designers" asp-action="All" method="post" enctype="multipart/form-data">
+<form asp-controller="@Model" asp-action="All" method="post" enctype="multipart/form-data">
 
     <div asp-validation-summary="All" class="text-danger"></div>
 

@@ -6,7 +6,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using MyPerfume.Services.Data;
-    using MyPerfume.Web.ViewModels.Dto;
+    using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.Perfums.InputModels;
 
     public class PerfumesController : BaseController

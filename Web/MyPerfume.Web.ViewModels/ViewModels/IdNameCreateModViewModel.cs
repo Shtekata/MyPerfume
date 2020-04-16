@@ -1,11 +1,11 @@
-﻿namespace MyPerfume.Web.ViewModels.Designers.ViewModels
+﻿namespace MyPerfume.Web.ViewModels.ViewModels
 {
     using System;
 
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
 
-    public class DesignerViewModel : IMapFrom<Designer>
+    public class IdNameCreateModViewModel : IMapFrom<Designer>, IMapFrom<Country>
     {
         public string Id { get; set; }
 

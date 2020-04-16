@@ -5,7 +5,7 @@
 
     using Microsoft.AspNetCore.Identity;
 
-    using MyPerfume.Web.ViewModels.Dto;
+    using MyPerfume.Web.ViewModels.Dtos;
 
     public interface IUsersService
     {

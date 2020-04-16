@@ -1,4 +1,4 @@
-﻿namespace MyPerfume.Web.ViewModels.Dto
+﻿namespace MyPerfume.Web.ViewModels.Dtos
 {
     using System;
 

@@ -1,11 +1,11 @@
-﻿namespace MyPerfume.Web.ViewModels.Designers.InputModels
+﻿namespace MyPerfume.Web.ViewModels.InputModels
 {
     using System.ComponentModel.DataAnnotations;
 
     using MyPerfume.Services.Mapping;
-    using MyPerfume.Web.ViewModels.Dto;
+    using MyPerfume.Web.ViewModels.Dtos;
 
-    public class DesignerInputModel : IMapTo<DesignerDto>, IMapFrom<DesignerDto>
+    public class IdAndNameInputModel : IMapTo<IdAndNameDto>, IMapFrom<IdAndNameDto>
     {
         public string Id { get; set; }
 

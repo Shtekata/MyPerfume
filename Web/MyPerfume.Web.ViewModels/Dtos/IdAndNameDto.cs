@@ -1,9 +1,9 @@
-﻿namespace MyPerfume.Web.ViewModels.Dto
+﻿namespace MyPerfume.Web.ViewModels.Dtos
 {
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
 
-    public class DesignerDto : IMapFrom<Designer>
+    public class IdAndNameDto : IMapFrom<Designer>, IMapFrom<Country>
     {
         public string Id { get; set; }
 

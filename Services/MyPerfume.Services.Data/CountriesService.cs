@@ -11,18 +11,18 @@
     using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.InputModels;
 
-    public class DesignersService : IDesignersService
+    public class CountriesService : ICountriesService
     {
-        private readonly IDeletableEntityRepository<Designer> deletableEntityRepository;
+        private readonly IDeletableEntityRepository<Country> deletableEntityRepository;
 
-        public DesignersService(IDeletableEntityRepository<Designer> deletableEntityRepository)
+        public CountriesService(IDeletableEntityRepository<Country> deletableEntityRepository)
         {
             this.deletableEntityRepository = deletableEntityRepository;
         }
 
         public async Task AddAsync(IdAndNameDto input)
         {
-            var model = new Designer { Name = input.Name };
+            var model = new Country { Name = input.Name };
             await this.deletableEntityRepository.AddAsync(model);
             await this.deletableEntityRepository.SaveChangesAsync();
         }

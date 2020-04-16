@@ -1,24 +1,24 @@
 ﻿@using MyPerfume.Web.ViewModels.ViewModels
 @model IEnumerable<IdNameCreateModViewModel>
 @{
-    this.ViewData["Title"] = "All Designers";
+    this.ViewData["Title"] = "All Countries";
 }
 
-<h1>This is all designers!</h1>
+<h1>This is all countries!</h1>
 
 <section class="py-5">
     <div class="container">
-        <h1 style="margin: 2%; text-align: center;">All Designers</h1>
-        <a class="btn btn-primary" asp-action="Add">Add Designer</a>
+        <h1 style="margin: 2%; text-align: center;">All Countries</h1>
+        <a class="btn btn-primary" asp-action="Add">Add Countries</a>
         <div style="padding: 5%;">
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Designer Name</th>
-                        <th scope="col">Designer Created On</th>
-                        <th scope="col">Designer Modified On</th>
-                        <th scope="col">Designer Edit</th>
-                        <th scope="col">Designer Delete</th>
+                        <th scope="col">Country Name</th>
+                        <th scope="col">Country Created On</th>
+                        <th scope="col">Country Modified On</th>
+                        <th scope="col">Country Edit</th>
+                        <th scope="col">Country Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,14 +31,14 @@
                             <td>
                                 <div class="button-holder">
                                     <a asp-action="Edit" asp-route-id="@designer.Id" class="btn btn-info text-uppercase">
-                                        Edit designer
+                                        Edit country
                                     </a>
                                 </div>
                             </td>
                             <td>
                                 <div class="button-holder">
                                     <a asp-action="Delete" asp-route-id="@designer.Id" class="btn btn-info text-uppercase">
-                                        Delete designer
+                                        Delete country
                                     </a>
                                 </div>
                             </td>

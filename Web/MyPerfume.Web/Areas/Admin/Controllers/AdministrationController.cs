@@ -12,7 +12,7 @@
     using MyPerfume.Web.Controllers;
     using MyPerfume.Web.ViewModels.Administration.Roles;
     using MyPerfume.Web.ViewModels.Administration.Users;
-    using MyPerfume.Web.ViewModels.Dto;
+    using MyPerfume.Web.ViewModels.Dtos;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
     [Authorize]

@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
 
     using MyPerfume.Data.Models;
-    using MyPerfume.Web.ViewModels.Dto;
+    using MyPerfume.Web.ViewModels.Dtos;
 
     public interface IPerfumesService
     {

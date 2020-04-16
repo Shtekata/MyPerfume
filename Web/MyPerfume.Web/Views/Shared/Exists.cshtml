@@ -8,7 +8,9 @@
 
     <div asp-validation-summary="All" class="text-danger"></div>
 
-    <a href="/Designers/Add" class="btn btn-primary btn-group-sm text-uppercase">Back</a>
+    <a class="btn btn-primary btn-group-sm text-uppercase" asp-controller="@this.ViewData["ControllerName"]" asp-action="All">
+        Back
+    </a>
 
 </form>
 

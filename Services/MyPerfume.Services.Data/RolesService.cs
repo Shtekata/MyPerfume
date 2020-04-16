@@ -9,7 +9,7 @@
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Administration.Roles;
-    using MyPerfume.Web.ViewModels.Dto;
+    using MyPerfume.Web.ViewModels.Dtos;
 
     public class RolesService : IRolesService
     {

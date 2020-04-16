@@ -77,6 +77,7 @@
             services.AddTransient<IDesignersService, DesignersService>();
             services.AddTransient<IRolesService, RolesService>();
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<ICountriesService, CountriesService>();
             services.AddApplicationInsightsTelemetry();
         }
 
