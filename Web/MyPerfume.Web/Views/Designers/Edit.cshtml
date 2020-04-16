@@ -1,10 +1,7 @@
 ﻿@using MyPerfume.Web.ViewModels.InputModels
 @model IdAndNameInputModel
-@{
-    this.ViewData["Title"] = "Edit Designer";
-}
 
-<h1>Edit the name of designer, please!</h1>
+<h1>Edit the name of @this.ViewData["ClassName"], please!</h1>
 
 <form method="post" enctype="multipart/form-data">
 

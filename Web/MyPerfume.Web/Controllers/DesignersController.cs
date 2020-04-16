@@ -20,6 +20,9 @@
 
         public IActionResult Add()
         {
+            this.ViewData["Title"] = "Add Designer";
+            this.ViewData["ClassName"] = "designer";
+
             return this.View();
         }
 
@@ -45,6 +48,10 @@
 
         public async Task<IActionResult> All()
         {
+            this.ViewData["Title"] = "All Designers";
+            this.ViewData["ClassName"] = "designer";
+            this.ViewData["ClassNames"] = "designers";
+
             var data = await this.designerService.GetAll<IdNameCreateModViewModel>();
 
             return this.View(data);
@@ -52,6 +59,9 @@
 
         public IActionResult Edit(string id)
         {
+            this.ViewData["Title"] = "Edit Designer";
+            this.ViewData["ClassName"] = "designer";
+
             if (!this.designerService.ExistsById(id))
             {
                 this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {id}!";
@@ -67,6 +77,8 @@
         [HttpPost]
         public async Task<IActionResult> Edit(IdAndNameInputModel input)
         {
+            this.ViewData["Title"] = "Edit Designer";
+            this.ViewData["ClassName"] = "designer";
             this.ViewData["ControllerName"] = "Designers";
 
             if (!this.ModelState.IsValid)
@@ -78,6 +90,13 @@
             {
                 this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
                 return this.View("NotFound");
+            }
+
+            var isTheSameInput = this.designerService.IsTheSameInput(input);
+            if (isTheSameInput)
+            {
+                this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
+                return this.View();
             }
 
             var result = await this.designerService.EditAsync(input);
@@ -93,6 +112,9 @@
 
         public IActionResult Delete(string id)
         {
+            this.ViewData["Title"] = "Delete Designer";
+            this.ViewData["ClassName"] = "designer";
+
             if (!this.designerService.ExistsById(id))
             {
                 this.ViewData["ErrorMessage"] = $"Can not delete designer with Id : {id}!";

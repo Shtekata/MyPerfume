@@ -22,5 +22,7 @@
         IdAndNameDto GetById(string id);
 
         Task<int> DeleteAsync(IdAndNameInputModel input);
+
+        bool IsTheSameInput(IdAndNameInputModel input);
     }
 }

@@ -3,7 +3,7 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
 
-    public class IdAndNameDto : IMapFrom<Designer>, IMapFrom<Country>
+    public class IdAndNameDto : IMapFrom<Designer>, IMapFrom<Country>, IMapFrom<Color>
     {
         public string Id { get; set; }
 

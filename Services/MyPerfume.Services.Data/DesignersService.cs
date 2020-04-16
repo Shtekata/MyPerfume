@@ -87,5 +87,14 @@
             this.deletableEntityRepository.Delete(model);
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
+
+        public bool IsTheSameInput(IdAndNameInputModel input)
+        {
+            var model = this.deletableEntityRepository.All()
+                .Where(x => x.Id == input.Id)
+                .FirstOrDefault();
+
+            return input.Name == model.Name;
+        }
     }
 }
