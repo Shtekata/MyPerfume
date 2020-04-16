@@ -91,7 +91,7 @@
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete user s Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete user with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 

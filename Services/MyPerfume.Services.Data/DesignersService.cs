@@ -33,10 +33,16 @@
             return designer;
         }
 
-        public bool Exists(CreateDesignerInputModel input)
+        public async Task<IEnumerable<T>> GetAllDesigners<T>()
+       => await this.deletableEntityRepository.AllAsNoTracking()
+            .OrderBy(x => x.Name)
+            .To<T>()
+            .ToArrayAsync();
+
+        public bool Exists(string id)
         {
             var designer = this.deletableEntityRepository.AllAsNoTrackingWithDeleted()
-                .FirstOrDefault(x => x.Name == input.Name);
+                 .FirstOrDefault(x => x.Id == id);
             if (designer != null)
             {
                 return true;
@@ -47,7 +53,31 @@
             }
         }
 
-        public async Task<IEnumerable<T>> GetAllDesigners<T>()
-       => await this.deletableEntityRepository.AllAsNoTracking().To<T>().ToArrayAsync();
+        public async Task<int> EditAsync(DesignerInputModel input)
+        {
+            var designer = this.deletableEntityRepository.All()
+                 .FirstOrDefault(x => x.Id == input.Id);
+
+            designer.Name = input.Name;
+            return await this.deletableEntityRepository.SaveChangesAsync();
+        }
+
+        public DesignerDto GetById(string id)
+        {
+            var designer = this.deletableEntityRepository.AllAsNoTracking()
+                 .FirstOrDefault(x => x.Id == id);
+
+            var designerDto = AutoMapperConfig.MapperInstance.Map<DesignerDto>(designer);
+            return designerDto;
+        }
+
+        public async Task<int> DeleteAsync(DesignerInputModel input)
+        {
+            var designer = this.deletableEntityRepository.All()
+                 .FirstOrDefault(x => x.Id == input.Id);
+
+            this.deletableEntityRepository.Delete(designer);
+            return await this.deletableEntityRepository.SaveChangesAsync();
+        }
     }
 }

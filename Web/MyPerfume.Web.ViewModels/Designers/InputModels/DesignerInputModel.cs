@@ -5,8 +5,10 @@
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dto;
 
-    public class CreateDesignerInputModel : IMapTo<DesignerDto>
+    public class DesignerInputModel : IMapTo<DesignerDto>, IMapFrom<DesignerDto>
     {
+        public string Id { get; set; }
+
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }

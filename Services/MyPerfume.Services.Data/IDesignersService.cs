@@ -13,8 +13,14 @@
 
         Task<Designer> GetByIdWithDeletedAsync(DesignerDto input);
 
-        bool Exists(CreateDesignerInputModel input);
-
         Task<IEnumerable<T>> GetAllDesigners<T>();
+
+        bool Exists(string id);
+
+        Task<int> EditAsync(DesignerInputModel input);
+
+        DesignerDto GetById(string id);
+
+        Task<int> DeleteAsync(DesignerInputModel input);
     }
 }

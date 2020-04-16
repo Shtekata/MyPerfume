@@ -13,27 +13,31 @@
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Designer One</th>
-                        <th scope="col">Designer Two</th>
-                        <th scope="col">Designer Three</th>
-                        <th scope="col">Designer Four</th>
-                        <th scope="col">Designer Five</th>
+                        <th scope="col">Designer Name</th>
+                        <th scope="col">Designer Created On</th>
+                        <th scope="col">Designer Modified On</th>
+                        <th scope="col">Designer Edit</th>
+                        <th scope="col">Designer Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var designer in @Model)
                     {
-                        <tr>
-                            <th scope="row">@designer.Name</th>
-                            <td>@designer.Name</td>
-                            <td>@designer.CreatedOn</td>
-                            <td>@designer.CreatedOn</td>
-                            <td>
-                                <div class="button-holder">
-                                    <a href="/Designers/Add" class="btn btn-info text-uppercase">Add designer!</a>
-                                </div>
-                            </td>
-                        </tr>
+                    <tr>
+                        <th scope="row">@designer.Name</th>
+                        <td>@designer.CreatedOn</td>
+                        <td>@designer.ModifiedOn</td>
+                        <td>
+                            <div class="button-holder">
+                                <a asp-action="Edit" asp-route-id="@designer.Id" class="btn btn-info text-uppercase">Edit designer</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="button-holder">
+                                <a asp-action="Delete" asp-route-id="@designer.Id" class="btn btn-info text-uppercase">Delete designer</a>
+                            </div>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>
