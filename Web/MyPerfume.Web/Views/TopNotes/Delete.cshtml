@@ -1,0 +1,18 @@
+﻿@using MyPerfume.Web.ViewModels.InputModels
+@model IdAndNameInputModel
+@{ 
+    this.ViewData["Title"] = "Delete Top Note";
+}
+
+<h1>Are you sure to delete this @this.ViewData["ClassName"]?</h1>
+
+<form method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="Name" />
+        <label asp-for="Name"></label>
+        <input asp-for="Name" disabled class="form-control" placeholder="Enter name" />
+    </div>
+    <button type="submit" class="btn btn-danger" asp-action="Delete">Delete</button>
+    <a class="btn btn-primary" asp-action="All">Back</a>
+</form>
+

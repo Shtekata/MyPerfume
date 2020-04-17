@@ -42,6 +42,12 @@
 
         public const string HeartNotesControllerName = "HeartNotes";
 
+        public const string TopNotesClassName = "top note";
+
+        public const string TopNotesClassNames = "top notes";
+
+        public const string TopNotesControllerName = "TopNotes";
+
         public const string CategoriesClassName = "category";
 
         public const string CategoriesClassNames = "categories";
