@@ -36,6 +36,12 @@
 
         public const string BaseNotesControllerName = "BaseNotes";
 
+        public const string HeartNotesClassName = "heart note";
+
+        public const string HeartNotesClassNames = "heart notes";
+
+        public const string HeartNotesControllerName = "HeartNotes";
+
         public const string CategoriesClassName = "category";
 
         public const string CategoriesClassNames = "categories";
