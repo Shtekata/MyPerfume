@@ -85,6 +85,7 @@
             services.AddTransient<IHeartNotesService, HeartNotesService>();
             services.AddTransient<IPerfumersService, PerfumersService>();
             services.AddTransient<ITopNotesService, TopNotesService>();
+            services.AddTransient<IPictureUrlsService, PictureUrlsService>();
             services.AddApplicationInsightsTelemetry();
         }
 

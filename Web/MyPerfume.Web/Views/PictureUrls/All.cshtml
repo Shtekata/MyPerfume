@@ -1,0 +1,56 @@
+﻿@using MyPerfume.Web.ViewModels.ViewModels
+@model IEnumerable<PictureUrlViewModel>
+@{
+    this.ViewData["Title"] = "All Picture Urls";
+}
+
+<h1>This is all @this.ViewData["ClassNames"]!</h1>
+
+<section class="py-5">
+    <div class="container">
+        <h1 style="margin: 2%; text-align: center;">All @this.ViewData["ClassNames"]</h1>
+        <a class="btn btn-primary" asp-action="Add">Add @this.ViewData["ClassName"]</a>
+        <div style="padding: 5%;">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">@this.ViewData["ClassName"] Url</th>
+                        <th scope="col">@this.ViewData["ClassName"] DesignerAndPerfumeNames</th>
+                        <th scope="col">@this.ViewData["ClassName"] Url</th>
+                        <th scope="col">@this.ViewData["ClassName"] Created On</th>
+                        <th scope="col">@this.ViewData["ClassName"] Modified On</th>
+                        <th scope="col">@this.ViewData["ClassName"] Edit</th>
+                        <th scope="col">@this.ViewData["ClassName"] Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var picture in @Model)
+                    {
+                        <tr>
+                            <th scope="row">@picture.Url</th>
+                            <td>@picture.DesignerAndPerfumeNames</td>
+                            <td>@picture.PictureNumber</td>
+                            <td>@picture.CreatedOn</td>
+                            <td>@picture.ModifiedOn</td>
+                            <td>
+                                <div class="button-holder">
+                                    <a asp-action="Edit" asp-route-id="@picture.Id" class="btn btn-info text-uppercase">
+                                        Edit @this.ViewData["ClassName"]
+                                    </a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="button-holder">
+                                    <a asp-action="Delete" asp-route-id="@picture.Id" class="btn btn-info text-uppercase">
+                                        Delete @this.ViewData["ClassName"]
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+

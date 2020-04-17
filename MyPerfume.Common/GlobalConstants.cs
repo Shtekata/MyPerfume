@@ -59,5 +59,11 @@
         public const string PerfumersClassNames = "perfumers";
 
         public const string PerfumersControllerName = "Perfumers";
+
+        public const string PictureUrlsClassName = "picture";
+
+        public const string PictureUrlsClassNames = "pictures";
+
+        public const string PictureUrlsControllerName = "PictureUrls";
     }
 }

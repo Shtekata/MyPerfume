@@ -1,0 +1,34 @@
+﻿@using MyPerfume.Web.ViewModels.InputModels
+@model PictureUrlInputModel
+@{ 
+    this.ViewData["Title"] = "Edit Picture Url";
+}
+
+<h1>Edit the name of @this.ViewData["ClassName"], please!</h1>
+
+<form method="post" enctype="multipart/form-data">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="@Model.Url"></label>
+        <input asp-for="@Model.Url" class="form-control" placeholder="Enter name" />
+        <span asp-validation-for="@Model.Url" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.DesignerAndPerfumeNames"></label>
+        <input asp-for="@Model.DesignerAndPerfumeNames" class="form-control" placeholder="Enter name" />
+        <span asp-validation-for="@Model.DesignerAndPerfumeNames" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.PictureNumber"></label>
+        <input asp-for="@Model.PictureNumber" class="form-control" placeholder="Enter name" />
+        <span asp-validation-for="@Model.PictureNumber" class="text-danger"></span>
+    </div>
+
+    <hr />
+
+    <button type="submit" class="btn btn-primary">Apply</button>
+    <a class="btn btn-primary" asp-action="All">Back</a>
+</form>
+
