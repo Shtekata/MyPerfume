@@ -35,5 +35,11 @@
         public const string BaseNotesClassNames = "base notes";
 
         public const string BaseNotesControllerName = "BaseNotes";
+
+        public const string CategoriesClassName = "category";
+
+        public const string CategoriesClassNames = "categories";
+
+        public const string CategoriesControllerName = "Categories";
     }
 }

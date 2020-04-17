@@ -81,6 +81,7 @@
             services.AddTransient<IColorsService, ColorsService>();
             services.AddTransient<IAromaticGroupsService, AromaticGroupsService>();
             services.AddTransient<IBaseNotesService, BaseNotesService>();
+            services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddApplicationInsightsTelemetry();
         }
 

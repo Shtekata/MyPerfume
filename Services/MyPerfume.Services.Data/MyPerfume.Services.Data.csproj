@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="BaseNotesService.cs~RF82acf02.TMP" />
     <None Remove="UsersService.cs~RF727212a.TMP" />
   </ItemGroup>
   <ItemGroup>
