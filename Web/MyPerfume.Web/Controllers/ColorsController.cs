@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using MyPerfume.Common;
     using MyPerfume.Services.Data;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
@@ -20,8 +21,7 @@
 
         public IActionResult Add()
         {
-            this.ViewData["Title"] = "Add Color";
-            this.ViewData["ClassName"] = "color";
+            this.ViewData["ClassName"] = GlobalConstants.ColorsClassName;
 
             return this.View();
         }
@@ -29,7 +29,7 @@
         [HttpPost]
         public async Task<IActionResult> Add(IdAndNameInputModel input)
         {
-            this.ViewData["ControllerName"] = "Colors";
+            this.ViewData["ControllerName"] = GlobalConstants.ColorsControllerName;
 
             if (!this.ModelState.IsValid)
             {
@@ -48,9 +48,8 @@
 
         public async Task<IActionResult> All()
         {
-            this.ViewData["Title"] = "All Color";
-            this.ViewData["ClassName"] = "color";
-            this.ViewData["ClassNames"] = "colors";
+            this.ViewData["ClassName"] = GlobalConstants.ColorsClassName;
+            this.ViewData["ClassNames"] = GlobalConstants.ColorsClassNames;
 
             var data = await this.colorsService.GetAll<IdNameCreateModViewModel>();
 
@@ -59,8 +58,7 @@
 
         public IActionResult Edit(string id)
         {
-            this.ViewData["Title"] = "Edit Color";
-            this.ViewData["ClassName"] = "color";
+            this.ViewData["ClassName"] = GlobalConstants.ColorsClassName;
 
             if (!this.colorsService.ExistsById(id))
             {
@@ -77,9 +75,8 @@
         [HttpPost]
         public async Task<IActionResult> Edit(IdAndNameInputModel input)
         {
-            this.ViewData["Title"] = "Edit Color";
-            this.ViewData["ClassName"] = "color";
-            this.ViewData["ControllerName"] = "Colors";
+            this.ViewData["ClassName"] = GlobalConstants.ColorsClassName;
+            this.ViewData["ControllerName"] = GlobalConstants.ColorsControllerName;
 
             if (!this.ModelState.IsValid)
             {
@@ -112,8 +109,7 @@
 
         public IActionResult Delete(string id)
         {
-            this.ViewData["Title"] = "Delete Color";
-            this.ViewData["ClassName"] = "color";
+            this.ViewData["ClassName"] = GlobalConstants.ColorsClassName;
 
             if (!this.colorsService.ExistsById(id))
             {
@@ -130,7 +126,7 @@
         [HttpPost]
         public async Task<IActionResult> Delete(IdAndNameInputModel input)
         {
-            this.ViewData["ControllerName"] = "Colors";
+            this.ViewData["ControllerName"] = GlobalConstants.ColorsControllerName;
 
             if (!this.ModelState.IsValid)
             {

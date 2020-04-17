@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using MyPerfume.Common;
     using MyPerfume.Services.Data;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
@@ -20,8 +21,7 @@
 
         public IActionResult Add()
         {
-            this.ViewData["Title"] = "Add Designer";
-            this.ViewData["ClassName"] = "designer";
+            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
 
             return this.View();
         }
@@ -29,7 +29,7 @@
         [HttpPost]
         public async Task<IActionResult> Add(IdAndNameInputModel input)
         {
-            this.ViewData["ControllerName"] = "Designers";
+            this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
 
             if (!this.ModelState.IsValid)
             {
@@ -48,9 +48,8 @@
 
         public async Task<IActionResult> All()
         {
-            this.ViewData["Title"] = "All Designers";
-            this.ViewData["ClassName"] = "designer";
-            this.ViewData["ClassNames"] = "designers";
+            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
+            this.ViewData["ClassNames"] = GlobalConstants.DesignersClassNames;
 
             var data = await this.designerService.GetAll<IdNameCreateModViewModel>();
 
@@ -59,8 +58,7 @@
 
         public IActionResult Edit(string id)
         {
-            this.ViewData["Title"] = "Edit Designer";
-            this.ViewData["ClassName"] = "designer";
+            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
 
             if (!this.designerService.ExistsById(id))
             {
@@ -77,9 +75,8 @@
         [HttpPost]
         public async Task<IActionResult> Edit(IdAndNameInputModel input)
         {
-            this.ViewData["Title"] = "Edit Designer";
-            this.ViewData["ClassName"] = "designer";
-            this.ViewData["ControllerName"] = "Designers";
+            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
+            this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
 
             if (!this.ModelState.IsValid)
             {
@@ -112,8 +109,7 @@
 
         public IActionResult Delete(string id)
         {
-            this.ViewData["Title"] = "Delete Designer";
-            this.ViewData["ClassName"] = "designer";
+            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
 
             if (!this.designerService.ExistsById(id))
             {
@@ -130,7 +126,7 @@
         [HttpPost]
         public async Task<IActionResult> Delete(IdAndNameInputModel input)
         {
-            this.ViewData["ControllerName"] = "Designers";
+            this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
 
             if (!this.ModelState.IsValid)
             {

@@ -79,6 +79,7 @@
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<ICountriesService, CountriesService>();
             services.AddTransient<IColorsService, ColorsService>();
+            services.AddTransient<IAromaticGroupsService, AromaticGroupsService>();
             services.AddApplicationInsightsTelemetry();
         }
 
