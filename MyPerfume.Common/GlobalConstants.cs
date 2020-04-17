@@ -6,23 +6,23 @@
 
         public const string AdministratorRoleName = "Administrator";
 
-        public const string DesignersClassName = "aromatic group";
+        public const string DesignersClassName = "designer";
 
-        public const string DesignersClassNames = "aromatic groups";
+        public const string DesignersClassNames = "designers";
 
-        public const string DesignersControllerName = "AromaticGroups";
+        public const string DesignersControllerName = "Designers";
 
-        public const string CountriesClassName = "aromatic group";
+        public const string CountriesClassName = "country";
 
-        public const string CountriesClassNames = "aromatic groups";
+        public const string CountriesClassNames = "countries";
 
-        public const string CountriesControllerName = "AromaticGroups";
+        public const string CountriesControllerName = "Countries";
 
-        public const string ColorsClassName = "aromatic group";
+        public const string ColorsClassName = "colour";
 
-        public const string ColorsClassNames = "aromatic groups";
+        public const string ColorsClassNames = "colours";
 
-        public const string ColorsControllerName = "AromaticGroups";
+        public const string ColorsControllerName = "Colours";
 
         public const string AromaticGroupsClassName = "aromatic group";
 
@@ -30,5 +30,10 @@
 
         public const string AromaticGroupsControllerName = "AromaticGroups";
 
+        public const string BaseNotesClassName = "base note";
+
+        public const string BaseNotesClassNames = "base notes";
+
+        public const string BaseNotesControllerName = "BaseNotes";
     }
 }

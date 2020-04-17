@@ -80,6 +80,7 @@
             services.AddTransient<ICountriesService, CountriesService>();
             services.AddTransient<IColorsService, ColorsService>();
             services.AddTransient<IAromaticGroupsService, AromaticGroupsService>();
+            services.AddTransient<IBaseNotesService, BaseNotesService>();
             services.AddApplicationInsightsTelemetry();
         }
 
