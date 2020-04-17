@@ -47,5 +47,11 @@
         public const string CategoriesClassNames = "categories";
 
         public const string CategoriesControllerName = "Categories";
+
+        public const string PerfumersClassName = "perfumer";
+
+        public const string PerfumersClassNames = "perfumers";
+
+        public const string PerfumersControllerName = "Perfumers";
     }
 }
