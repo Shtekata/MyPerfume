@@ -2,10 +2,11 @@
 @using MyPerfume.Data.Models.Enums
 @model PerfumeInputModel
 @{
-    this.ViewData["Title"] = "Add Perfume";
+    this.ViewData["Title"] = "Edit Perfume";
+    var a = this.ViewData["Designers"];
 }
 <hr />
-<h2>Fill the name of @this.ViewData["ClassName"], please!</h2>
+<h2>Edit the @this.ViewData["ClassName"], please!</h2>
 <hr />
 
 <form method="post" enctype="multipart/form-data">
@@ -64,7 +65,6 @@
         </div>
     </div>
     <hr />
-    <button type="submit" class="btn btn-primary" asp-action="Add">Apply</button>
+    <button type="submit" class="btn btn-primary" asp-action="Edit">Apply</button>
     <a class="btn btn-primary" asp-action="All">Back</a>
 </form>
-

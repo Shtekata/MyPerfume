@@ -27,7 +27,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(IdAndNameInputModel input)
+        public async Task<IActionResult> Add(BaseInputModel input)
         {
             this.ViewData["ControllerName"] = GlobalConstants.CategoriesControllerName;
 
@@ -41,7 +41,7 @@
                 return this.View("Exists");
             }
 
-            var dto = AutoMapperConfig.MapperInstance.Map<IdAndNameDto>(input);
+            var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
             await this.categoriesService.AddAsync(dto);
             return this.View("OperationIsOk");
         }
@@ -51,9 +51,9 @@
             this.ViewData["ClassName"] = GlobalConstants.CategoriesClassName;
             this.ViewData["ClassNames"] = GlobalConstants.CategoriesClassNames;
 
-            var data = await this.categoriesService.GetAll<IdNameCreateModViewModel>();
+            var model = await this.categoriesService.GetAll<BaseViewModel>();
 
-            return this.View(data);
+            return this.View(model);
         }
 
         public IActionResult Edit(string id)
@@ -62,18 +62,18 @@
 
             if (!this.categoriesService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit country with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {id}!";
                 return this.View("NotFound");
             }
 
             var dto = this.categoriesService.GetById(id);
-            var model = AutoMapperConfig.MapperInstance.Map<IdAndNameInputModel>(dto);
+            var model = AutoMapperConfig.MapperInstance.Map<BaseInputModel>(dto);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(IdAndNameInputModel input)
+        public async Task<IActionResult> Edit(BaseInputModel input)
         {
             this.ViewData["ClassName"] = GlobalConstants.CategoriesClassName;
             this.ViewData["ControllerName"] = GlobalConstants.CategoriesControllerName;
@@ -85,22 +85,28 @@
 
             if (!this.categoriesService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
-            var isTheSameInput = this.categoriesService.IsTheSameInput(input);
+            var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
+            var isTheSameInput = this.categoriesService.IsTheSameInput(dto);
             if (isTheSameInput)
             {
                 this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
                 return this.View();
             }
 
-            var result = await this.categoriesService.EditAsync(input);
+            if (this.categoriesService.ExistsByName(input.Name))
+            {
+                return this.View("Exists");
+            }
+
+            var result = await this.categoriesService.EditAsync(dto);
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
@@ -113,37 +119,32 @@
 
             if (!this.categoriesService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete country with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {id}!";
                 return this.View("NotFound");
             }
 
             var dto = this.categoriesService.GetById(id);
-            var model = AutoMapperConfig.MapperInstance.Map<IdAndNameInputModel>(dto);
+            var model = AutoMapperConfig.MapperInstance.Map<BaseViewModel>(dto);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(IdAndNameInputModel input)
+        public async Task<IActionResult> Delete(BaseInputModel input)
         {
             this.ViewData["ControllerName"] = GlobalConstants.CategoriesControllerName;
 
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(input);
-            }
-
             if (!this.categoriesService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete country with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
-            var result = await this.categoriesService.DeleteAsync(input);
+            var result = await this.categoriesService.DeleteAsync(input.Id);
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit user country Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit user {this.ViewData["ClassName"]} Id : {input.Id}!";
                 return this.View("NotFound");
             }
 

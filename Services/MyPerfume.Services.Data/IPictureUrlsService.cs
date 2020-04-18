@@ -3,9 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.InputModels;
 
     public interface IPictureUrlsService
     {
@@ -17,12 +15,12 @@
 
         bool ExistsByName(string url);
 
-        Task<int> EditAsync(PictureUrlInputModel input);
+        Task<int> EditAsync(PictureUrlDto input);
 
         PictureUrlDto GetById(string id);
 
-        Task<int> DeleteAsync(PictureUrlInputModel input);
+        Task<int> DeleteAsync(string id);
 
-        bool IsTheSameInput(PictureUrlInputModel input);
+        bool IsTheSameInput(PictureUrlDto input);
     }
 }

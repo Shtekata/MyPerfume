@@ -2,14 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
     using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.InputModels;
 
     public interface ICountriesService
     {
-        Task AddAsync(IdAndNameDto input);
+        Task AddAsync(BaseDto input);
 
         Task<IEnumerable<T>> GetAll<T>();
 
@@ -17,12 +15,14 @@
 
         bool ExistsByName(string name);
 
-        Task<int> EditAsync(IdAndNameInputModel input);
+        Task<int> EditAsync(BaseDto input);
 
-        IdAndNameDto GetById(string id);
+        Country GetByIdCountry(string id);
 
-        Task<int> DeleteAsync(IdAndNameInputModel input);
+        BaseDto GetById(string id);
 
-        bool IsTheSameInput(IdAndNameInputModel input);
+        Task<int> DeleteAsync(string id);
+
+        bool IsTheSameInput(BaseDto input);
     }
 }

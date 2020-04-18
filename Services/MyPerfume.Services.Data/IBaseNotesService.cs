@@ -3,13 +3,11 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.InputModels;
 
     public interface IBaseNotesService
     {
-        Task AddAsync(IdAndNameDto input);
+        Task AddAsync(BaseDto input);
 
         Task<IEnumerable<T>> GetAll<T>();
 
@@ -17,12 +15,12 @@
 
         bool ExistsByName(string name);
 
-        Task<int> EditAsync(IdAndNameInputModel input);
+        Task<int> EditAsync(BaseDto input);
 
-        IdAndNameDto GetById(string id);
+        BaseDto GetById(string id);
 
-        Task<int> DeleteAsync(IdAndNameInputModel input);
+        Task<int> DeleteAsync(string id);
 
-        bool IsTheSameInput(IdAndNameInputModel input);
+        bool IsTheSameInput(BaseDto input);
     }
 }

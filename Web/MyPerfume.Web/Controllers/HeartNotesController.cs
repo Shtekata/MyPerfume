@@ -27,7 +27,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(IdAndNameInputModel input)
+        public async Task<IActionResult> Add(BaseInputModel input)
         {
             this.ViewData["ControllerName"] = GlobalConstants.HeartNotesControllerName;
 
@@ -41,7 +41,7 @@
                 return this.View("Exists");
             }
 
-            var dto = AutoMapperConfig.MapperInstance.Map<IdAndNameDto>(input);
+            var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
             await this.heartNotesService.AddAsync(dto);
             return this.View("OperationIsOk");
         }
@@ -51,9 +51,9 @@
             this.ViewData["ClassName"] = GlobalConstants.HeartNotesClassName;
             this.ViewData["ClassNames"] = GlobalConstants.HeartNotesClassNames;
 
-            var data = await this.heartNotesService.GetAll<IdNameCreateModViewModel>();
+            var model = await this.heartNotesService.GetAll<BaseViewModel>();
 
-            return this.View(data);
+            return this.View(model);
         }
 
         public IActionResult Edit(string id)
@@ -62,18 +62,18 @@
 
             if (!this.heartNotesService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit country with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {id}!";
                 return this.View("NotFound");
             }
 
             var dto = this.heartNotesService.GetById(id);
-            var model = AutoMapperConfig.MapperInstance.Map<IdAndNameInputModel>(dto);
+            var model = AutoMapperConfig.MapperInstance.Map<BaseInputModel>(dto);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(IdAndNameInputModel input)
+        public async Task<IActionResult> Edit(BaseInputModel input)
         {
             this.ViewData["ClassName"] = GlobalConstants.HeartNotesClassName;
             this.ViewData["ControllerName"] = GlobalConstants.HeartNotesControllerName;
@@ -85,22 +85,28 @@
 
             if (!this.heartNotesService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
-            var isTheSameInput = this.heartNotesService.IsTheSameInput(input);
+            var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
+            var isTheSameInput = this.heartNotesService.IsTheSameInput(dto);
             if (isTheSameInput)
             {
                 this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
                 return this.View();
             }
 
-            var result = await this.heartNotesService.EditAsync(input);
+            if (this.heartNotesService.ExistsByName(input.Name))
+            {
+                return this.View("Exists");
+            }
+
+            var result = await this.heartNotesService.EditAsync(dto);
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
@@ -113,37 +119,32 @@
 
             if (!this.heartNotesService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete country with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {id}!";
                 return this.View("NotFound");
             }
 
             var dto = this.heartNotesService.GetById(id);
-            var model = AutoMapperConfig.MapperInstance.Map<IdAndNameInputModel>(dto);
+            var model = AutoMapperConfig.MapperInstance.Map<BaseViewModel>(dto);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(IdAndNameInputModel input)
+        public async Task<IActionResult> Delete(BaseInputModel input)
         {
             this.ViewData["ControllerName"] = GlobalConstants.HeartNotesControllerName;
 
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(input);
-            }
-
             if (!this.heartNotesService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete country with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
-            var result = await this.heartNotesService.DeleteAsync(input);
+            var result = await this.heartNotesService.DeleteAsync(input.Id);
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit user country Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit user {this.ViewData["ClassName"]} Id : {input.Id}!";
                 return this.View("NotFound");
             }
 

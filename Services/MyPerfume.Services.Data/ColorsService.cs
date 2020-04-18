@@ -9,7 +9,6 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.InputModels;
 
     public class ColorsService : IColorsService
     {
@@ -20,7 +19,7 @@
             this.deletableEntityRepository = deletableEntityRepository;
         }
 
-        public async Task AddAsync(IdAndNameDto input)
+        public async Task AddAsync(BaseDto input)
         {
             var model = new Color { Name = input.Name };
             await this.deletableEntityRepository.AddAsync(model);
@@ -61,7 +60,7 @@
             }
         }
 
-        public async Task<int> EditAsync(IdAndNameInputModel input)
+        public async Task<int> EditAsync(BaseDto input)
         {
             var model = this.deletableEntityRepository.All()
                  .FirstOrDefault(x => x.Id == input.Id);
@@ -70,25 +69,30 @@
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
-        public IdAndNameDto GetById(string id)
+        public Color GetByIdColor(string id)
         {
-            var model = this.deletableEntityRepository.AllAsNoTracking()
-                 .FirstOrDefault(x => x.Id == id);
+            return this.deletableEntityRepository.AllAsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
+        }
 
-            var dto = AutoMapperConfig.MapperInstance.Map<IdAndNameDto>(model);
+        public BaseDto GetById(string id)
+        {
+            var model = this.GetByIdColor(id);
+
+            var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(model);
             return dto;
         }
 
-        public async Task<int> DeleteAsync(IdAndNameInputModel input)
+        public async Task<int> DeleteAsync(string id)
         {
             var model = this.deletableEntityRepository.All()
-                 .FirstOrDefault(x => x.Id == input.Id);
+                 .FirstOrDefault(x => x.Id == id);
 
             this.deletableEntityRepository.Delete(model);
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
-        public bool IsTheSameInput(IdAndNameInputModel input)
+        public bool IsTheSameInput(BaseDto input)
         {
             var model = this.deletableEntityRepository.All()
                 .Where(x => x.Id == input.Id)

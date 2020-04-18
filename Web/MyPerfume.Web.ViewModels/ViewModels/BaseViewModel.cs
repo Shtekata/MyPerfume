@@ -5,7 +5,7 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
 
-    public class IdNameCreateModViewModel : IMapFrom<Designer>, IMapFrom<Country>, IMapFrom<Color>, IMapFrom<AromaticGroup>, IMapFrom<BaseNote>, IMapFrom<Category>, IMapFrom<HeartNote>, IMapFrom<Perfumer>, IMapFrom<TopNote>
+    public class BaseViewModel : IMapFrom<Designer>, IMapFrom<AromaticGroup>, IMapFrom<BaseNote>, IMapFrom<Category>, IMapFrom<Color>, IMapFrom<Country>, IMapFrom<HeartNote>, IMapFrom<Perfumer>, IMapFrom<TopNote>
     {
         public string Id { get; set; }
 

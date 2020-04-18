@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Services\MyPerfume.Services.Mapping\MyPerfume.Services.Mapping.csproj" />
     <ProjectReference Include="..\MyPerfume.Data.Common\MyPerfume.Data.Common.csproj" />
   </ItemGroup>
   

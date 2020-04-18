@@ -3,8 +3,6 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using Microsoft.AspNetCore.Identity;
-
     using MyPerfume.Web.ViewModels.Dtos;
 
     public interface IUsersService

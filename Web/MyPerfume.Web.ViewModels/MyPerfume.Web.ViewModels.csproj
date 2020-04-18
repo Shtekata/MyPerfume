@@ -24,8 +24,4 @@
     <ProjectReference Include="..\..\Services\MyPerfume.Services.Mapping\MyPerfume.Services.Mapping.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Perfums\ViewModels\" />
-  </ItemGroup>
-
 </Project>

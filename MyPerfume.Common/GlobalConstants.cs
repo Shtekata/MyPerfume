@@ -18,11 +18,11 @@
 
         public const string CountriesControllerName = "Countries";
 
-        public const string ColorsClassName = "colour";
+        public const string ColorsClassName = "color";
 
-        public const string ColorsClassNames = "colours";
+        public const string ColorsClassNames = "colors";
 
-        public const string ColorsControllerName = "Colours";
+        public const string ColorsControllerName = "Colors";
 
         public const string AromaticGroupsClassName = "aromatic group";
 
@@ -65,5 +65,11 @@
         public const string PictureUrlsClassNames = "pictures";
 
         public const string PictureUrlsControllerName = "PictureUrls";
+
+        public const string PerfumesClassName = "Perfume";
+
+        public const string PerfumesClassNames = "PERFUMES";
+
+        public const string PerfumesControllerName = "Perfumes";
     }
 }

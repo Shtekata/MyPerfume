@@ -12,11 +12,11 @@
 
     public class DesignersController : BaseController
     {
-        private readonly IDesignersService designerService;
+        private readonly IDesignersService designersService;
 
         public DesignersController(IDesignersService designersService)
         {
-            this.designerService = designersService;
+            this.designersService = designersService;
         }
 
         public IActionResult Add()
@@ -27,7 +27,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(IdAndNameInputModel input)
+        public async Task<IActionResult> Add(BaseInputModel input)
         {
             this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
 
@@ -36,13 +36,13 @@
                 return this.View(input);
             }
 
-            if (this.designerService.ExistsByName(input.Name))
+            if (this.designersService.ExistsByName(input.Name))
             {
                 return this.View("Exists");
             }
 
-            var dto = AutoMapperConfig.MapperInstance.Map<IdAndNameDto>(input);
-            await this.designerService.AddAsync(dto);
+            var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
+            await this.designersService.AddAsync(dto);
             return this.View("OperationIsOk");
         }
 
@@ -51,29 +51,29 @@
             this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
             this.ViewData["ClassNames"] = GlobalConstants.DesignersClassNames;
 
-            var data = await this.designerService.GetAll<IdNameCreateModViewModel>();
+            var model = await this.designersService.GetAll<BaseViewModel>();
 
-            return this.View(data);
+            return this.View(model);
         }
 
         public IActionResult Edit(string id)
         {
             this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
 
-            if (!this.designerService.ExistsById(id))
+            if (!this.designersService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {id}!";
                 return this.View("NotFound");
             }
 
-            var dto = this.designerService.GetById(id);
-            var model = AutoMapperConfig.MapperInstance.Map<IdAndNameInputModel>(dto);
+            var dto = this.designersService.GetById(id);
+            var model = AutoMapperConfig.MapperInstance.Map<BaseInputModel>(dto);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(IdAndNameInputModel input)
+        public async Task<IActionResult> Edit(BaseInputModel input)
         {
             this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
             this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
@@ -83,24 +83,30 @@
                 return this.View(input);
             }
 
-            if (!this.designerService.ExistsById(input.Id))
+            if (!this.designersService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
-            var isTheSameInput = this.designerService.IsTheSameInput(input);
+            var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
+            var isTheSameInput = this.designersService.IsTheSameInput(dto);
             if (isTheSameInput)
             {
                 this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
                 return this.View();
             }
 
-            var result = await this.designerService.EditAsync(input);
+            if (this.designersService.ExistsByName(input.Name))
+            {
+                return this.View("Exists");
+            }
+
+            var result = await this.designersService.EditAsync(dto);
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
@@ -111,39 +117,34 @@
         {
             this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
 
-            if (!this.designerService.ExistsById(id))
+            if (!this.designersService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete designer with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {id}!";
                 return this.View("NotFound");
             }
 
-            var dto = this.designerService.GetById(id);
-            var model = AutoMapperConfig.MapperInstance.Map<IdAndNameInputModel>(dto);
+            var dto = this.designersService.GetById(id);
+            var model = AutoMapperConfig.MapperInstance.Map<BaseViewModel>(dto);
 
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(IdAndNameInputModel input)
+        public async Task<IActionResult> Delete(BaseViewModel input)
         {
             this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
 
-            if (!this.ModelState.IsValid)
+            if (!this.designersService.ExistsById(input.Id))
             {
-                return this.View(input);
-            }
-
-            if (!this.designerService.ExistsById(input.Id))
-            {
-                this.ViewData["ErrorMessage"] = $"Can not delete designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
-            var result = await this.designerService.DeleteAsync(input);
+            var result = await this.designersService.DeleteAsync(input.Id);
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 

@@ -1,78 +1,155 @@
 ﻿namespace MyPerfume.Web.Controllers
 {
-    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
+    using MyPerfume.Common;
     using MyPerfume.Services.Data;
+    using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.Perfums.InputModels;
+    using MyPerfume.Web.ViewModels.InputModels;
+    using MyPerfume.Web.ViewModels.ViewModels;
 
     public class PerfumesController : BaseController
     {
-        private readonly IPerfumesService perfumeService;
+        private readonly IPerfumesService perfumesService;
 
-        public PerfumesController(IPerfumesService perfumeService)
+        public PerfumesController(IPerfumesService perfumesService)
         {
-            this.perfumeService = perfumeService;
+            this.perfumesService = perfumesService;
         }
 
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
-            var designers = this.perfumeService.GetAllDesigners().Select(x => new SelectListItem
-            {
-                Value = x.Id.ToString(),
-                Text = x.Name,
-            });
+            this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
 
-            var colors = this.perfumeService.GetAllColors().Select(x => new SelectListItem
-            {
-                Value = x.Id.ToString(),
-                Text = x.Name,
-            });
+            var model = new PerfumeInputModel();
+            model.Extensions = await this.perfumesService.Extensions();
 
-            var countries = this.perfumeService.GetAllCountries().Select(x => new SelectListItem
-            {
-                Value = x.Id.ToString(),
-                Text = x.Name,
-            });
-
-            var model = new CreatePerfumInputModel
-            {
-                Designers = designers,
-                Colors = colors,
-                Countries = countries,
-            };
             return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CreatePerfumInputModel input)
+        public async Task<IActionResult> Add(PerfumeInputModel input)
         {
+            this.ViewData["ControllerName"] = GlobalConstants.PerfumesControllerName;
+
             if (!this.ModelState.IsValid)
             {
-                input.Designers = this.perfumeService.GetAllDesigners().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
-                input.Colors = this.perfumeService.GetAllColors().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
-                input.Countries = this.perfumeService.GetAllCountries().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
-
                 return this.View(input);
             }
 
-            var perfumDto = new PerfumDto
+            if (this.perfumesService.ExistsByName(input.Name))
             {
-                Name = input.Name,
-                Description = input.Description,
-                Niche = input.Niche,
-                YearOfManifacture = input.YearOfManifacture,
-                CustomerType = input.CustomerType,
-                DesignerId = input.DesignerId,
-                ColorId = input.ColorId,
-                CountryId = input.CountryId,
-            };
+                return this.View("Exists");
+            }
 
-            await this.perfumeService.AddAsync(perfumDto);
-            return this.Redirect("/");
+            var dto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(input);
+            await this.perfumesService.AddAsync(dto);
+            return this.View("OperationIsOk");
+        }
+
+        public async Task<IActionResult> All()
+        {
+            this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
+            this.ViewData["ClassNames"] = GlobalConstants.PerfumesClassNames;
+
+            var model = await this.perfumesService.GetAll<PerfumeViewModel>();
+
+            return this.View(model);
+        }
+
+        public async Task<IActionResult> Edit(string id)
+        {
+            this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
+
+            if (!this.perfumesService.ExistsById(id))
+            {
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {id}!";
+                return this.View("NotFound");
+            }
+
+            var dto = this.perfumesService.GetById(id);
+            var model = AutoMapperConfig.MapperInstance.Map<PerfumeInputModel>(dto);
+            model.Extensions = await this.perfumesService.Extensions();
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(PerfumeInputModel input)
+        {
+            this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
+            this.ViewData["ControllerName"] = GlobalConstants.PerfumesControllerName;
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            if (!this.perfumesService.ExistsById(input.Id))
+            {
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
+                return this.View("NotFound");
+            }
+
+            var dto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(input);
+            var isTheSameInput = this.perfumesService.IsTheSameInput(dto);
+            if (isTheSameInput)
+            {
+                this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
+                input.Extensions = await this.perfumesService.Extensions();
+                return this.View(input);
+            }
+
+            var result = await this.perfumesService.EditAsync(dto);
+
+            if (result == 0)
+            {
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
+                return this.View("NotFound");
+            }
+
+            return this.View("OperationIsOk");
+        }
+
+        public IActionResult Delete(string id)
+        {
+            this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
+
+            if (!this.perfumesService.ExistsById(id))
+            {
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {id}!";
+                return this.View("NotFound");
+            }
+
+            var dto = this.perfumesService.GetById(id);
+
+            var model = AutoMapperConfig.MapperInstance.Map<PerfumeViewModel>(dto);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(PerfumeInputModel input)
+        {
+            this.ViewData["ControllerName"] = GlobalConstants.PerfumesControllerName;
+
+            if (!this.perfumesService.ExistsById(input.Id))
+            {
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {input.Id}!";
+                return this.View("NotFound");
+            }
+
+            var result = await this.perfumesService.DeleteAsync(input.Id);
+
+            if (result == 0)
+            {
+                this.ViewData["ErrorMessage"] = $"Can not edit user {this.ViewData["ClassName"]} Id : {input.Id}!";
+                return this.View("NotFound");
+            }
+
+            return this.View("OperationIsOk");
         }
     }
 }

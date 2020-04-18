@@ -51,9 +51,9 @@
             this.ViewData["ClassName"] = GlobalConstants.PictureUrlsClassName;
             this.ViewData["ClassNames"] = GlobalConstants.PictureUrlsClassNames;
 
-            var data = await this.pictureUrlsService.GetAll<PictureUrlViewModel>();
+            var model = await this.pictureUrlsService.GetAll<PictureUrlViewModel>();
 
-            return this.View(data);
+            return this.View(model);
         }
 
         public IActionResult Edit(string id)
@@ -62,7 +62,7 @@
 
             if (!this.pictureUrlsService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit country with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {id}!";
                 return this.View("NotFound");
             }
 
@@ -85,22 +85,28 @@
 
             if (!this.pictureUrlsService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
-            var isTheSameInput = this.pictureUrlsService.IsTheSameInput(input);
+            var dto = AutoMapperConfig.MapperInstance.Map<PictureUrlDto>(input);
+            var isTheSameInput = this.pictureUrlsService.IsTheSameInput(dto);
             if (isTheSameInput)
             {
                 this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
                 return this.View();
             }
 
-            var result = await this.pictureUrlsService.EditAsync(input);
+            if (this.pictureUrlsService.ExistsByName(input.DesignerAndPerfumeNames))
+            {
+                return this.View("Exists");
+            }
+
+            var result = await this.pictureUrlsService.EditAsync(dto);
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit designer with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
@@ -113,12 +119,13 @@
 
             if (!this.pictureUrlsService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete country with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {id}!";
                 return this.View("NotFound");
             }
 
             var dto = this.pictureUrlsService.GetById(id);
-            var model = AutoMapperConfig.MapperInstance.Map<PictureUrlInputModel>(dto);
+
+            var model = AutoMapperConfig.MapperInstance.Map<PictureUrlViewModel>(dto);
 
             return this.View(model);
         }
@@ -128,22 +135,17 @@
         {
             this.ViewData["ControllerName"] = GlobalConstants.PictureUrlsControllerName;
 
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(input);
-            }
-
             if (!this.pictureUrlsService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete country with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");
             }
 
-            var result = await this.pictureUrlsService.DeleteAsync(input);
+            var result = await this.pictureUrlsService.DeleteAsync(input.Id);
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit user country Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not edit user {this.ViewData["ClassName"]} Id : {input.Id}!";
                 return this.View("NotFound");
             }
 

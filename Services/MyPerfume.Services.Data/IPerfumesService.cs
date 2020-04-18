@@ -3,19 +3,27 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    using MyPerfume.Data.Models;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using MyPerfume.Web.ViewModels.Dtos;
 
     public interface IPerfumesService
     {
-        Task AddAsync(PerfumDto input);
+        Task AddAsync(PerfumeDto input);
 
-        Task<ICollection<T>> All<T>();
+        Task<IEnumerable<T>> GetAll<T>();
 
-        IEnumerable<Designer> GetAllDesigners();
+        bool ExistsById(string id);
 
-        IEnumerable<Color> GetAllColors();
+        bool ExistsByName(string name);
 
-        IEnumerable<Country> GetAllCountries();
+        Task<int> EditAsync(PerfumeDto input);
+
+        PerfumeDto GetById(string id);
+
+        Task<int> DeleteAsync(string id);
+
+        bool IsTheSameInput(PerfumeDto input);
+
+        Task<Dictionary<string, List<SelectListItem>>> Extensions();
     }
 }

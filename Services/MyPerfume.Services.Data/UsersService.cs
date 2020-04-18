@@ -6,8 +6,6 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
     using MyPerfume.Data.Common.Repositories;
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;

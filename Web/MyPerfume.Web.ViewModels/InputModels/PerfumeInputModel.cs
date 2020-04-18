@@ -1,14 +1,15 @@
-﻿namespace MyPerfume.Web.ViewModels.Perfums.InputModels
+﻿namespace MyPerfume.Web.ViewModels.InputModels
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNetCore.Mvc.Rendering;
-    using MyPerfume.Data.Models;
     using MyPerfume.Data.Models.Enums;
 
-    public class CreatePerfumInputModel
+    public class PerfumeInputModel
     {
+        public string Id { get; set; }
+
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
@@ -19,9 +20,8 @@
         [Required]
         public bool Niche { get; set; }
 
-        [DataType(DataType.Date)]
         [Display(Name = "Year Of Manifacture")]
-        public int? YearOfManifacture { get; set; }
+        public int YearOfManifacture { get; set; }
 
         [Required]
         [Display(Name = "Customer Type")]
@@ -37,10 +37,6 @@
         [Display(Name = "Country")]
         public string CountryId { get; set; }
 
-        public IEnumerable<SelectListItem> Designers { get; set; }
-
-        public IEnumerable<SelectListItem> Colors { get; set; }
-
-        public IEnumerable<SelectListItem> Countries { get; set; }
+        public Dictionary<string, List<SelectListItem>> Extensions { get; set; }
     }
 }

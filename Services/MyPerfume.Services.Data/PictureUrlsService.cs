@@ -9,7 +9,6 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.InputModels;
 
     public class PictureUrlsService : IPictureUrlsService
     {
@@ -22,12 +21,7 @@
 
         public async Task AddAsync(PictureUrlDto input)
         {
-            var model = new PictureUrl
-            {
-                Url = input.Url,
-                DesignerAndPerfumeNames = input.DesignerAndPerfumeNames,
-                PictureNumber = input.PictureNumber,
-            };
+            var model = AutoMapperConfig.MapperInstance.Map<PictureUrl>(input);
             await this.deletableEntityRepository.AddAsync(model);
             await this.deletableEntityRepository.SaveChangesAsync();
         }
@@ -66,7 +60,7 @@
             }
         }
 
-        public async Task<int> EditAsync(PictureUrlInputModel input)
+        public async Task<int> EditAsync(PictureUrlDto input)
         {
             var model = this.deletableEntityRepository.All()
                  .FirstOrDefault(x => x.Id == input.Id);
@@ -86,16 +80,16 @@
             return dto;
         }
 
-        public async Task<int> DeleteAsync(PictureUrlInputModel input)
+        public async Task<int> DeleteAsync(string id)
         {
             var model = this.deletableEntityRepository.All()
-                 .FirstOrDefault(x => x.Id == input.Id);
+                 .FirstOrDefault(x => x.Id == id);
 
             this.deletableEntityRepository.Delete(model);
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
-        public bool IsTheSameInput(PictureUrlInputModel input)
+        public bool IsTheSameInput(PictureUrlDto input)
         {
             var model = this.deletableEntityRepository.All()
                 .Where(x => x.Id == input.Id)

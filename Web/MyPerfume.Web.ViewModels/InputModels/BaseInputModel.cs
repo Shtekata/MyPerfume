@@ -2,10 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using MyPerfume.Services.Mapping;
-    using MyPerfume.Web.ViewModels.Dtos;
-
-    public class IdAndNameInputModel : IMapTo<IdAndNameDto>, IMapFrom<IdAndNameDto>
+    public class BaseInputModel
     {
         public string Id { get; set; }
 

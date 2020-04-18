@@ -2,10 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using MyPerfume.Services.Mapping;
-    using MyPerfume.Web.ViewModels.Dtos;
-
-    public class PictureUrlInputModel : IMapFrom<PictureUrlDto>, IMapTo<PictureUrlDto>
+    public class PictureUrlInputModel
     {
         public string Id { get; set; }
 
