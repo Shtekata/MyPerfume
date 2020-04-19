@@ -1,0 +1,55 @@
+﻿@using Microsoft.WindowsAzure.Storage.Blob
+@using MyPerfume.Common
+@{
+    this.ViewData["Title"] = "Home Page";
+    var blobs = (List<CloudBlob>)this.ViewData["Blobs"];
+    var fileSizes = (List<long>)this.ViewData["FileSizes"];
+}
+
+<br />
+<strong>Blob Container :</strong>
+<br />
+@this.ViewData["ContainerName"]
+
+<br />
+<br />
+<strong>List of Blobs</strong>
+<table>
+    @if (blobs.Count > 0)
+    {
+        @foreach (var blob in blobs)
+        {
+            <tr>
+                <td>
+                    <a href="@blob.StorageUri.PrimaryUri">@blob.StorageUri.PrimaryUri</a>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>No Blobs associated with this Container.</tr>
+    }
+</table>
+<br />
+<hr />
+<table>
+    @if (fileSizes?.Count > 0)
+    {
+        foreach (var fileSize in fileSizes)
+        {
+            <tr>
+                <td>
+                    Upload file with size : @fileSize;
+                </td>
+            </tr>
+        }
+    }
+</table>
+<hr />
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="files" multiple />
+    <br />
+    <br />
+    <input type="submit" asp-action="UploadFiles" value="Upload files to Storage" />
+</form>

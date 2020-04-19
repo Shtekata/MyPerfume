@@ -1,8 +1,19 @@
 ﻿namespace MyPerfume.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Net.Http.Headers;
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Auth;
+    using Microsoft.WindowsAzure.Storage.Blob;
     using MyPerfume.Common;
     using MyPerfume.Services.Data;
     using MyPerfume.Services.Mapping;
@@ -13,10 +24,24 @@
     public class PictureUrlsController : BaseController
     {
         private readonly IPictureUrlsService pictureUrlsService;
+        private readonly IWebHostEnvironment env;
+        private StorageCredentials storageCredentials;
+        private CloudStorageAccount cloudStorageAccount;
+        private CloudBlobClient cloudBlobClient;
+        private CloudBlobContainer cloudBlobContainer;
+        private IWebHostEnvironment hostingEnvironment;
 
-        public PictureUrlsController(IPictureUrlsService pictureUrlsService)
+        public PictureUrlsController(
+            IPictureUrlsService pictureUrlsService,
+            IWebHostEnvironment env,
+            IConfiguration configuration)
         {
             this.pictureUrlsService = pictureUrlsService;
+            this.env = env;
+            this.storageCredentials = new StorageCredentials(configuration["BlobStorageName"], configuration["BlobKey"]);
+            this.cloudStorageAccount = new CloudStorageAccount(this.storageCredentials, true);
+            this.cloudBlobClient = this.cloudStorageAccount.CreateCloudBlobClient();
+            this.cloudBlobContainer = this.cloudBlobClient.GetContainerReference("pictures");
         }
 
         public IActionResult Add()
@@ -150,6 +175,64 @@
             }
 
             return this.View("OperationIsOk");
+        }
+
+        public async Task<IActionResult> Blobs()
+        {
+            this.ViewData["ContainerName"] = "Name : " + this.cloudBlobContainer.Name;
+            await this.GetAllBlobs();
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadFiles(IList<IFormFile> files)
+        {
+            long size = 0;
+            var fileSizes = new List<long>();
+            try
+            {
+                foreach (var file in files)
+                {
+                    var fileName = ContentDispositionHeaderValue
+                        .Parse(file.ContentDisposition)
+                        .FileName
+                        .Trim();
+
+                    CloudBlockBlob blockBlob = this.cloudBlobContainer.GetBlockBlobReference(fileName.ToString());
+                    var stream = file.OpenReadStream();
+                    size = file.Length;
+                    fileSizes.Add(size);
+                    await blockBlob.UploadFromStreamAsync(stream);
+                    await this.GetAllBlobs();
+                }
+
+                this.ViewData["FileSizes"] = fileSizes;
+            }
+            catch (Exception)
+            {
+                this.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return this.Json("Upload Failed. Please try again.");
+            }
+
+            return this.View("Blobs");
+        }
+
+        private async Task GetAllBlobs()
+        {
+            BlobContinuationToken continuationToken = null;
+            CloudBlob blob;
+
+            int? segmentSize = null;
+            var resultSegment = await this.cloudBlobContainer.ListBlobsSegmentedAsync(string.Empty, true, BlobListingDetails.Metadata, segmentSize, continuationToken, null, null);
+
+            var blobs = new List<CloudBlob>();
+            foreach (var blobItem in resultSegment.Results)
+            {
+                blob = (CloudBlob)blobItem;
+                blobs.Add(blob);
+            }
+
+            this.ViewData["Blobs"] = blobs;
         }
     }
 }
