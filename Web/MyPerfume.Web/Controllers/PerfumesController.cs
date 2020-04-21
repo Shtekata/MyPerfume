@@ -1,5 +1,6 @@
 ﻿namespace MyPerfume.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
@@ -28,6 +29,7 @@
 
             var model = new PerfumeInputModel();
             model.Extensions = await this.perfumesService.Extensions();
+            model.PictureUrls = this.pictureUrlsService.GetPerfumePictures<PictureUrlCollectionModel>();
 
             return this.View(model);
         }
@@ -48,7 +50,15 @@
             }
 
             var dto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(input);
-            await this.perfumesService.AddAsync(dto);
+            var perfumeDto = await this.perfumesService.AddAsync(dto);
+
+            var result = await this.pictureUrlsService.EditAsync(perfumeDto);
+            if (result == 0)
+            {
+                this.ViewData["errormessage"] = $"can not edit {this.ViewData["classname"]} with id : {input.Id}!";
+                return this.View("NotFound");
+            }
+
             return this.View("OperationIsOk");
         }
 

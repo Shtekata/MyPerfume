@@ -5,12 +5,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
     using MyPerfume.Data.Common.Repositories;
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.InputModels;
 
     public class PictureUrlsService : IPictureUrlsService
     {
@@ -72,18 +72,19 @@
 
         public async Task<int> EditAsync(PerfumeDto input)
         {
+            var perfumId = input.Id;
             var pictureUrls = input.PictureUrls.ToArray();
-            for (var i = 0; i < input.PictureUrls.Count(); i++)
+            for (var i = 0; i < pictureUrls.Count(); i++)
             {
                 var result = 0;
 
                 var pictureUrlModel = this.deletableEntityRepository.All()
                     .FirstOrDefault(x => x.Id == pictureUrls[i].Id);
 
-                var isAlreadyHaveThisPicture = pictureUrlModel.PerfumeId == input.Id;
+                var isAlreadyHaveThisPicture = pictureUrlModel.PerfumeId == perfumId;
                 if (pictureUrls[i].IsSelected && !isAlreadyHaveThisPicture)
                 {
-                    pictureUrlModel.PerfumeId = input.Id;
+                    pictureUrlModel.PerfumeId = perfumId;
                     result = await this.deletableEntityRepository.SaveChangesAsync();
                 }
                 else if (!pictureUrls[i].IsSelected && isAlreadyHaveThisPicture)
@@ -157,6 +158,23 @@
                 .ToList();
 
             return pictureUrls;
+        }
+
+        public List<SelectListItem> PictureNumbers()
+        {
+            var pictureNumbers = new List<SelectListItem>();
+            for (int i = 0; i < 100; i++)
+            {
+                var pictureNumber = new SelectListItem
+                {
+                    Text = i.ToString(),
+                    Value = i.ToString(),
+                };
+
+                pictureNumbers.Add(pictureNumber);
+            }
+
+            return pictureNumbers;
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿namespace MyPerfume.Web.ViewModels.InputModels
 {
+
     using AutoMapper;
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
 
-    public class PictureUrlCollectionModel : IMapFrom<PictureUrl>, IMapFrom<Perfume>, IHaveCustomMappings
+    public class PictureUrlCollectionModel : IMapFrom<PictureUrl>, IMapTo<PictureUrl>, IMapFrom<Perfume>, IHaveCustomMappings
     {
         public string Id { get; set; }
+
+        public string Url { get; set; }
 
         public bool IsSelected { get; set; }
 
@@ -17,7 +20,7 @@
             configuration.CreateMap<PictureUrl, PictureUrlCollectionModel>()
                 .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
                 .ForMember(x => x.DesignerAndPerfumeNames, y => y.MapFrom(z => z.DesignerAndPerfumeNames))
-                .ForMember(x => x.IsSelected, y => y.MapFrom(z => true));
+                .ForMember(x => x.IsSelected, y => y.MapFrom(z => false));
         }
     }
 }

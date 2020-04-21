@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using MyPerfume.Web.ViewModels.Dtos;
 
     public interface IPictureUrlsService
@@ -28,5 +28,7 @@
         bool GetByPerfumeAndPictureUrlId(string perfumeId, string pictureUrlId);
 
         IList<T> GetPerfumePictures<T>();
+
+        List<SelectListItem> PictureNumbers();
     }
 }

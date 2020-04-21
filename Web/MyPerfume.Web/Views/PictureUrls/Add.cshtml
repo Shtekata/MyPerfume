@@ -20,9 +20,10 @@
         <input asp-for="@Model.DesignerAndPerfumeNames" class="form-control" placeholder="Enter name" />
         <span asp-validation-for="@Model.DesignerAndPerfumeNames" class="text-danger"></span>
     </div>
-    <div class="form-group col-sm-6">
+    <div class="form-group col-sm-3">
         <label asp-for="@Model.PictureNumber"></label>
-        <input asp-for="@Model.PictureNumber" type="number" class="form-control" placeholder="Enter number of picture" />
+        <select asp-for="@Model.PictureNumber" class="form-control" asp-items="@Model.PictureNumbers" placeholder="Enter number of picture">
+        </select>
         <span asp-validation-for="@Model.PictureNumber" class="text-danger"></span>
     </div>
     <div class="form-group col-md-3">

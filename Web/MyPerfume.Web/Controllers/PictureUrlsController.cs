@@ -48,7 +48,9 @@
         {
             this.ViewData["ClassName"] = GlobalConstants.PictureUrlsClassName;
 
-            return this.View();
+            var model = new PictureUrlInputModel();
+            model.PictureNumbers = this.pictureUrlsService.PictureNumbers();
+            return this.View(model);
         }
 
         [HttpPost]
@@ -56,6 +58,7 @@
         {
             this.ViewData["ControllerName"] = GlobalConstants.PictureUrlsControllerName;
 
+            input.PictureNumbers = this.pictureUrlsService.PictureNumbers();
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);

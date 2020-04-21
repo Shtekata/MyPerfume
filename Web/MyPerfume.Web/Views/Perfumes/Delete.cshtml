@@ -1,0 +1,43 @@
+﻿@using MyPerfume.Web.ViewModels.ViewModels
+@model PerfumeViewModel
+@{ 
+    this.ViewData["Title"] = "Delete Picture Url";
+}
+
+<h1>Are you sure to delete this @this.ViewData["ClassName"]?</h1>
+
+<form method="post">
+    <div class="form-group">
+        <input type="hidden" asp-for="@Model.Name" />
+        <label asp-for="@Model.Name"></label>
+        <input asp-for="@Model.Name" disabled class="form-control" placeholder="@Model.Name" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="@Model.DesignerId" />
+        <label asp-for="@Model.DesignerId"></label>
+        <input asp-for="@Model.DesignerId" disabled class="form-control" placeholder="@Model.DesignerId" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="@Model.DesignerName" />
+        <label asp-for="@Model.DesignerName"></label>
+        <input asp-for="@Model.DesignerName" disabled class="form-control" placeholder="@Model.DesignerName" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="@Model.CountryName" />
+        <label asp-for="@Model.CountryName"></label>
+        <input asp-for="@Model.CountryName" disabled class="form-control" placeholder="@Model.CountryName" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="@Model.ColorName" />
+        <label asp-for="@Model.ColorName"></label>
+        <input asp-for="@Model.ColorName" disabled class="form-control" placeholder="@Model.ColorName" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="@Model.Description" />
+        <label asp-for="@Model.Description"></label>
+        <input asp-for="@Model.Description" disabled class="form-control" placeholder="@Model.Description" />
+    </div>
+    <button type="submit" class="btn btn-danger" asp-action="Delete">Delete</button>
+    <a class="btn btn-primary" asp-action="All">Back</a>
+</form>
+

@@ -8,7 +8,7 @@
 
     public interface IPerfumesService
     {
-        Task AddAsync(PerfumeDto input);
+        Task<PerfumeDto> AddAsync(PerfumeDto input);
 
         Task<IEnumerable<T>> GetAll<T>();
 

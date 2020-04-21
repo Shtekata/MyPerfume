@@ -55,12 +55,6 @@
                 </select>
                 <span asp-validation-for="@Model.DesignerId" class="text-danger"></span>
             </div>
-            <div class="form-group col-md-3">
-                <label asp-for="@Model.PictureUrlId"></label>
-                <select asp-for="@Model.PictureUrlId" class="form-control" asp-items="@Model.Extensions["PictureUrls"]">
-                </select>
-                <span asp-validation-for="@Model.PictureUrlId" class="text-danger"></span>
-            </div>
         </div>
         <div class="form-group">
             <label asp-for="@Model.Description"></label>
@@ -71,27 +65,30 @@
     <hr />
     <button type="submit" class="btn btn-primary" asp-action="Add">Apply</button>
     <a class="btn btn-primary" asp-action="All">Back</a>
-    <div class="card">
-        <div class="card-header">
-            <h2>Add or remove users from this role.</h2>
-        </div>
-        @*<div class="card-body">
-            @for (int i = 0; i < Model.PicturesUrls.Count(); i++)
-            {
-                <div class="form-check m-1">
-                    <input type="hidden" asp-for="@Model.PicturesUrls[i].Id" />
-                    <input type="hidden" asp-for="@Model.PicturesUrls[i].DesignerAndPerfumeNames" />
-                    <input asp-for="@Model.PicturesUrls[i].IsSelected" class="form-check-input" />
-                    <label class="form-check-label" asp-for="@Model.PicturesUrls[i].IsSelected">
-                        @Model.PicturesUrls[i].DesignerAndPerfumeNames
-                    </label>
+    <hr />
+    <h2>Pictures</h2>
+    <br />
+    @if (Model.PictureUrls?.Count() > 0)
+    {
+        <div class="form-group">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    @for (int i = 0; i < Model.PictureUrls.Count(); i++)
+                    {
+                        <div class="form-check m-1">
+                            <input type="hidden" asp-for="@Model.PictureUrls[i].Id" />
+                            <input type="hidden" asp-for="@Model.PictureUrls[i].Url" />
+                            <input type="hidden" asp-for="@Model.PictureUrls[i].DesignerAndPerfumeNames" />
+                            <input asp-for="@Model.PictureUrls[i].IsSelected" class="form-check-input" />
+                            <label class="form-check-label" asp-for="@Model.PictureUrls[i].IsSelected">
+                                @Model.PictureUrls[i].DesignerAndPerfumeNames
+                            </label>
+                        </div>
+                    }
                 </div>
-            }
-        </div>*@
-        <div class="card-footer">
-            <input type="submit" value="Update" class="btn btn-primary" style="width:auto" />
-            <a asp-action="EditRole" asp-route-id="" class="btn btn-primary" style="width:auto">Cancel</a>
+            </div>
         </div>
-    </div>
+    }
+    <hr />
 </form>
 

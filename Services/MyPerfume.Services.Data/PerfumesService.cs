@@ -37,13 +37,38 @@
             this.pictureUrlsService = pictureUrlsService;
         }
 
-        public async Task AddAsync(PerfumeDto input)
+        public async Task<PerfumeDto> AddAsync(PerfumeDto input)
         {
-            var model = AutoMapperConfig.MapperInstance.Map<Perfume>(input);
-            model.Id = Guid.NewGuid().ToString();
+            // var model = AutoMapperConfig.MapperInstance.Map<Perfume>(input);
+            // model.Id = Guid.NewGuid().ToString();
+            var model = new Perfume
+            {
+                Id = Guid.NewGuid().ToString(),
+                Name = input.Name,
+                ColorId = input.ColorId,
+                CountryId = input.CountryId,
+                DesignerId = input.DesignerId,
+                CustomerType = input.CustomerType,
+                Niche = input.Niche,
+                YearOfManifacture = input.YearOfManifacture,
+                Description = input.Description,
+
+                // PictureUrls = input.PictureUrls.Where(x => x.IsSelected == true)
+                // .Select(x => new PictureUrl
+                // {
+                //    Id = x.Id,
+                //    DesignerAndPerfumeNames = x.DesignerAndPerfumeNames,
+                //    Url = x.Url,
+                // }),
+            };
 
             await this.deletableEntityRepository.AddAsync(model);
             await this.deletableEntityRepository.SaveChangesAsync();
+            var perfume = this.deletableEntityRepository.All().FirstOrDefault(x => x.Id == model.Id);
+            var perfumDto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(perfume);
+            perfumDto.PictureUrls = input.PictureUrls;
+
+            return perfumDto;
         }
 
         public async Task<IEnumerable<T>> GetAll<T>()
@@ -125,6 +150,8 @@
                     CustomerType = x.CustomerType,
                     YearOfManifacture = (int)x.YearOfManifacture,
                     ColorName = x.Color.Name,
+                    DesignerName = x.Designer.Name,
+                    CountryName = x.Country.Name,
                     Niche = x.Niche,
                     Description = x.Description,
                     PictureUrls = x.PictureUrls.Select(y => new PictureUrlCollectionModel
@@ -189,15 +216,15 @@
                 model.YearOfManifacture == input.YearOfManifacture &&
                 model.Description == input.Description;
 
-                // input.AromaticGroups == model.PerfumesAromaticGroups &&
-                // input.BaseNotes == model.PerfumesBaseNotes &&
-                // input.Categories == model.PerfumesCategories &&
-                // input.HeartNotes == model.PerfumesHeartNotes &&
-                // input.Perfumers == model.PerfumesPerfumers &&
-                // input.PerfumesPurposes == model.PerfumesPurposes &&
-                // input.PerfumesSeasons == model.PerfumesSeasons &&
-                // input.TopNotes == model.PerfumesTopNotes &&
-                // input.PictureUrls == model.PictureUrls &&
+            // input.AromaticGroups == model.PerfumesAromaticGroups &&
+            // input.BaseNotes == model.PerfumesBaseNotes &&
+            // input.Categories == model.PerfumesCategories &&
+            // input.HeartNotes == model.PerfumesHeartNotes &&
+            // input.Perfumers == model.PerfumesPerfumers &&
+            // input.PerfumesPurposes == model.PerfumesPurposes &&
+            // input.PerfumesSeasons == model.PerfumesSeasons &&
+            // input.TopNotes == model.PerfumesTopNotes &&
+            // input.PictureUrls == model.PictureUrls &&
         }
 
         public async Task<Dictionary<string, List<SelectListItem>>> Extensions()
