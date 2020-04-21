@@ -7,7 +7,7 @@
 
     public interface IPictureUrlsService
     {
-        Task AddAsync(PictureUrlDto input);
+        Task<int> AddAsync(PictureUrlDto input);
 
         Task<IEnumerable<T>> GetAll<T>();
 
@@ -15,12 +15,18 @@
 
         bool ExistsByName(string url);
 
-        Task<int> EditAsync(PictureUrlDto input);
+        Task<int> EditAsync(PictureUrlDto dto);
+
+        Task<int> EditAsync(PerfumeDto input);
 
         PictureUrlDto GetById(string id);
 
         Task<int> DeleteAsync(string id);
 
         bool IsTheSameInput(PictureUrlDto input);
+
+        bool GetByPerfumeAndPictureUrlId(string perfumeId, string pictureUrlId);
+
+        IList<T> GetPerfumePictures<T>();
     }
 }

@@ -9,7 +9,7 @@
         [Required]
         [MinLength(10)]
         [MaxLength(500)]
-        public string Url { get; set; }
+        public string Url => $"https://geshevalstorage.blob.core.windows.net/pictures/{this.DesignerAndPerfumeNames}.jpg";
 
         [Required]
         [MinLength(3)]

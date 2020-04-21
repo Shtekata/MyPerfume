@@ -10,46 +10,66 @@
     <div class="container">
         <h1 style="margin: 2%; text-align: center;">All @this.ViewData["ClassNames"]</h1>
         <a class="btn btn-primary" asp-action="Add">Add @this.ViewData["ClassName"]</a>
-        <div style="padding: 5%;">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">@this.ViewData["ClassName"] Url</th>
-                        <th scope="col">@this.ViewData["ClassName"] DesignerAndPerfumeNames</th>
-                        <th scope="col">@this.ViewData["ClassName"] Url</th>
-                        <th scope="col">@this.ViewData["ClassName"] Created On</th>
-                        <th scope="col">@this.ViewData["ClassName"] Modified On</th>
-                        <th scope="col">@this.ViewData["ClassName"] Edit</th>
-                        <th scope="col">@this.ViewData["ClassName"] Delete</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var picture in @Model)
-                    {
+        <div style="padding: 2%;">
+            @foreach (var picture in @Model)
+            {
+                <table class="table">
+                    <thead class="thead-light">
                         <tr>
-                            <th scope="row">@picture.Url</th>
+                            <th scope="col">Number</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Created On</th>
+                            <th scope="col">Modified On</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <th scope="row">@picture.PictureNumber</th>
                             <td>@picture.DesignerAndPerfumeNames</td>
-                            <td>@picture.PictureNumber</td>
                             <td>@picture.CreatedOn</td>
                             <td>@picture.ModifiedOn</td>
                             <td>
                                 <div class="button-holder">
                                     <a asp-action="Edit" asp-route-id="@picture.Id" class="btn btn-info text-uppercase">
-                                        Edit @this.ViewData["ClassName"]
+                                        Edit
                                     </a>
                                 </div>
                             </td>
                             <td>
                                 <div class="button-holder">
-                                    <a asp-action="Delete" asp-route-id="@picture.Id" class="btn btn-info text-uppercase">
-                                        Delete @this.ViewData["ClassName"]
+                                    <a asp-action="Delete" asp-route-id="@picture.Id" class="btn btn-danger text-uppercase">
+                                        Delete
                                     </a>
                                 </div>
                             </td>
                         </tr>
-                    }
-                </tbody>
-            </table>
+
+                    </tbody>
+                </table>
+                <div class="row">
+                        <div class="col-md-2">
+                            <strong>
+                                Picture Url:
+                            </strong>
+                        </div>
+                        <div class="col-md-7">
+                            <a href="@picture.Url"> @picture.Url</a>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card mb-3" style="max-width: 540px;">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img src="@picture.Url" class="card-img" alt="...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <hr />
+            }
         </div>
     </div>
 </section>

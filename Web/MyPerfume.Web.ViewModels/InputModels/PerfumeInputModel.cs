@@ -4,9 +4,12 @@
     using System.ComponentModel.DataAnnotations;
 
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using MyPerfume.Data.Models;
     using MyPerfume.Data.Models.Enums;
+    using MyPerfume.Services.Mapping;
+    using MyPerfume.Web.ViewModels.Dtos;
 
-    public class PerfumeInputModel
+    public class PerfumeInputModel : IMapFrom<PerfumeDto>
     {
         public string Id { get; set; }
 
@@ -36,6 +39,11 @@
 
         [Display(Name = "Country")]
         public string CountryId { get; set; }
+
+        [Display(Name = "Picture")]
+        public string PictureUrlId { get; set; }
+
+        public IList<PictureUrlCollectionModel> PictureUrls { get; set; }
 
         public Dictionary<string, List<SelectListItem>> Extensions { get; set; }
     }

@@ -4,8 +4,9 @@
 
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
+    using MyPerfume.Web.ViewModels.Dtos;
 
-    public class PictureUrlViewModel : IMapFrom<PictureUrl>
+    public class PictureUrlViewModel : IMapFrom<PictureUrl>, IMapFrom<PictureUrlDto>
     {
         public string Id { get; set; }
 

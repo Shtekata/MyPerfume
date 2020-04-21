@@ -4,6 +4,7 @@
 
     using Microsoft.AspNetCore.Mvc;
     using MyPerfume.Common;
+    using MyPerfume.Data.Models;
     using MyPerfume.Services.Data;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
@@ -13,10 +14,12 @@
     public class PerfumesController : BaseController
     {
         private readonly IPerfumesService perfumesService;
+        private readonly IPictureUrlsService pictureUrlsService;
 
-        public PerfumesController(IPerfumesService perfumesService)
+        public PerfumesController(IPerfumesService perfumesService, IPictureUrlsService pictureUrlsService)
         {
             this.perfumesService = perfumesService;
+            this.pictureUrlsService = pictureUrlsService;
         }
 
         public async Task<IActionResult> Add()
@@ -72,6 +75,18 @@
             var dto = this.perfumesService.GetById(id);
             var model = AutoMapperConfig.MapperInstance.Map<PerfumeInputModel>(dto);
             model.Extensions = await this.perfumesService.Extensions();
+            model.PictureUrls = this.pictureUrlsService.GetPerfumePictures<PictureUrlCollectionModel>();
+            foreach (var pictureUrl in model.PictureUrls)
+            {
+                if (this.pictureUrlsService.GetByPerfumeAndPictureUrlId(id, pictureUrl.Id))
+                {
+                    pictureUrl.IsSelected = true;
+                }
+                else
+                {
+                    pictureUrl.IsSelected = false;
+                }
+            }
 
             return this.View(model);
         }
@@ -94,6 +109,7 @@
             }
 
             var dto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(input);
+
             var isTheSameInput = this.perfumesService.IsTheSameInput(dto);
             if (isTheSameInput)
             {
@@ -102,9 +118,10 @@
                 return this.View(input);
             }
 
-            var result = await this.perfumesService.EditAsync(dto);
+            var result1 = await this.pictureUrlsService.EditAsync(dto);
+            var result2 = await this.perfumesService.EditAsync(dto);
 
-            if (result == 0)
+            if (result1 == 0 && result2 == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
                 return this.View("NotFound");

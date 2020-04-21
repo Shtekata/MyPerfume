@@ -1,14 +1,13 @@
 ﻿namespace MyPerfume.Web.ViewModels.ViewModels
 {
-    using System;
     using System.Collections.Generic;
 
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using MyPerfume.Data.Models;
     using MyPerfume.Data.Models.Enums;
     using MyPerfume.Services.Mapping;
+    using MyPerfume.Web.ViewModels.Dtos;
 
-    public class PerfumeViewModel : IMapFrom<Perfume>
+    public class PerfumeViewModel : IMapFrom<Perfume>, IMapFrom<PerfumeDto>
     {
         public string Id { get; set; }
 
@@ -34,7 +33,7 @@
 
         public string CountryName { get; set; }
 
-        // public virtual IEnumerable<PictureUrl> PictureUrls { get; set; }
+        public virtual IEnumerable<string> PictureUrlsUrl { get; set; }
 
         // public virtual IEnumerable<PerfumeSeason> PerfumesSeasons { get; set; }
 

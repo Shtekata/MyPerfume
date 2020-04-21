@@ -52,7 +52,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(PictureUrlInputModel input)
+        public async Task<IActionResult> Add(PictureUrlInputModel input, IList<IFormFile> files)
         {
             this.ViewData["ControllerName"] = GlobalConstants.PictureUrlsControllerName;
 
@@ -66,9 +66,20 @@
                 return this.View("Exists");
             }
 
+            var pictureName = $"{input.DesignerAndPerfumeNames}.jpg";
+            await this.UploadFiles(files, pictureName);
+
             var dto = AutoMapperConfig.MapperInstance.Map<PictureUrlDto>(input);
-            await this.pictureUrlsService.AddAsync(dto);
-            return this.View("OperationIsOk");
+
+            var result = await this.pictureUrlsService.AddAsync(dto);
+
+            if (result == 0)
+            {
+                this.ViewData["ErrorMessage"] = $"Can not add {this.ViewData["ClassName"]} with Id : {input.Id}!";
+                return this.View("NotFound");
+            }
+
+            return this.RedirectToAction("All");
         }
 
         public async Task<IActionResult> All()
@@ -184,8 +195,7 @@
             return this.View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UploadFiles(IList<IFormFile> files)
+        public async Task<IActionResult> UploadFiles(IList<IFormFile> files, string pictureName)
         {
             long size = 0;
             var fileSizes = new List<long>();
@@ -198,12 +208,12 @@
                         .FileName
                         .Trim();
 
-                    CloudBlockBlob blockBlob = this.cloudBlobContainer.GetBlockBlobReference(fileName.ToString());
+                    CloudBlockBlob blockBlob = this.cloudBlobContainer.GetBlockBlobReference(pictureName);
                     var stream = file.OpenReadStream();
                     size = file.Length;
                     fileSizes.Add(size);
+                    blockBlob.Properties.ContentType = "image/jpg";
                     await blockBlob.UploadFromStreamAsync(stream);
-                    await this.GetAllBlobs();
                 }
 
                 this.ViewData["FileSizes"] = fileSizes;
@@ -214,7 +224,7 @@
                 return this.Json("Upload Failed. Please try again.");
             }
 
-            return this.View("Blobs");
+            return this.Ok();
         }
 
         private async Task GetAllBlobs()

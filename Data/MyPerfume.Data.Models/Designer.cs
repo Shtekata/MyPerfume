@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
- 
+
     using MyPerfume.Data.Common.Models;
     using MyPerfume.Services.Mapping;
 
