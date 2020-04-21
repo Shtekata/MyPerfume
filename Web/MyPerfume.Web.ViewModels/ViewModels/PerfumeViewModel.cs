@@ -6,6 +6,7 @@
     using MyPerfume.Data.Models.Enums;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
+    using MyPerfume.Web.ViewModels.InputModels;
 
     public class PerfumeViewModel : IMapFrom<Perfume>, IMapFrom<PerfumeDto>
     {
@@ -33,7 +34,7 @@
 
         public string CountryName { get; set; }
 
-        public virtual IEnumerable<string> PictureUrlsUrl { get; set; }
+        public IList<PictureUrlCollectionModel> PictureUrls { get; set; }
 
         // public virtual IEnumerable<PerfumeSeason> PerfumesSeasons { get; set; }
 

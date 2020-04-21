@@ -8,17 +8,16 @@
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
 </div>
-<hr/>
+<hr />
 <h2 style="margin: 1%; text-align: center;">@this.ViewData["HomeWelcome"]</h2>
 <hr />
 <form>
     @foreach (var perfume in @Model)
-    {
-        <div class="card">
+    {<div class="card">
             <h5 class="card-header">Featured</h5>
             <div class="card-body">
                 <div class="form-row">
-                    <div class="form-group col-md-11">
+                    <div class="form-group col-md-7">
                         <section class="py-sm-0">
                             <div class="container-fluid">
                                 <hr />
@@ -49,29 +48,39 @@
                             </div>
                         </section>
                     </div>
-                    <div class="form-group">
-                        <label asp-for="@perfume.Niche"></label>
+                    <div class="form-group col-md-1">
+                        <label asp-for="@perfume.Niche">Niche</label>
                         <input type="checkbox" asp-for="@perfume.Niche" class="form-control" disabled />
                         <span asp-validation-for="@perfume.Niche" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        @if (perfume.PictureUrls.Count() > 0)
+                        {
+                            <img src="@perfume.PictureUrls[0].Url" class="card-img rounded float-right" style="max-width: 350px; max-height: 350px;" />
+                        }
                     </div>
                 </div>
                 <div class="card">
                     <div class="card-header">
                         Description
                     </div>
-                    <div class="card-body">
+                    <div class="card-body mb-5">
                         <blockquote class="blockquote mb-0">
                             <h5 class="card-text"><small>@perfume.Description</small></h5>
                         </blockquote>
                     </div>
                 </div>
                 <br />
-                <a asp-action="Edit" asp-route-id="@perfume.Id" class="btn btn-primary btn-sm">
-                    Edit @this.ViewData["ClassName"]
-                </a>
-                <a asp-action="Delete" asp-route-id="@perfume.Id" class="btn btn-danger btn-sm">
-                    Delete @this.ViewData["ClassName"]
-                </a>
+                @if (perfume.PictureUrls.Count() > 0)
+                {
+                    var maxPictures = Math.Min(perfume.PictureUrls.Count(), 6);
+                    <div class="rounded mx-auto d-block">
+                        @for (int i = 1; i < maxPictures; i++)
+                        {
+                            <img src="@perfume.PictureUrls[i].Url" class="card-img" style="max-width: 210px; max-height: 210px;" />
+                        }
+                    </div>
+                }
                 <hr />
             </div>
         </div>
