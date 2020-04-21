@@ -1,9 +1,82 @@
 ﻿@using MyPerfume.Common
+@using MyPerfume.Web.ViewModels.ViewModels
+@model IEnumerable<PerfumeViewModel>
 @{
-    this.ViewData["Title"] = "Home Page";
+    this.ViewData["Title"] = "All Perfumes";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<hr/>
+<h2 style="margin: 1%; text-align: center;">@this.ViewData["HomeWelcome"]</h2>
+<hr />
+<form>
+    @foreach (var perfume in @Model)
+    {
+        <div class="card">
+            <h5 class="card-header">Featured</h5>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="form-group col-md-11">
+                        <section class="py-sm-0">
+                            <div class="container-fluid">
+                                <hr />
+                                <div style="padding: 2%;">
+                                    <table class="table-sm table-bordered">
+                                        <thead class="thead-light">
+                                            <tr>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Designer</th>
+                                                <th scope="col">Customer Type</th>
+                                                <th scope="col">Country</th>
+                                                <th scope="col">Year Of Manifacture</th>
+                                                <th scope="col">Color</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">@perfume.Name</th>
+                                                <td>@perfume.DesignerName</td>
+                                                <td>@perfume.CustomerType</td>
+                                                <td>@perfume.CountryName</td>
+                                                <td>@perfume.YearOfManifacture</td>
+                                                <td>@perfume.ColorName</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@perfume.Niche"></label>
+                        <input type="checkbox" asp-for="@perfume.Niche" class="form-control" disabled />
+                        <span asp-validation-for="@perfume.Niche" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Description
+                    </div>
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <h5 class="card-text"><small>@perfume.Description</small></h5>
+                        </blockquote>
+                    </div>
+                </div>
+                <br />
+                <a asp-action="Edit" asp-route-id="@perfume.Id" class="btn btn-primary btn-sm">
+                    Edit @this.ViewData["ClassName"]
+                </a>
+                <a asp-action="Delete" asp-route-id="@perfume.Id" class="btn btn-danger btn-sm">
+                    Delete @this.ViewData["ClassName"]
+                </a>
+                <hr />
+            </div>
+        </div>
+        <hr />
+    }
+</form>
+
+

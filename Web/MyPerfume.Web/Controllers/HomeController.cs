@@ -1,15 +1,30 @@
 ﻿namespace MyPerfume.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
+    using MyPerfume.Common;
+    using MyPerfume.Services.Data;
     using MyPerfume.Web.ViewModels;
+    using MyPerfume.Web.ViewModels.ViewModels;
 
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly IPerfumesService perfumesService;
+
+        public HomeController(IPerfumesService perfumesService)
         {
-            return this.View();
+            this.perfumesService = perfumesService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            this.ViewData["HomeWelcome"] = GlobalConstants.HomeWelcome;
+
+            var model = await this.perfumesService.GetAll<PerfumeViewModel>();
+
+            return this.View(model);
         }
 
         public IActionResult Privacy()

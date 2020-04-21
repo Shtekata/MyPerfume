@@ -71,5 +71,7 @@
         public const string PerfumesClassNames = "PERFUMES";
 
         public const string PerfumesControllerName = "Perfumes";
+
+        public const string HomeWelcome = "All the favorite perfumes!";
     }
 }
