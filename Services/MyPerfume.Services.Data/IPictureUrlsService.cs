@@ -30,5 +30,7 @@
         IList<T> GetPerfumePictures<T>();
 
         List<SelectListItem> PictureNumbers();
+
+        int GetCount();
     }
 }

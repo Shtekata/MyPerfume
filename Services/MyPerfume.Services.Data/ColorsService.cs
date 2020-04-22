@@ -100,5 +100,10 @@
 
             return input.Name == model.Name;
         }
+
+        public int GetCount()
+        {
+            return this.deletableEntityRepository.All().Count();
+        }
     }
 }

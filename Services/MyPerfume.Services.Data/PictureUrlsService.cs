@@ -176,5 +176,10 @@
 
             return pictureNumbers;
         }
+
+        public int GetCount()
+        {
+            return this.deletableEntityRepository.All().Count();
+        }
     }
 }

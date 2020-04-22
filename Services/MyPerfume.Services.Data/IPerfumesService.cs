@@ -25,5 +25,7 @@
         bool IsTheSameInput(PerfumeDto input);
 
         Task<Dictionary<string, List<SelectListItem>>> Extensions();
+
+        int GetCount();
     }
 }

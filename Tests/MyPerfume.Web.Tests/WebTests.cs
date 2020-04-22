@@ -16,7 +16,7 @@
             this.server = server;
         }
 
-        [Fact(Skip = "Example test. Disabled for CI.")]
+        [Fact]
         public async Task IndexPageShouldReturnStatusCode200WithTitle()
         {
             var client = this.server.CreateClient();

@@ -22,6 +22,7 @@
         private readonly ICountriesService countriesService;
         private readonly IColorsService colorsService;
         private readonly IPictureUrlsService pictureUrlsService;
+        private IDeletableEntityRepository<Perfume> @object;
 
         public PerfumesService(
             IDeletableEntityRepository<Perfume> deletableEntityRepository,
@@ -276,6 +277,11 @@
             result["PictureUrls"] = pictureUrls;
 
             return result;
+        }
+
+        public int GetCount()
+        {
+            return this.deletableEntityRepository.All().Count();
         }
     }
 }

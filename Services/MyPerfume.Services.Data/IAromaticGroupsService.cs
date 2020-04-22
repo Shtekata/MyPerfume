@@ -22,5 +22,7 @@
         Task<int> DeleteAsync(string id);
 
         bool IsTheSameInput(BaseDto input);
+
+        int GetCount();
     }
 }
