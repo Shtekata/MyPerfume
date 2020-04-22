@@ -55,7 +55,7 @@
             var result = await this.pictureUrlsService.EditAsync(perfumeDto);
             if (result == 0)
             {
-                this.ViewData["errormessage"] = $"can not edit {this.ViewData["classname"]} with id : {input.Id}!";
+                this.ViewData["errormessage"] = $"can not add {this.ViewData["classname"]} with id : {input.Id}!";
                 return this.View("NotFound");
             }
 

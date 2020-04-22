@@ -4,9 +4,15 @@
     using AutoMapper;
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
+    using System;
 
     public class PictureUrlCollectionModel : IMapFrom<PictureUrl>, IMapTo<PictureUrl>, IMapFrom<Perfume>, IHaveCustomMappings
     {
+        public PictureUrlCollectionModel()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         public string Id { get; set; }
 
         public string Url { get; set; }

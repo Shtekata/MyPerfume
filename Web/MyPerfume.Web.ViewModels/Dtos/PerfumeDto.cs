@@ -12,6 +12,11 @@
 
     public class PerfumeDto : IMapFrom<PerfumeInputModel>, IMapFrom<Perfume>, IMapTo<Perfume>, IHaveCustomMappings
     {
+        public PerfumeDto()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         public string Id { get; set; }
 
         public string Name { get; set; }

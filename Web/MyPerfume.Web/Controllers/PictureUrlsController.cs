@@ -64,7 +64,7 @@
                 return this.View(input);
             }
 
-            if (this.pictureUrlsService.ExistsByName(input.Url))
+            if (this.pictureUrlsService.ExistsByUrl(input.Url))
             {
                 return this.View("Exists");
             }
@@ -75,7 +75,6 @@
             var dto = AutoMapperConfig.MapperInstance.Map<PictureUrlDto>(input);
 
             var result = await this.pictureUrlsService.AddAsync(dto);
-
             if (result == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not add {this.ViewData["ClassName"]} with Id : {input.Id}!";
@@ -136,7 +135,7 @@
                 return this.View();
             }
 
-            if (this.pictureUrlsService.ExistsByName(input.DesignerAndPerfumeNames))
+            if (this.pictureUrlsService.ExistsByUrl(input.DesignerAndPerfumeNames))
             {
                 return this.View("Exists");
             }

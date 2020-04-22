@@ -19,11 +19,11 @@
             this.deletableEntityRepository = deletableEntityRepository;
         }
 
-        public async Task AddAsync(BaseDto input)
+        public async Task<int> AddAsync(BaseDto input)
         {
             var model = new Perfumer { Name = input.Name };
             await this.deletableEntityRepository.AddAsync(model);
-            await this.deletableEntityRepository.SaveChangesAsync();
+            return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<T>> GetAll<T>()
@@ -65,6 +65,11 @@
             var model = this.deletableEntityRepository.All()
                  .FirstOrDefault(x => x.Id == input.Id);
 
+            if (model == null)
+            {
+                return 0;
+            }
+
             model.Name = input.Name;
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
@@ -82,6 +87,11 @@
         {
             var model = this.deletableEntityRepository.All()
                  .FirstOrDefault(x => x.Id == id);
+
+            if (model == null)
+            {
+                return 0;
+            }
 
             this.deletableEntityRepository.Delete(model);
             return await this.deletableEntityRepository.SaveChangesAsync();

@@ -42,7 +42,13 @@
             }
 
             var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
-            await this.categoriesService.AddAsync(dto);
+            var result = await this.categoriesService.AddAsync(dto);
+            if (result == 0)
+            {
+                this.ViewData["ErrorMessage"] = $"Can not add {this.ViewData["ClassName"]} with Id : {input.Id}!";
+                return this.View("NotFound");
+            }
+
             return this.View("OperationIsOk");
         }
 

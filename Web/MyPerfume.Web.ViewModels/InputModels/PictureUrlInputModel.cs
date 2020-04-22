@@ -1,5 +1,6 @@
 ﻿namespace MyPerfume.Web.ViewModels.InputModels
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -8,6 +9,11 @@
     public class PictureUrlInputModel
     {
         private string designerAndPerfumeNames;
+
+        public PictureUrlInputModel()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
 
         public string Id { get; set; }
 

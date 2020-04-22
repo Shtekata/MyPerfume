@@ -7,7 +7,7 @@
 
     public interface ICategoriesService
     {
-        Task AddAsync(BaseDto input);
+        Task<int> AddAsync(BaseDto input);
 
         Task<IEnumerable<T>> GetAll<T>();
 

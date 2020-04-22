@@ -65,8 +65,7 @@
 
             await this.deletableEntityRepository.AddAsync(model);
             await this.deletableEntityRepository.SaveChangesAsync();
-            var perfume = this.deletableEntityRepository.All().FirstOrDefault(x => x.Id == model.Id);
-            var perfumDto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(perfume);
+            var perfumDto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(model);
             perfumDto.PictureUrls = input.PictureUrls;
 
             return perfumDto;
@@ -111,6 +110,11 @@
             var model = this.deletableEntityRepository.All()
                  .FirstOrDefault(x => x.Id == input.Id);
 
+            if (model == null)
+            {
+                return 0;
+            }
+
             model.Name = input.Name;
             model.ColorId = input.ColorId;
             model.CountryId = input.CountryId;
@@ -130,7 +134,6 @@
             // model.PerfumesSeasons = input.PerfumesSeasons;
             // model.PictureUrls = input.PictureUrls;
             // model.YearOfManifacture = input.YearOfManifacture;
-
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
@@ -170,6 +173,11 @@
         {
             var model = this.deletableEntityRepository.All()
                  .FirstOrDefault(x => x.Id == id);
+
+            if (model == null)
+            {
+                return 0;
+            }
 
             this.deletableEntityRepository.Delete(model);
             return await this.deletableEntityRepository.SaveChangesAsync();

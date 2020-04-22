@@ -49,7 +49,7 @@
             }
         }
 
-        public bool ExistsByName(string url)
+        public bool ExistsByUrl(string url)
         {
             var model = this.deletableEntityRepository.AllAsNoTracking()
                  .FirstOrDefault(x => x.Url == url);
@@ -80,6 +80,11 @@
 
                 var pictureUrlModel = this.deletableEntityRepository.All()
                     .FirstOrDefault(x => x.Id == pictureUrls[i].Id);
+
+                if (pictureUrlModel == null)
+                {
+                    return 0;
+                }
 
                 var isAlreadyHaveThisPicture = pictureUrlModel.PerfumeId == perfumId;
                 if (pictureUrls[i].IsSelected && !isAlreadyHaveThisPicture)
@@ -126,6 +131,11 @@
         {
             var model = this.deletableEntityRepository.All()
                  .FirstOrDefault(x => x.Id == id);
+
+            if (model == null)
+            {
+                return 0;
+            }
 
             this.deletableEntityRepository.Delete(model);
             return await this.deletableEntityRepository.SaveChangesAsync();

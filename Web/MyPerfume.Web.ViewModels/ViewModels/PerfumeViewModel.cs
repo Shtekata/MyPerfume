@@ -1,5 +1,6 @@
 ﻿namespace MyPerfume.Web.ViewModels.ViewModels
 {
+    using System;
     using System.Collections.Generic;
 
     using MyPerfume.Data.Models;
@@ -10,6 +11,11 @@
 
     public class PerfumeViewModel : IMapFrom<Perfume>, IMapFrom<PerfumeDto>
     {
+        public PerfumeViewModel()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         public string Id { get; set; }
 
         public string Name { get; set; }

@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Mvc.Rendering;
     using MyPerfume.Web.ViewModels.Dtos;
 
@@ -13,7 +14,7 @@
 
         bool ExistsById(string id);
 
-        bool ExistsByName(string url);
+        bool ExistsByUrl(string url);
 
         Task<int> EditAsync(PictureUrlDto dto);
 

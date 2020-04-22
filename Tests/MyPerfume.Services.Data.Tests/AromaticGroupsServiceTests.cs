@@ -10,6 +10,7 @@
     using MyPerfume.Data.Common.Repositories;
     using MyPerfume.Data.Models;
     using MyPerfume.Data.Repositories;
+    using MyPerfume.Web.ViewModels.Dtos;
     using Xunit;
 
     public class AromaticGroupsServiceTests
@@ -33,7 +34,7 @@
         public async Task GetCountShouldReturnCorrectNumberUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "AromaticGroupsTestDb").Options;
+                .UseInMemoryDatabase(databaseName: "AromaticGroupsTest1Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.AromaticGroups.Add(new AromaticGroup());
             dbContext.AromaticGroups.Add(new AromaticGroup());
@@ -43,6 +44,182 @@
             var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
             var service = new AromaticGroupsService(repository);
             Assert.Equal(3, service.GetCount());
+        }
+
+        [Fact]
+        public async Task AddAsyncShouldReturnCorrectAnswerUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "AromaticGroupsTest2Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup());
+            dbContext.AromaticGroups.Add(new AromaticGroup());
+            dbContext.AromaticGroups.Add(new AromaticGroup());
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var result = await service.AddAsync(new BaseDto());
+
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public async Task<bool> ExistsByIdShouldReturnTrueWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "AromaticGroupsTest3Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "A", });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "B", });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "C", });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var result = service.ExistsById("A");
+
+            Assert.True(result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<bool> ExistsByIdShouldReturnFalseWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "AromaticGroupsTest4Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "A", });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "B", });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "C", });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var result = service.ExistsById("D");
+
+            Assert.False(result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<bool> ExistsByNameShouldReturnTrueWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "AromaticGroupsTest5Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "A", Name = "E" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "B", Name = "F" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var result = service.ExistsByName("E");
+
+            Assert.True(result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<bool> ExistsByNameShouldReturnFalseWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "AromaticGroupsTest6Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "A", Name = "E" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "B", Name = "F" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var result = service.ExistsByName("H");
+
+            Assert.False(result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<int> EditAsyncShouldReturnTrueWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "AromaticGroupsTest7Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "A", Name = "E" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "B", Name = "F" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var result = await service.EditAsync(new BaseDto
+            {
+                Id = "A",
+                Name = "D",
+            });
+
+            Assert.Equal(1, result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<int> EditAsyncShouldReturnFalseWithIncorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "AromaticGroupsTest8Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "A", Name = "E" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "B", Name = "F" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var result = await service.EditAsync(new BaseDto
+            {
+                Id = "H",
+                Name = "D",
+            });
+
+            Assert.Equal(0, result);
+            return result;
+        }
+
+        [Fact]
+        public async Task DeleteAsyncShouldReturnTrueWithCorrectInputIdUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "AromaticGroupsTest9Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "A", });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "B", });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "C", });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var result = await service.DeleteAsync("A");
+
+            Assert.Equal(1, result);
+        }
+
+        [Fact]
+        public async Task DeleteAsyncShouldReturnFalseWithIncorrectInputIdUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+                .UseInMemoryDatabase(databaseName: "AromaticGroupsTest10Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "A", });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "B", });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "C", });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var result = await service.DeleteAsync("D");
+
+            Assert.Equal(0, result);
         }
     }
 }

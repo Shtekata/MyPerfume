@@ -8,7 +8,7 @@
 
     public interface ICountriesService
     {
-        Task AddAsync(BaseDto input);
+        Task<int> AddAsync(BaseDto input);
 
         Task<IEnumerable<T>> GetAll<T>();
 
