@@ -12,7 +12,7 @@
 <h2 style="margin: 1%; text-align: center;">@this.ViewData["HomeWelcome"]</h2>
 <hr />
 <form>
-    @foreach (var perfume in @Model)
+    @foreach (var perfume in @Model.OrderBy(x => x.Name).ThenBy(x => x.PictureUrls.OrderBy(y => y.PictureNumber)))
     {<div class="card">
             <h5 class="card-header">Featured</h5>
             <div class="card-body">

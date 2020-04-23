@@ -71,6 +71,7 @@
                 .FirstOrDefault();
             model.DesignerAndPerfumeNames = dto.DesignerAndPerfumeNames;
             model.PictureNumber = dto.PictureNumber;
+            model.Url = dto.Url;
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
