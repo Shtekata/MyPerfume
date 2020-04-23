@@ -5,6 +5,7 @@
 
     using Microsoft.AspNetCore.Mvc.Rendering;
     using MyPerfume.Web.ViewModels.Dtos;
+    using MyPerfume.Web.ViewModels.InputModels;
 
     public interface IPictureUrlsService
     {

@@ -69,7 +69,7 @@
                 return this.View("Exists");
             }
 
-            var pictureName = $"{input.DesignerAndPerfumeNames}.jpg";
+            var pictureName = input.Url.Replace("https://geshevalstorage.blob.core.windows.net/pictures/", string.Empty);
             await this.UploadFiles(files, pictureName);
 
             var dto = AutoMapperConfig.MapperInstance.Map<PictureUrlDto>(input);
@@ -81,7 +81,7 @@
                 return this.View("NotFound");
             }
 
-            return this.RedirectToAction("All");
+            return this.View("OperationIsOk");
         }
 
         public async Task<IActionResult> All()
@@ -100,12 +100,13 @@
 
             if (!this.pictureUrlsService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Item with this Id : {id} is not exists!";
                 return this.View("NotFound");
             }
 
             var dto = this.pictureUrlsService.GetById(id);
             var model = AutoMapperConfig.MapperInstance.Map<PictureUrlInputModel>(dto);
+            model.PictureNumbers = this.pictureUrlsService.PictureNumbers();
 
             return this.View(model);
         }
@@ -115,6 +116,7 @@
         {
             this.ViewData["ClassName"] = GlobalConstants.PictureUrlsClassName;
             this.ViewData["ControllerName"] = GlobalConstants.PictureUrlsControllerName;
+            input.PictureNumbers = this.pictureUrlsService.PictureNumbers();
 
             if (!this.ModelState.IsValid)
             {
@@ -123,8 +125,13 @@
 
             if (!this.pictureUrlsService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Item with this Id : {input.Id} is not exists!";
                 return this.View("NotFound");
+            }
+
+            if (this.pictureUrlsService.ExistsByUrl(input.DesignerAndPerfumeNames))
+            {
+                return this.View("Exists");
             }
 
             var dto = AutoMapperConfig.MapperInstance.Map<PictureUrlDto>(input);
@@ -132,12 +139,7 @@
             if (isTheSameInput)
             {
                 this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
-                return this.View();
-            }
-
-            if (this.pictureUrlsService.ExistsByUrl(input.DesignerAndPerfumeNames))
-            {
-                return this.View("Exists");
+                return this.View(input);
             }
 
             var result = await this.pictureUrlsService.EditAsync(dto);

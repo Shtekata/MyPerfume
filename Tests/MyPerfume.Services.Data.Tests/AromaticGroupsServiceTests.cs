@@ -221,5 +221,53 @@
 
             Assert.Equal(0, result);
         }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnTrueWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "AromaticGroupsTest11Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "A", Name = "E" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "B", Name = "F" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var input = new BaseDto
+            {
+                Id = "A",
+                Name = "E",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.True(result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnFalseWithIncorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "AromaticGroupsTest12Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "A", Name = "E" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "B", Name = "F" });
+            dbContext.AromaticGroups.Add(new AromaticGroup { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<AromaticGroup>(dbContext);
+            var service = new AromaticGroupsService(repository);
+            var input = new BaseDto
+            {
+                Id = "A",
+                Name = "H",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.False(result);
+            return result;
+        }
     }
 }

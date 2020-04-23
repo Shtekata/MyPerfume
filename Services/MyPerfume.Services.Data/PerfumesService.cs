@@ -22,7 +22,6 @@
         private readonly ICountriesService countriesService;
         private readonly IColorsService colorsService;
         private readonly IPictureUrlsService pictureUrlsService;
-        private IDeletableEntityRepository<Perfume> @object;
 
         public PerfumesService(
             IDeletableEntityRepository<Perfume> deletableEntityRepository,

@@ -68,7 +68,7 @@
 
             if (!this.baseNotesService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {id}!";
+                this.ViewData["ErrorMessage"] = $"Item with this Id : {id} is not exists!";
                 return this.View("NotFound");
             }
 
@@ -91,7 +91,7 @@
 
             if (!this.baseNotesService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Item with this Id : {input.Id} is not exists!";
                 return this.View("NotFound");
             }
 

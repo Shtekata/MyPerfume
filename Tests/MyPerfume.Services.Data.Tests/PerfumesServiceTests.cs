@@ -281,7 +281,7 @@
             var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "PerfumersTest9Db").Options;
+                .UseInMemoryDatabase(databaseName: "PerfumesTest8Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Perfumes.Add(new Perfume { Id = "A", });
             dbContext.Perfumes.Add(new Perfume { Id = "B", });
@@ -311,7 +311,7 @@
             var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "PerfumersTest10Db").Options;
+                .UseInMemoryDatabase(databaseName: "PerfumesTest9Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Perfumes.Add(new Perfume { Id = "A", });
             dbContext.Perfumes.Add(new Perfume { Id = "B", });
@@ -323,6 +323,78 @@
             var result = await service.DeleteAsync("D");
 
             Assert.Equal(0, result);
+        }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnTrueWithCorrectInputUsingDbContext()
+        {
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
+            var designerService = new DesignersService(designerRepository.Object);
+
+            var countryRepository = new Mock<IDeletableEntityRepository<Country>>();
+            var countriesService = new CountriesService(countryRepository.Object);
+
+            var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
+            var colorsService = new ColorsService(colorRepository.Object);
+
+            var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "PerfumesTest10Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.Perfumes.Add(new Perfume { Id = "A", Name = "E" });
+            dbContext.Perfumes.Add(new Perfume { Id = "B", Name = "F" });
+            dbContext.Perfumes.Add(new Perfume { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var input = new PerfumeDto
+            {
+                Id = "A",
+                Name = "E",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.True(result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnFalseWithIncorrectInputUsingDbContext()
+        {
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
+            var designerService = new DesignersService(designerRepository.Object);
+
+            var countryRepository = new Mock<IDeletableEntityRepository<Country>>();
+            var countriesService = new CountriesService(countryRepository.Object);
+
+            var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
+            var colorsService = new ColorsService(colorRepository.Object);
+
+            var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "PerfumesTest11Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.Perfumes.Add(new Perfume { Id = "A", Name = "E" });
+            dbContext.Perfumes.Add(new Perfume { Id = "B", Name = "F" });
+            dbContext.Perfumes.Add(new Perfume { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var input = new PerfumeDto
+            {
+                Id = "A",
+                Name = "H",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.False(result);
+            return result;
         }
     }
 }

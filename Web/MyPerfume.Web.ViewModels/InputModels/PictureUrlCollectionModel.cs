@@ -1,10 +1,10 @@
 ﻿namespace MyPerfume.Web.ViewModels.InputModels
 {
+    using System;
 
     using AutoMapper;
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
-    using System;
 
     public class PictureUrlCollectionModel : IMapFrom<PictureUrl>, IMapTo<PictureUrl>, IMapFrom<Perfume>, IHaveCustomMappings
     {
@@ -20,6 +20,8 @@
         public bool IsSelected { get; set; }
 
         public string DesignerAndPerfumeNames { get; set; }
+
+        public int PictureNumber { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

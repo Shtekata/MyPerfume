@@ -11,6 +11,7 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
+    using MyPerfume.Web.ViewModels.InputModels;
 
     public class PictureUrlsService : IPictureUrlsService
     {
@@ -65,8 +66,11 @@
 
         public async Task<int> EditAsync(PictureUrlDto dto)
         {
-            var model = AutoMapperConfig.MapperInstance.Map<PictureUrl>(dto);
-            await this.deletableEntityRepository.AddAsync(model);
+            var model = this.deletableEntityRepository.All()
+                .Where(x => x.Id == dto.Id)
+                .FirstOrDefault();
+            model.DesignerAndPerfumeNames = dto.DesignerAndPerfumeNames;
+            model.PictureNumber = dto.PictureNumber;
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
@@ -147,7 +151,7 @@
                 .Where(x => x.Id == input.Id)
                 .FirstOrDefault();
 
-            return input.Url == model.Url &&
+            return
                 input.DesignerAndPerfumeNames == model.DesignerAndPerfumeNames &&
                 input.PictureNumber == model.PictureNumber;
         }
@@ -164,6 +168,7 @@
         {
             var pictureUrls = this.deletableEntityRepository.AllAsNoTracking()
                 .OrderBy(x => x.DesignerAndPerfumeNames)
+                .ThenBy(x => x.PictureNumber)
                 .To<T>()
                 .ToList();
 
@@ -173,7 +178,7 @@
         public List<SelectListItem> PictureNumbers()
         {
             var pictureNumbers = new List<SelectListItem>();
-            for (int i = 0; i < 100; i++)
+            for (int i = 1; i < 16; i++)
             {
                 var pictureNumber = new SelectListItem
                 {

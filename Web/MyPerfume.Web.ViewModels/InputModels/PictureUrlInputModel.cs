@@ -20,7 +20,7 @@
         [Required]
         [MinLength(10)]
         [MaxLength(500)]
-        public string Url => $"https://geshevalstorage.blob.core.windows.net/pictures/{this.DesignerAndPerfumeNames}.jpg";
+        public string Url => $"https://geshevalstorage.blob.core.windows.net/pictures/{this.DesignerAndPerfumeNames}/{this.PictureNumber}.jpg";
 
         [Required]
         [MinLength(3)]
@@ -37,6 +37,5 @@
         public int PictureNumber { get; set; }
 
         public List<SelectListItem> PictureNumbers { get; set; }
-
     }
 }

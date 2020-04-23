@@ -190,7 +190,7 @@
         public async Task DeleteAsyncShouldReturnTrueWithCorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "CategoriesTest9Db").Options;
+                .UseInMemoryDatabase(databaseName: "DesignersTest9Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Designers.Add(new Designer { Id = "A", });
             dbContext.Designers.Add(new Designer { Id = "B", });
@@ -208,7 +208,7 @@
         public async Task DeleteAsyncShouldReturnFalseWithIncorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "CategoriesTest10Db").Options;
+                .UseInMemoryDatabase(databaseName: "DesignersTest10Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Designers.Add(new Designer { Id = "A", });
             dbContext.Designers.Add(new Designer { Id = "B", });
@@ -220,6 +220,54 @@
             var result = await service.DeleteAsync("D");
 
             Assert.Equal(0, result);
+        }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnTrueWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "DesignersTest11Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.Categories.Add(new Category { Id = "A", Name = "E" });
+            dbContext.Categories.Add(new Category { Id = "B", Name = "F" });
+            dbContext.Categories.Add(new Category { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<Category>(dbContext);
+            var service = new CategoriesService(repository);
+            var input = new BaseDto
+            {
+                Id = "A",
+                Name = "E",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.True(result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnFalseWithIncorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "DesignersTest12Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.Categories.Add(new Category { Id = "A", Name = "E" });
+            dbContext.Categories.Add(new Category { Id = "B", Name = "F" });
+            dbContext.Categories.Add(new Category { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<Category>(dbContext);
+            var service = new CategoriesService(repository);
+            var input = new BaseDto
+            {
+                Id = "A",
+                Name = "H",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.False(result);
+            return result;
         }
     }
 }

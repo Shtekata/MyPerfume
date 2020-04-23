@@ -20,7 +20,7 @@
 
         public string DesignerAndPerfumeNames { get; set; }
 
-        public int? PictureNumber { get; set; }
+        public int PictureNumber { get; set; }
 
         public string PerfumeId { get; set; }
 

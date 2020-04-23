@@ -221,5 +221,53 @@
 
             Assert.Equal(0, result);
         }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnTrueWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "PerfumersTest11Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.Perfumers.Add(new Perfumer { Id = "A", Name = "E" });
+            dbContext.Perfumers.Add(new Perfumer { Id = "B", Name = "F" });
+            dbContext.Perfumers.Add(new Perfumer { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<Perfumer>(dbContext);
+            var service = new PerfumersService(repository);
+            var input = new BaseDto
+            {
+                Id = "A",
+                Name = "E",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.True(result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnFalseWithIncorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "PerfumersTest12Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.Perfumers.Add(new Perfumer { Id = "A", Name = "E" });
+            dbContext.Perfumers.Add(new Perfumer { Id = "B", Name = "F" });
+            dbContext.Perfumers.Add(new Perfumer { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<Perfumer>(dbContext);
+            var service = new PerfumersService(repository);
+            var input = new BaseDto
+            {
+                Id = "A",
+                Name = "H",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.False(result);
+            return result;
+        }
     }
 }
