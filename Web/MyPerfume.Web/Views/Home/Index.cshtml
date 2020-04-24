@@ -1,6 +1,6 @@
 ﻿@using MyPerfume.Common
 @using MyPerfume.Web.ViewModels.ViewModels
-@model IEnumerable<PerfumeViewModel>
+@model PageViewModel
 @{
     this.ViewData["Title"] = "All Perfumes";
 }
@@ -12,9 +12,9 @@
 <h2 style="margin: 1%; text-align: center;">@this.ViewData["HomeWelcome"]</h2>
 <hr />
 <form>
-    @foreach (var perfume in @Model.OrderBy(x => x.Name))
+    @foreach (var perfume in @Model.Perfumes.OrderBy(x => x.Name))
     {<div class="card">
-         <h5 class="card-header">Дизайнер: @perfume.DesignerName</h5>
+            <h5 class="card-header">Дизайнер: @perfume.DesignerName</h5>
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-7">
@@ -87,5 +87,46 @@
         <hr />
     }
 </form>
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
+
+        @if (Model.CurrentPage == 1)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item active">
+                <a class="page-link"
+                   asp-route-id="@(Model.CurrentPage - 1)">Previous</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= Model.PagesCount; i++)
+        {
+            var active = i == Model.CurrentPage ? "active" : string.Empty;
+            <li class="page-item @active">
+                <a class="page-link"
+                   asp-route-id="@i">@i</a>
+            </li>
+        }
+
+        @if (Model.CurrentPage == Model.PagesCount)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item active">
+                <a class="page-link"
+                   asp-route-id="@(Model.CurrentPage + 1)">Next</a>
+            </li>
+        }
+    </ul>
+</nav>
 
 

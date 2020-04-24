@@ -38,7 +38,7 @@
     },
     {
       "library": "tinymce@5.2.0",
-      "destination": "wwwroot/lib/tinymce/", //,
+      "destination": "wwwroot/lib/tinymce/",
       "files": [
         "tinymce.min.js",
         "themes/silver/theme.min.js",

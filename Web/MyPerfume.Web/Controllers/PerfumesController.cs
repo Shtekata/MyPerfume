@@ -1,5 +1,6 @@
 ﻿namespace MyPerfume.Web.Controllers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -14,6 +15,8 @@
 
     public class PerfumesController : BaseController
     {
+        private const int ItemsPerPage = 5;
+
         private readonly IPerfumesService perfumesService;
         private readonly IPictureUrlsService pictureUrlsService;
 
@@ -62,12 +65,25 @@
             return this.View("OperationIsOk");
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int id = 1)
         {
             this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
             this.ViewData["ClassNames"] = GlobalConstants.PerfumesClassNames;
 
-            var model = await this.perfumesService.GetAll<PerfumeViewModel>();
+            // var model = await this.perfumesService.GetAll<PerfumeViewModel>();
+            var count = this.perfumesService.GetCount();
+            var model = new PageViewModel
+            {
+                PagesCount = (int)Math.Ceiling((double)count / ItemsPerPage),
+                Perfumes = await this.perfumesService.GetPage<PerfumeViewModel>(ItemsPerPage, (id - 1) * ItemsPerPage),
+            };
+
+            if (model.PagesCount == 0)
+            {
+                model.PagesCount = 1;
+            }
+
+            model.CurrentPage = id;
 
             return this.View(model);
         }

@@ -27,5 +27,7 @@
         Task<Dictionary<string, List<SelectListItem>>> Extensions();
 
         int GetCount();
+
+        Task<IEnumerable<T>> GetPage<T>(int? take = null, int skip = 0);
     }
 }

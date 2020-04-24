@@ -23,6 +23,8 @@
 
     public class PictureUrlsController : BaseController
     {
+        private const int ItemsPerPage = 10;
+
         private readonly IPictureUrlsService pictureUrlsService;
         private readonly IWebHostEnvironment env;
         private StorageCredentials storageCredentials;
@@ -86,12 +88,24 @@
             return this.View("OperationIsOk");
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int id = 1)
         {
             this.ViewData["ClassName"] = GlobalConstants.PictureUrlsClassName;
             this.ViewData["ClassNames"] = GlobalConstants.PictureUrlsClassNames;
 
-            var model = await this.pictureUrlsService.GetAll<PictureUrlViewModel>();
+            var count = this.pictureUrlsService.GetCount();
+            var model = new PagePictureUrlViewModel
+            {
+                PagesCount = (int)Math.Ceiling((double)count / ItemsPerPage),
+                PictureUrls = await this.pictureUrlsService.GetPage<PictureUrlViewModel>(ItemsPerPage, (id - 1) * ItemsPerPage),
+            };
+
+            if (model.PagesCount == 0)
+            {
+                model.PagesCount = 1;
+            }
+
+            model.CurrentPage = id;
 
             return this.View(model);
         }

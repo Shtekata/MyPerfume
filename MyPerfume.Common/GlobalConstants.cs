@@ -72,6 +72,6 @@
 
         public const string PerfumesControllerName = "Perfumes";
 
-        public const string HomeWelcome = "Тук ще можете да се потопите във вълшебеният свят на ароматите!";
+        public const string HomeWelcome = "Тук ще можете да се потопите във вълшебният свят на ароматите!";
     }
 }

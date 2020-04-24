@@ -1,5 +1,5 @@
 ﻿@using MyPerfume.Web.ViewModels.ViewModels
-@model IEnumerable<PerfumeViewModel>
+@model PageViewModel
 @{
     this.ViewData["Title"] = "All Perfumes";
 }
@@ -8,7 +8,7 @@
 <a class="btn btn-success" asp-action="Add">Add @this.ViewData["ClassName"]</a>
 <hr/>
 <form>
-    @foreach (var perfume in @Model)
+    @foreach (var perfume in @Model.Perfumes)
     {
     <div class="card">
         <h5 class="card-header">Featured</h5>
@@ -99,5 +99,45 @@
     <hr />
     }
 </form>
+<nav aria-label="...">
+    <ul class="pagination justify-content-center">
 
+        @if (Model.CurrentPage == 1)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item active">
+                <a class="page-link"
+                   asp-route-id="@(Model.CurrentPage - 1)">Previous</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= Model.PagesCount; i++)
+        {
+            var active = i == Model.CurrentPage ? "active" : string.Empty;
+            <li class="page-item @active">
+                <a class="page-link"
+                   asp-route-id="@i">@i</a>
+            </li>
+        }
+
+        @if (Model.CurrentPage == Model.PagesCount)
+        {
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Next</a>
+            </li>
+        }
+        else
+        {
+            <li class="page-item active">
+                <a class="page-link"
+                   asp-route-id="@(Model.CurrentPage + 1)">Next</a>
+            </li>
+        }
+    </ul>
+</nav>
 

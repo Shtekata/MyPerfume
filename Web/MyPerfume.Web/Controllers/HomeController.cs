@@ -1,5 +1,6 @@
 ﻿namespace MyPerfume.Web.Controllers
 {
+    using System;
     using System.Diagnostics;
     using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@
 
     public class HomeController : BaseController
     {
+        private const int ItemsPerPage = 5;
+
         private readonly IPerfumesService perfumesService;
 
         public HomeController(IPerfumesService perfumesService)
@@ -18,11 +21,23 @@
             this.perfumesService = perfumesService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id = 1)
         {
             this.ViewData["HomeWelcome"] = GlobalConstants.HomeWelcome;
 
-            var model = await this.perfumesService.GetAll<PerfumeViewModel>();
+            var count = this.perfumesService.GetCount();
+            var model = new PageViewModel
+            {
+                PagesCount = (int)Math.Ceiling((double)count / ItemsPerPage),
+                Perfumes = await this.perfumesService.GetPage<PerfumeViewModel>(ItemsPerPage, (id - 1) * ItemsPerPage),
+            };
+
+            if (model.PagesCount == 0)
+            {
+                model.PagesCount = 1;
+            }
+
+            model.CurrentPage = id;
 
             return this.View(model);
         }

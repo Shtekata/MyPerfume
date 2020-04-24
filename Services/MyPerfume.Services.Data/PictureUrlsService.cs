@@ -216,5 +216,18 @@
         {
             return this.deletableEntityRepository.All().Count();
         }
+
+        public async Task<IEnumerable<T>> GetPage<T>(int? take = null, int skip = 0)
+        {
+            var query = this.deletableEntityRepository.All()
+                .OrderBy(x => x.DesignerAndPerfumeNames)
+                .Skip(skip);
+            if (take.HasValue)
+            {
+                query = query.Take(take.Value);
+            }
+
+            return await query.To<T>().ToArrayAsync();
+        }
     }
 }
