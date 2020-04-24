@@ -106,7 +106,7 @@
         public async Task<bool> ExistsByNameShouldReturnTrueWithCorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "CategoriesTest5Db").Options;
+               .UseInMemoryDatabase(databaseName: "ColorsTest5Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Colors.Add(new Color { Id = "A", Name = "E" });
             dbContext.Colors.Add(new Color { Id = "B", Name = "F" });
@@ -125,7 +125,7 @@
         public async Task<bool> ExistsByNameShouldReturnFalseWithCorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "CategoriesTest6Db").Options;
+               .UseInMemoryDatabase(databaseName: "ColorsTest6Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Colors.Add(new Color { Id = "A", Name = "E" });
             dbContext.Colors.Add(new Color { Id = "B", Name = "F" });
@@ -144,7 +144,7 @@
         public async Task<int> EditAsyncShouldReturnTrueWithCorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "CategoriesTest7Db").Options;
+               .UseInMemoryDatabase(databaseName: "ColorsTest7Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Colors.Add(new Color { Id = "A", Name = "E" });
             dbContext.Colors.Add(new Color { Id = "B", Name = "F" });
@@ -167,7 +167,7 @@
         public async Task<int> EditAsyncShouldReturnFalseWithIncorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "CategoriesTest8Db").Options;
+               .UseInMemoryDatabase(databaseName: "ColorsTest8Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Colors.Add(new Color { Id = "A", Name = "E" });
             dbContext.Colors.Add(new Color { Id = "B", Name = "F" });
@@ -190,7 +190,7 @@
         public async Task DeleteAsyncShouldReturnTrueWithCorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "CategoriesTest9Db").Options;
+                .UseInMemoryDatabase(databaseName: "ColorsTest9Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Colors.Add(new Color { Id = "A", });
             dbContext.Colors.Add(new Color { Id = "B", });
@@ -208,7 +208,7 @@
         public async Task DeleteAsyncShouldReturnFalseWithIncorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "CategoriesTest10Db").Options;
+                .UseInMemoryDatabase(databaseName: "ColorsTest10Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Colors.Add(new Color { Id = "A", });
             dbContext.Colors.Add(new Color { Id = "B", });
@@ -226,7 +226,7 @@
         public async Task<bool> IsTheSameInputShouldReturnTrueWithCorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "CategoriesTest11Db").Options;
+               .UseInMemoryDatabase(databaseName: "ColorsTest11Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Colors.Add(new Color { Id = "A", Name = "E" });
             dbContext.Colors.Add(new Color { Id = "B", Name = "F" });
@@ -250,7 +250,7 @@
         public async Task<bool> IsTheSameInputShouldReturnFalseWithIncorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "CategoriesTest12Db").Options;
+               .UseInMemoryDatabase(databaseName: "ColorsTest12Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Colors.Add(new Color { Id = "A", Name = "E" });
             dbContext.Colors.Add(new Color { Id = "B", Name = "F" });

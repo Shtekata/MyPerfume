@@ -187,7 +187,7 @@
         public async Task DeleteAsyncShouldReturnTrueWithCorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "CategoriesTest9Db").Options;
+                .UseInMemoryDatabase(databaseName: "PictureUrlsTest8Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", });
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", });
@@ -205,7 +205,7 @@
         public async Task DeleteAsyncShouldReturnFalseWithIncorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "CategoriesTest10Db").Options;
+                .UseInMemoryDatabase(databaseName: "PictureUrlsTest9Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", });
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", });
@@ -217,6 +217,54 @@
             var result = await service.DeleteAsync("D");
 
             Assert.Equal(0, result);
+        }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnTrueWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "PictureUrlsTest10Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", DesignerAndPerfumeNames = "E" });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", DesignerAndPerfumeNames = "F" });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "C", DesignerAndPerfumeNames = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
+            var service = new PictureUrlsService(repository);
+            var input = new PictureUrlDto
+            {
+                Id = "A",
+                DesignerAndPerfumeNames = "E",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.True(result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnFalseWithIncorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "PictureUrlsTest11Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", DesignerAndPerfumeNames = "E" });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", DesignerAndPerfumeNames = "F" });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "C", DesignerAndPerfumeNames = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
+            var service = new PictureUrlsService(repository);
+            var input = new PictureUrlDto
+            {
+                Id = "A",
+                DesignerAndPerfumeNames = "H",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.False(result);
+            return result;
         }
     }
 }

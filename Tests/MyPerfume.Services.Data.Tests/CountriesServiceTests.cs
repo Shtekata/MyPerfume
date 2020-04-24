@@ -190,7 +190,7 @@
         public async Task DeleteAsyncShouldReturnTrueWithCorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "CategoriesTest9Db").Options;
+                .UseInMemoryDatabase(databaseName: "CountriesTes9tDb").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Countries.Add(new Country { Id = "A", });
             dbContext.Countries.Add(new Country { Id = "B", });
@@ -208,7 +208,7 @@
         public async Task DeleteAsyncShouldReturnFalseWithIncorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "CategoriesTest10Db").Options;
+                .UseInMemoryDatabase(databaseName: "CountriesTes10tDb").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Countries.Add(new Country { Id = "A", });
             dbContext.Countries.Add(new Country { Id = "B", });
@@ -226,7 +226,7 @@
         public async Task<bool> IsTheSameInputShouldReturnTrueWithCorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "CategoriesTest11Db").Options;
+               .UseInMemoryDatabase(databaseName: "CountriesTes11tDb").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Countries.Add(new Country { Id = "A", Name = "E" });
             dbContext.Countries.Add(new Country { Id = "B", Name = "F" });
@@ -250,7 +250,7 @@
         public async Task<bool> IsTheSameInputShouldReturnFalseWithIncorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "CategoriesTest12Db").Options;
+               .UseInMemoryDatabase(databaseName: "CountriesTes12tDb").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.Countries.Add(new Country { Id = "A", Name = "E" });
             dbContext.Countries.Add(new Country { Id = "B", Name = "F" });

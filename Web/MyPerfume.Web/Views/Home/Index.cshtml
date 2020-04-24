@@ -6,15 +6,15 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
+    <h1 class="display-4">Добре дошли в @GlobalConstants.SystemName!</h1>
 </div>
 <hr />
 <h2 style="margin: 1%; text-align: center;">@this.ViewData["HomeWelcome"]</h2>
 <hr />
 <form>
-    @foreach (var perfume in @Model.OrderBy(x => x.Name).ThenBy(y => y.PictureUrls.OrderBy(z => z.PictureShowNumber).ToList()))
+    @foreach (var perfume in @Model.OrderBy(x => x.Name))
     {<div class="card">
-            <h5 class="card-header">Featured</h5>
+         <h5 class="card-header">Дизайнер: @perfume.DesignerName</h5>
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-7">
@@ -25,18 +25,16 @@
                                     <table class="table-sm table-bordered">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Designer</th>
-                                                <th scope="col">Customer Type</th>
-                                                <th scope="col">Country</th>
-                                                <th scope="col">Year Of Manifacture</th>
-                                                <th scope="col">Color</th>
+                                                <th scope="col">Парфюм</th>
+                                                <th scope="col">За кого е подходящ</th>
+                                                <th scope="col">Държава на произход</th>
+                                                <th scope="col">Година на производство</th>
+                                                <th scope="col">Цвят</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <th scope="row">@perfume.Name</th>
-                                                <td>@perfume.DesignerName</td>
                                                 <td>@perfume.CustomerType</td>
                                                 <td>@perfume.CountryName</td>
                                                 <td>@perfume.YearOfManifacture</td>
@@ -49,7 +47,7 @@
                         </section>
                     </div>
                     <div class="form-group col-md-1">
-                        <label asp-for="@perfume.Niche">Niche</label>
+                        <label asp-for="@perfume.Niche">Нишов</label>
                         <input type="checkbox" asp-for="@perfume.Niche" class="form-control" disabled />
                         <span asp-validation-for="@perfume.Niche" class="text-danger"></span>
                     </div>
@@ -63,7 +61,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        Description
+                        Описание на основните му характеристики:
                     </div>
                     <div class="card-body mb-5">
                         <blockquote class="blockquote mb-0">

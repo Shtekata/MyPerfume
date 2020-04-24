@@ -190,7 +190,7 @@
         public async Task DeleteAsyncShouldReturnTrueWithCorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "CategoriesTest9Db").Options;
+                .UseInMemoryDatabase(databaseName: "TopNotesTest9Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.TopNotes.Add(new TopNote { Id = "A", });
             dbContext.TopNotes.Add(new TopNote { Id = "B", });
@@ -208,7 +208,7 @@
         public async Task DeleteAsyncShouldReturnFalseWithIncorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "CategoriesTest10Db").Options;
+                .UseInMemoryDatabase(databaseName: "TopNotesTest10Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.TopNotes.Add(new TopNote { Id = "A", });
             dbContext.TopNotes.Add(new TopNote { Id = "B", });
@@ -220,6 +220,54 @@
             var result = await service.DeleteAsync("D");
 
             Assert.Equal(0, result);
+        }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnTrueWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "TopNotesTest11Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.TopNotes.Add(new TopNote { Id = "A", Name = "E" });
+            dbContext.TopNotes.Add(new TopNote { Id = "B", Name = "F" });
+            dbContext.TopNotes.Add(new TopNote { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<TopNote>(dbContext);
+            var service = new TopNotesService(repository);
+            var input = new BaseDto
+            {
+                Id = "A",
+                Name = "E",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.True(result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<bool> IsTheSameInputShouldReturnFalseWithIncorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "TopNotesTest12Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.TopNotes.Add(new TopNote { Id = "A", Name = "E" });
+            dbContext.TopNotes.Add(new TopNote { Id = "B", Name = "F" });
+            dbContext.TopNotes.Add(new TopNote { Id = "C", Name = "G" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<TopNote>(dbContext);
+            var service = new TopNotesService(repository);
+            var input = new BaseDto
+            {
+                Id = "A",
+                Name = "H",
+            };
+            var result = service.IsTheSameInput(input);
+
+            Assert.False(result);
+            return result;
         }
     }
 }
