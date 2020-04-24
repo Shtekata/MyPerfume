@@ -1,12 +1,23 @@
 ﻿@{
-    ViewBag.Title = "NotFound";
+    ViewBag.Title = "Не е намерена";
 }
-
-<h1>NotFound</h1>
-
-<form>
-    <h2>@ViewData["ErrorMessage"]</h2>
-</form>
-
-<a asp-area="" asp-controller="Home" asp-action="Index">Click here to navigate to the home page.</a>
+@{
+    this.ViewData["Title"] = "Не е намерено";
+}
+<html>
+<head>
+    <style>
+        body {
+            background-image: url(~/images/NotFound.png)
+        }
+    </style>
+</head>
+<body>
+    <h1>Ресурса, който се опита да използваш не беше намерен!</h1>
+    <form>
+        <h2>@ViewData["NotFoundMessage"]</h2>
+    </form>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Натисни тук за да се върнеш на началната страница.</a>
+</body>
+</html>
 

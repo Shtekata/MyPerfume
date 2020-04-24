@@ -34,7 +34,7 @@
             this.logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {
-                return this.LocalRedirect(returnUrl);
+                return this.LocalRedirect("/Identity/Account/Logout");
             }
             else
             {

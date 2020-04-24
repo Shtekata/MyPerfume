@@ -44,7 +44,7 @@
             code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
             var result = await this.userManager.ConfirmEmailAsync(user, code);
             await this.signInManager.SignInAsync(user, true);
-            this.StatusMessage = result.Succeeded ? "Thank you for confirming your email." : "Error confirming your email.";
+            this.StatusMessage = result.Succeeded ? "Благодаря че потвърдихте вашият акаунт." : "Error confirming your email.";
             return this.Page();
         }
     }

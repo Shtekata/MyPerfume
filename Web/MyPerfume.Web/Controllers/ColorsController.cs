@@ -46,7 +46,7 @@
             if (result == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not add {this.ViewData["ClassName"]} with Id : {input.Id}!";
-                return this.View("NotFound");
+                return this.View("Error");
             }
 
             return this.View("OperationIsOk");
@@ -68,7 +68,7 @@
 
             if (!this.colorsService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Item with this Id : {id} is not exists!";
+                this.ViewData["NotFoundMessage"] = $"Item with this Id : {id} is not exists!";
                 return this.View("NotFound");
             }
 
@@ -91,7 +91,7 @@
 
             if (!this.colorsService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Item with this Id : {input.Id} is not exists!";
+                this.ViewData["NotFoundMessage"] = $"Item with this Id : {input.Id} is not exists!";
                 return this.View("NotFound");
             }
 
@@ -113,7 +113,7 @@
             if (result == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
-                return this.View("NotFound");
+                return this.View("Error");
             }
 
             return this.View("OperationIsOk");
@@ -125,7 +125,7 @@
 
             if (!this.colorsService.ExistsById(id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {id}!";
+                this.ViewData["NotFoundMessage"] = $"Item with this Id : {id} is not exists!";
                 return this.View("NotFound");
             }
 
@@ -142,7 +142,7 @@
 
             if (!this.colorsService.ExistsById(input.Id))
             {
-                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {input.Id}!";
+                this.ViewData["NotFoundMessage"] = $"Item with this Id : {input.Id} is not exists!";
                 return this.View("NotFound");
             }
 
@@ -150,8 +150,8 @@
 
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not edit user {this.ViewData["ClassName"]} Id : {input.Id}!";
-                return this.View("NotFound");
+                this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {input.Id}!";
+                return this.View("Error");
             }
 
             return this.View("OperationIsOk");
