@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
 
+    using Ganss.XSS;
     using MyPerfume.Data.Models;
     using MyPerfume.Data.Models.Enums;
     using MyPerfume.Services.Mapping;
@@ -21,6 +22,8 @@
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public string SanitizedDescription => new HtmlSanitizer().Sanitize(this.Description);
 
         public bool Niche { get; set; }
 

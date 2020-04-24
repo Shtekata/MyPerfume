@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using Ganss.XSS;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using MyPerfume.Data.Models.Enums;
     using MyPerfume.Services.Mapping;
