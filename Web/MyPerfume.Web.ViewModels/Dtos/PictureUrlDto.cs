@@ -22,6 +22,8 @@
 
         public int PictureNumber { get; set; }
 
+        public int PictureShowNumber { get; set; }
+
         public string PerfumeId { get; set; }
 
         public DateTime CreatedOn { get; set; }

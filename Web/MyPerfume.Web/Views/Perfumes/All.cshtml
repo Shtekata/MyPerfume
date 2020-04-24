@@ -66,10 +66,13 @@
             {
                 <div class="form-group">
                     <div class="form-row">
-                        @foreach (var pictureUrl in perfume.PictureUrls.OrderBy(x => x.DesignerAndPerfumeNames).ThenBy(x => x.PictureNumber)) 
+                        @foreach (var pictureUrl in perfume.PictureUrls.OrderBy(x => x.DesignerAndPerfumeNames).ThenBy(x => x.PictureNumber))
                         {
                             <div class="form-group col-md-1">
                                 <input asp-for="@pictureUrl.PictureNumber" disabled class="form-control" placeholder="@pictureUrl.PictureNumber" />
+                            </div>
+                            <div class="form-group col-md-1">
+                                <input asp-for="@pictureUrl.PictureShowNumber" disabled class="form-control" placeholder="@pictureUrl.PictureShowNumber" />
                             </div>
                             <div class="form-group col-md-2">
                                 <div class="form-check m-1">

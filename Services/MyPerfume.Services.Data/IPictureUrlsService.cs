@@ -33,6 +33,8 @@
 
         List<SelectListItem> PictureNumbers();
 
+        List<SelectListItem> PictureShowNumbers();
+
         int GetCount();
     }
 }

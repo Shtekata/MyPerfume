@@ -17,20 +17,26 @@
     </div>
     <div class="form-group col-sm-6">
         <label asp-for="@Model.DesignerAndPerfumeNames"></label>
-        <input asp-for="@Model.DesignerAndPerfumeNames" class="form-control" placeholder="Enter name" />
+        <input asp-for="@Model.DesignerAndPerfumeNames" class="form-control" placeholder="@Model.DesignerAndPerfumeNames" />
         <span asp-validation-for="@Model.DesignerAndPerfumeNames" class="text-danger"></span>
     </div>
     <div class="form-group col-sm-3">
         <label asp-for="@Model.PictureNumber"></label>
-        <select asp-for="@Model.PictureNumber" class="form-control" asp-items="@Model.PictureNumbers" placeholder="Enter number of picture">
+        <select asp-for="@Model.PictureNumber" class="form-control" asp-items="@Model.PictureNumbers" placeholder="@Model.PictureNumbers">
         </select>
         <span asp-validation-for="@Model.PictureNumber" class="text-danger"></span>
+    </div>
+    <div class="form-group col-sm-3">
+        <label asp-for="@Model.PictureShowNumber"></label>
+        <select asp-for="@Model.PictureShowNumber" class="form-control" asp-items="@Model.PictureShowNumbers" placeholder="@Model.PictureShowNumbers">
+        </select>
+        <span asp-validation-for="@Model.PictureShowNumber" class="text-danger"></span>
     </div>
     <div class="form-group col-md-3">
         <input type="file" name="files" />
     </div>
-        <br />
-        <br />
+    <br />
+    <br />
     <hr />
     <div class="form-group col-sm-6">
         <button type="submit" class="btn btn-primary" asp-action="Add">Apply</button>

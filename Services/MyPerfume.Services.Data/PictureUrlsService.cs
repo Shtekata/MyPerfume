@@ -72,6 +72,7 @@
             model.DesignerAndPerfumeNames = dto.DesignerAndPerfumeNames;
             model.PictureNumber = dto.PictureNumber;
             model.Url = dto.Url;
+            model.PictureShowNumber = dto.PictureShowNumber;
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
@@ -154,7 +155,8 @@
 
             return
                 input.DesignerAndPerfumeNames == model.DesignerAndPerfumeNames &&
-                input.PictureNumber == model.PictureNumber;
+                input.PictureNumber == model.PictureNumber &&
+                input.PictureShowNumber == model.PictureShowNumber;
         }
 
         public bool GetByPerfumeAndPictureUrlId(string perfumeId, string pictureUrlIdInput)
@@ -180,6 +182,23 @@
         {
             var pictureNumbers = new List<SelectListItem>();
             for (int i = 1; i < 16; i++)
+            {
+                var pictureNumber = new SelectListItem
+                {
+                    Text = i.ToString(),
+                    Value = i.ToString(),
+                };
+
+                pictureNumbers.Add(pictureNumber);
+            }
+
+            return pictureNumbers;
+        }
+
+        public List<SelectListItem> PictureShowNumbers()
+        {
+            var pictureNumbers = new List<SelectListItem>();
+            for (int i = 1; i < 7; i++)
             {
                 var pictureNumber = new SelectListItem
                 {

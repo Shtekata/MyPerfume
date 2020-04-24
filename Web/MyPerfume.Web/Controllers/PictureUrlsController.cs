@@ -50,6 +50,7 @@
 
             var model = new PictureUrlInputModel();
             model.PictureNumbers = this.pictureUrlsService.PictureNumbers();
+            model.PictureShowNumbers = this.pictureUrlsService.PictureShowNumbers();
             return this.View(model);
         }
 
@@ -59,6 +60,7 @@
             this.ViewData["ControllerName"] = GlobalConstants.PictureUrlsControllerName;
 
             input.PictureNumbers = this.pictureUrlsService.PictureNumbers();
+            input.PictureShowNumbers = this.pictureUrlsService.PictureShowNumbers();
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
@@ -107,6 +109,7 @@
             var dto = this.pictureUrlsService.GetById(id);
             var model = AutoMapperConfig.MapperInstance.Map<PictureUrlInputModel>(dto);
             model.PictureNumbers = this.pictureUrlsService.PictureNumbers();
+            model.PictureShowNumbers = this.pictureUrlsService.PictureShowNumbers();
 
             return this.View(model);
         }
@@ -117,6 +120,7 @@
             this.ViewData["ClassName"] = GlobalConstants.PictureUrlsClassName;
             this.ViewData["ControllerName"] = GlobalConstants.PictureUrlsControllerName;
             input.PictureNumbers = this.pictureUrlsService.PictureNumbers();
+            input.PictureShowNumbers = this.pictureUrlsService.PictureShowNumbers();
 
             if (!this.ModelState.IsValid)
             {

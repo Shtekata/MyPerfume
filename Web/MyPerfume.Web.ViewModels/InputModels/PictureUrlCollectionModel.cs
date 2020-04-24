@@ -23,6 +23,8 @@
 
         public int PictureNumber { get; set; }
 
+        public int PictureShowNumber { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<PictureUrl, PictureUrlCollectionModel>()

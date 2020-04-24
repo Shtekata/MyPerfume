@@ -36,6 +36,10 @@
         [Range(1, 10000)]
         public int PictureNumber { get; set; }
 
+        public int PictureShowNumber { get; set; }
+
         public List<SelectListItem> PictureNumbers { get; set; }
+
+        public List<SelectListItem> PictureShowNumbers { get; set; }
     }
 }

@@ -28,6 +28,12 @@
         </select>
         <span asp-validation-for="@Model.PictureNumber" class="text-danger"></span>
     </div>
+    <div class="form-group col-sm-3">
+        <label asp-for="@Model.PictureShowNumber"></label>
+        <select asp-for="@Model.PictureShowNumber" class="form-control" asp-items="@Model.PictureShowNumbers" placeholder="@Model.PictureShowNumbers">
+        </select>
+        <span asp-validation-for="@Model.PictureShowNumber" class="text-danger"></span>
+    </div>
 
     <hr />
 
