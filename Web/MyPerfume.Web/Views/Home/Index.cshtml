@@ -55,7 +55,9 @@
                         @if (perfume.PictureUrls.Count() > 0)
                         {
                             var pictureUrls = perfume.PictureUrls.OrderBy(x => x.PictureShowNumber).ToList();
-                            <img src="@pictureUrls[0].Url" class="card-img rounded float-right" style="max-width: 350px; max-height: 350px;" />
+                            <a href="@pictureUrls[0].Url">
+                                <img src="@pictureUrls[0].Url" class="card-img rounded float-right" style="max-width: 350px; max-height: 350px;" />
+                            </a>
                         }
                     </div>
                 </div>
@@ -77,7 +79,9 @@
                         @for (int i = 1; i < maxPictures; i++)
                         {
                             var pictureUrls = perfume.PictureUrls.OrderBy(x => x.PictureShowNumber).ToList();
-                            <img src="@pictureUrls[i].Url" class="card-img" style="max-width: 210px; max-height: 210px;" />
+                            <a href="@pictureUrls[i].Url">
+                                <img src="@pictureUrls[i].Url" class="card-img" style="max-width: 210px; max-height: 210px;" />
+                            </a>
                         }
                     </div>
                 }
