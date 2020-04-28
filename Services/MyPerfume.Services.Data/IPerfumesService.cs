@@ -28,6 +28,6 @@
 
         int GetCount();
 
-        Task<IEnumerable<T>> GetPage<T>(int? take = null, int skip = 0);
+        Task<ICollection<T>> GetPage<T>(int? take = null, int skip = 0);
     }
 }

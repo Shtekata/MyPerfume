@@ -38,8 +38,8 @@
 
         public bool InStock { get; set; }
 
-        public virtual IEnumerable<PictureUrl> PictureUrls { get; set; }
+        public virtual ICollection<PictureUrl> PictureUrls { get; set; }
 
-        public virtual IEnumerable<Sale> Sales { get; set; }
+        public virtual ICollection<Sale> Sales { get; set; }
     }
 }

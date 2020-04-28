@@ -217,7 +217,7 @@
             return this.deletableEntityRepository.All().Count();
         }
 
-        public async Task<IEnumerable<T>> GetPage<T>(int? take = null, int skip = 0)
+        public async Task<ICollection<T>> GetPage<T>(int? take = null, int skip = 0)
         {
             var query = this.deletableEntityRepository.All()
                 .OrderBy(x => x.DesignerAndPerfumeNames)

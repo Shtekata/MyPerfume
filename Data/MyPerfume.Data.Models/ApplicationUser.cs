@@ -15,6 +15,9 @@ namespace MyPerfume.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Sales = new HashSet<Sale>();
+            this.Posts = new HashSet<Post>();
+            this.Comments = new HashSet<Comment>();
         }
 
         // Audit info
@@ -33,6 +36,10 @@ namespace MyPerfume.Data.Models
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
-        public ICollection<Sale> Sales => new HashSet<Sale>();
+        public virtual ICollection<Sale> Sales { get; set; }
+
+        public virtual ICollection<Post> Posts { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

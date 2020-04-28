@@ -17,6 +17,6 @@
         [MaxLength(100)]
         public string Name { get; set; }
 
-        public virtual IEnumerable<PerfumeTopNote> PerfumesTopNotes => new HashSet<PerfumeTopNote>();
+        public virtual ICollection<PerfumeTopNote> PerfumesTopNotes => new HashSet<PerfumeTopNote>();
     }
 }

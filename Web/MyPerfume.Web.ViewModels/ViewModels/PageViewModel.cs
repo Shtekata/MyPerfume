@@ -8,6 +8,6 @@
 
         public int PagesCount { get; set; }
 
-        public IEnumerable<PerfumeViewModel> Perfumes { get; set; }
+        public ICollection<PerfumeViewModel> Perfumes { get; set; }
     }
 }

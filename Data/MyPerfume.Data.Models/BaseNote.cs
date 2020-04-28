@@ -18,6 +18,6 @@
         [MaxLength(100)]
         public string Name { get; set; }
 
-        public virtual IEnumerable<PerfumeBaseNote> PerfumesBaseNotes { get; set; }
+        public virtual ICollection<PerfumeBaseNote> PerfumesBaseNotes { get; set; }
     }
 }

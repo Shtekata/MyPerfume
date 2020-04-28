@@ -193,9 +193,9 @@
                 .ToArray();
             var modelUrls = this.deletableEntityRepository.All()
                 .Where(x => x.Id == input.Id)
-                .Select(x => new Perfume
+                .Select(x => new PerfumeDto
                 {
-                    PictureUrls = x.PictureUrls.Select(y => new PictureUrl
+                    PictureUrls = x.PictureUrls.Select(y => new PictureUrlCollectionModel
                     {
                         Id = y.Id,
                     }),
@@ -291,7 +291,7 @@
             return this.deletableEntityRepository.All().Count();
         }
 
-        public async Task<IEnumerable<T>> GetPage<T>(int? take = null, int skip = 0)
+        public async Task<ICollection<T>> GetPage<T>(int? take = null, int skip = 0)
         {
             var query = this.deletableEntityRepository.All()
                 .OrderBy(x => x.Name)

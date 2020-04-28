@@ -49,21 +49,21 @@
 
         public virtual IEnumerable<PictureUrlCollectionModel> PictureUrls { get; set; }
 
-        public IEnumerable<string> TopNotes { get; set; }
+        public ICollection<string> TopNotes { get; set; }
 
-        public IEnumerable<string> HeartNotes { get; set; }
+        public ICollection<string> HeartNotes { get; set; }
 
-        public IEnumerable<string> BaseNotes { get; set; }
+        public ICollection<string> BaseNotes { get; set; }
 
-        public IEnumerable<string> Perfumers { get; set; }
+        public ICollection<string> Perfumers { get; set; }
 
-        public IEnumerable<string> AromaticGroups { get; set; }
+        public ICollection<string> AromaticGroups { get; set; }
 
-        public IEnumerable<string> PerfumesSeasons { get; set; }
+        public ICollection<string> PerfumesSeasons { get; set; }
 
-        public IEnumerable<string> PerfumesPurposes { get; set; }
+        public ICollection<string> PerfumesPurposes { get; set; }
 
-        public IEnumerable<string> Categories { get; set; }
+        public ICollection<string> Categories { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)
         {

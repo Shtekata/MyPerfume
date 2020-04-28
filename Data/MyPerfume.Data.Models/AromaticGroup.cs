@@ -18,6 +18,6 @@
         [MaxLength(100)]
         public string Name { get; set; }
 
-        public virtual IEnumerable<PerfumeAromaticGroup> PerfumesAromaticGroups { get; set; }
+        public virtual ICollection<PerfumeAromaticGroup> PerfumesAromaticGroups { get; set; }
     }
 }
