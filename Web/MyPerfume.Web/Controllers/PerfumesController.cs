@@ -72,7 +72,7 @@
 
             // var model = await this.perfumesService.GetAll<PerfumeViewModel>();
             var count = this.perfumesService.GetCount();
-            var model = new PageViewModel
+            var model = new PagePerfumeViewModel
             {
                 PagesCount = (int)Math.Ceiling((double)count / ItemsPerPage),
                 Perfumes = await this.perfumesService.GetPage<PerfumeViewModel>(ItemsPerPage, (id - 1) * ItemsPerPage),
@@ -193,6 +193,13 @@
             }
 
             return this.View("OperationIsOk");
+        }
+
+        public IActionResult ByName(string name)
+        {
+            var perfumDto = this.perfumesService.GetByName<PerfumeDto>(name);
+            var viewModel = AutoMapperConfig.MapperInstance.Map<PerfumeViewModel>(perfumDto);
+            return this.View(viewModel);
         }
     }
 }

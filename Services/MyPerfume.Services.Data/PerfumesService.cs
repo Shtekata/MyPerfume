@@ -3,8 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices.ComTypes;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -70,11 +68,18 @@
             return perfumDto;
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>()
-       => await this.deletableEntityRepository.AllAsNoTracking()
-            .OrderBy(x => x.Name)
-            .To<T>()
-            .ToArrayAsync();
+        public async Task<IEnumerable<T>> GetAll<T>(int? count = null)
+        {
+            IQueryable<Perfume> query = this.deletableEntityRepository.AllAsNoTracking()
+            .OrderBy(x => x.Name);
+            if (count.HasValue)
+            {
+                query = query.Take(count.Value);
+            }
+
+            return await query.To<T>()
+            .ToListAsync();
+        }
 
         public bool ExistsById(string id)
         {
@@ -166,6 +171,17 @@
 
             var dto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(model);
             return customDto;
+        }
+
+        public T GetByName<T>(string name)
+        {
+            var modifiedName = name.Replace('-', ' ');
+            var model = this.deletableEntityRepository.All()
+                .Where(x => x.Name == modifiedName)
+                .To<T>()
+                .FirstOrDefault();
+
+            return model;
         }
 
         public async Task<int> DeleteAsync(string id)
@@ -291,7 +307,7 @@
             return this.deletableEntityRepository.All().Count();
         }
 
-        public async Task<ICollection<T>> GetPage<T>(int? take = null, int skip = 0)
+        public async Task<IEnumerable<T>> GetPage<T>(int? take = null, int skip = 0)
         {
             var query = this.deletableEntityRepository.All()
                 .OrderBy(x => x.Name)

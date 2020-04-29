@@ -30,11 +30,18 @@
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>()
-       => await this.deletableEntityRepository.AllAsNoTracking()
-            .OrderBy(x => x.DesignerAndPerfumeNames)
-            .To<T>()
-            .ToArrayAsync();
+        public async Task<IEnumerable<T>> GetAll<T>(int? count = null)
+        {
+            IQueryable<PictureUrl> query = this.deletableEntityRepository.AllAsNoTracking()
+            .OrderBy(x => x.DesignerAndPerfumeNames);
+            if (count.HasValue)
+            {
+                query = query.Take(count.Value);
+            }
+
+            return await query.To<T>()
+            .ToListAsync();
+        }
 
         public bool ExistsById(string id)
         {
@@ -217,7 +224,7 @@
             return this.deletableEntityRepository.All().Count();
         }
 
-        public async Task<ICollection<T>> GetPage<T>(int? take = null, int skip = 0)
+        public async Task<IEnumerable<T>> GetPage<T>(int? take = null, int skip = 0)
         {
             var query = this.deletableEntityRepository.All()
                 .OrderBy(x => x.DesignerAndPerfumeNames)

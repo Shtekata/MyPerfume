@@ -11,7 +11,7 @@
     {
         Task<int> AddAsync(PictureUrlDto input);
 
-        Task<IEnumerable<T>> GetAll<T>();
+        Task<IEnumerable<T>> GetAll<T>(int? count = null);
 
         bool ExistsById(string id);
 
@@ -37,6 +37,6 @@
 
         int GetCount();
 
-        Task<ICollection<T>> GetPage<T>(int? take = null, int skip = 0);
+        Task<IEnumerable<T>> GetPage<T>(int? take = null, int skip = 0);
     }
 }

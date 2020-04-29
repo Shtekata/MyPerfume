@@ -26,11 +26,18 @@
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>()
-       => await this.deletableEntityRepository.AllAsNoTracking()
-            .OrderBy(x => x.Name)
-            .To<T>()
-            .ToArrayAsync();
+        public async Task<IEnumerable<T>> GetAll<T>(int? count = null)
+        {
+            IQueryable<HeartNote> query = this.deletableEntityRepository.AllAsNoTracking()
+            .OrderBy(x => x.Name);
+            if (count.HasValue)
+            {
+                query = query.Take(count.Value);
+            }
+
+            return await query.To<T>()
+            .ToListAsync();
+        }
 
         public bool ExistsById(string id)
         {

@@ -9,7 +9,7 @@
     {
         Task<int> AddAsync(BaseDto input);
 
-        Task<IEnumerable<T>> GetAll<T>();
+        Task<IEnumerable<T>> GetAll<T>(int? count = null);
 
         bool ExistsById(string id);
 

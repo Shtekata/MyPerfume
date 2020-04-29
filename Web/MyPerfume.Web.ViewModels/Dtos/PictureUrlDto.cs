@@ -5,7 +5,6 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.InputModels;
-    using MyPerfume.Web.ViewModels.ViewModels;
 
     public class PictureUrlDto : IMapFrom<PictureUrlInputModel>, IMapTo<PictureUrlInputModel>, IMapFrom<PictureUrl>, IMapTo<PictureUrl>
     {

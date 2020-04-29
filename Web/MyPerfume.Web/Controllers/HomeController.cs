@@ -26,7 +26,7 @@
             this.ViewData["HomeWelcome"] = GlobalConstants.HomeWelcome;
 
             var count = this.perfumesService.GetCount();
-            var model = new PageViewModel
+            var model = new PagePerfumeViewModel
             {
                 PagesCount = (int)Math.Ceiling((double)count / ItemsPerPage),
                 Perfumes = await this.perfumesService.GetPage<PerfumeViewModel>(ItemsPerPage, (id - 1) * ItemsPerPage),

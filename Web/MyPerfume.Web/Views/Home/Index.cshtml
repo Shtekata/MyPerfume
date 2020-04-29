@@ -1,6 +1,6 @@
 ﻿@using MyPerfume.Common
 @using MyPerfume.Web.ViewModels.ViewModels
-@model PageViewModel
+@model PagePerfumeViewModel
 @{
     this.ViewData["Title"] = "All Perfumes";
 }
@@ -14,7 +14,7 @@
 <form>
     @foreach (var perfume in @Model.Perfumes.OrderBy(x => x.Name))
     {<div class="card">
-            <h5 class="card-header">Дизайнер: @perfume.DesignerName</h5>
+            <h5 class="card-header">Парфюм: <a href="@perfume.Url">@perfume.Name</a></h5>
             <div class="card-body">
                 <div class="form-row">
                     <div class="form-group col-md-7">
@@ -25,7 +25,7 @@
                                     <table class="table-sm table-bordered">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th scope="col">Парфюм</th>
+                                                <th scope="col">Дизайнер</th>
                                                 <th scope="col">За кого е подходящ</th>
                                                 <th scope="col">Държава на произход</th>
                                                 <th scope="col">Година на производство</th>
@@ -34,7 +34,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th scope="row">@perfume.Name</th>
+                                                <th scope="row">@perfume.DesignerName</th>
                                                 <td>@perfume.CustomerType</td>
                                                 <td>@perfume.CountryName</td>
                                                 <td>@perfume.YearOfManifacture</td>
@@ -56,7 +56,7 @@
                         {
                             var pictureUrls = perfume.PictureUrls.OrderBy(x => x.PictureShowNumber).ToList();
                             <a href="@pictureUrls[0].Url">
-                                <img src="@pictureUrls[0].Url" class="card-img rounded float-right" style="max-width: 350px; max-height: 350px;" />
+                                <img src="@pictureUrls[0].Url" class="card-img rounded float-right" style="max-width: 350px; max-height: 350px;" alt="@perfume.Name" />
                             </a>
                         }
                     </div>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="card-body mb-5">
                         <blockquote class="blockquote mb-0">
-                            <h5 class="card-text"><small>@Html.Raw(@perfume.SanitizedDescription)</small></h5>
+                            <h5 class="card-text"><small>@Html.Raw(@perfume.SanitizedShortDescription)</small></h5>
                         </blockquote>
                     </div>
                 </div>
@@ -80,11 +80,15 @@
                         {
                             var pictureUrls = perfume.PictureUrls.OrderBy(x => x.PictureShowNumber).ToList();
                             <a href="@pictureUrls[i].Url">
-                                <img src="@pictureUrls[i].Url" class="card-img" style="max-width: 210px; max-height: 210px;" />
+                                <img src="@pictureUrls[i].Url" class="card-img" style="max-width: 210px; max-height: 210px;" alt="@perfume.Name" />
                             </a>
                         }
                     </div>
                 }
+                <hr />
+                <div>
+                    <p>Постове: @perfume.PostsCount</p>
+                </div>
                 <hr />
             </div>
         </div>
