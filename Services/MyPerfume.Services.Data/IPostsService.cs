@@ -6,7 +6,7 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Dtos;
 
-    public interface ITopNotesService
+    public interface IPostsService
     {
         Task<int> AddAsync(BaseDto input);
 
@@ -14,11 +14,11 @@
 
         bool ExistsById(string id);
 
-        bool ExistsByName(string name);
+        bool ExistsByTitle(string title);
 
         Task<int> EditAsync(BaseDto input);
 
-        TopNote GetByIdModel(string id);
+        Post GetByIdModel(string id);
 
         BaseDto GetById(string id);
 

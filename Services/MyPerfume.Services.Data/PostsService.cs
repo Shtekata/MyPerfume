@@ -10,26 +10,26 @@
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
 
-    public class DesignersService : IDesignersService
+    public class PostsService : IPostsService
     {
-        private readonly IDeletableEntityRepository<Designer> deletableEntityRepository;
+        private readonly IDeletableEntityRepository<Post> deletableEntityRepository;
 
-        public DesignersService(IDeletableEntityRepository<Designer> deletableEntityRepository)
+        public PostsService(IDeletableEntityRepository<Post> deletableEntityRepository)
         {
             this.deletableEntityRepository = deletableEntityRepository;
         }
 
         public async Task<int> AddAsync(BaseDto input)
         {
-            var model = new Designer { Name = input.Name };
+            var model = new Post { Title = input.Name };
             await this.deletableEntityRepository.AddAsync(model);
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<T>> GetAll<T>(int? count = null)
         {
-            IQueryable<Designer> query = this.deletableEntityRepository.AllAsNoTracking()
-            .OrderBy(x => x.Name);
+            IQueryable<Post> query = this.deletableEntityRepository.AllAsNoTracking()
+            .OrderBy(x => x.Title);
             if (count.HasValue)
             {
                 query = query.Take(count.Value);
@@ -53,10 +53,10 @@
             }
         }
 
-        public bool ExistsByName(string name)
+        public bool ExistsByTitle(string title)
         {
             var model = this.deletableEntityRepository.AllAsNoTracking()
-                 .FirstOrDefault(x => x.Name == name);
+                 .FirstOrDefault(x => x.Title == title);
             if (model != null)
             {
                 return true;
@@ -77,11 +77,11 @@
                 return 0;
             }
 
-            model.Name = input.Name;
+            model.Title = input.Name;
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
-        public Designer GetByIdModel(string id)
+        public Post GetByIdModel(string id)
         {
             return this.deletableEntityRepository.AllAsNoTracking()
                 .FirstOrDefault(x => x.Id == id);
@@ -115,7 +115,7 @@
                 .Where(x => x.Id == input.Id)
                 .FirstOrDefault();
 
-            return input.Name == model.Name;
+            return input.Name == model.Title;
         }
 
         public int GetCount()

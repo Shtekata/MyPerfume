@@ -15,18 +15,18 @@
     [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
     [Authorize]
     [Area("Management")]
-    public class AromaticGroupsController : BaseController
+    public class DesignersController : BaseController
     {
-        private readonly IAromaticGroupsService aromaticGroupsService;
+        private readonly IDesignersService designersService;
 
-        public AromaticGroupsController(IAromaticGroupsService aromaticGroupsService)
+        public DesignersController(IDesignersService designersService)
         {
-            this.aromaticGroupsService = aromaticGroupsService;
+            this.designersService = designersService;
         }
 
         public IActionResult Add()
         {
-            this.ViewData["ClassName"] = GlobalConstants.AromaticGroupsClassName;
+            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
 
             return this.View();
         }
@@ -34,20 +34,20 @@
         [HttpPost]
         public async Task<IActionResult> Add(BaseInputModel input)
         {
-            this.ViewData["ControllerName"] = GlobalConstants.AromaticGroupsControllerName;
+            this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
 
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            if (this.aromaticGroupsService.ExistsByName(input.Name))
+            if (this.designersService.ExistsByName(input.Name))
             {
                 return this.View("Exists");
             }
 
             var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
-            var result = await this.aromaticGroupsService.AddAsync(dto);
+            var result = await this.designersService.AddAsync(dto);
             if (result == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not add {this.ViewData["ClassName"]} with Id : {input.Id}!";
@@ -59,25 +59,25 @@
 
         public async Task<IActionResult> All()
         {
-            this.ViewData["ClassName"] = GlobalConstants.AromaticGroupsClassName;
-            this.ViewData["ClassNames"] = GlobalConstants.AromaticGroupsClassNames;
+            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
+            this.ViewData["ClassNames"] = GlobalConstants.DesignersClassNames;
 
-            var model = await this.aromaticGroupsService.GetAll<BaseViewModel>();
+            var model = await this.designersService.GetAll<BaseViewModel>();
 
             return this.View(model);
         }
 
         public IActionResult Edit(string id)
         {
-            this.ViewData["ClassName"] = GlobalConstants.AromaticGroupsClassName;
+            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
 
-            if (!this.aromaticGroupsService.ExistsById(id))
+            if (!this.designersService.ExistsById(id))
             {
                 this.ViewData["NotFoundMessage"] = $"Item with this Id : {id} is not exists!";
                 return this.View("NotFound");
             }
 
-            var dto = this.aromaticGroupsService.GetById(id);
+            var dto = this.designersService.GetById(id);
             var model = AutoMapperConfig.MapperInstance.Map<BaseInputModel>(dto);
 
             return this.View(model);
@@ -86,34 +86,34 @@
         [HttpPost]
         public async Task<IActionResult> Edit(BaseInputModel input)
         {
-            this.ViewData["ClassName"] = GlobalConstants.AromaticGroupsClassName;
-            this.ViewData["ControllerName"] = GlobalConstants.AromaticGroupsControllerName;
+            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
+            this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
 
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            if (!this.aromaticGroupsService.ExistsById(input.Id))
+            if (!this.designersService.ExistsById(input.Id))
             {
                 this.ViewData["NotFoundMessage"] = $"Item with this Id : {input.Id} is not exists!";
                 return this.View("NotFound");
             }
 
             var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
-            var isTheSameInput = this.aromaticGroupsService.IsTheSameInput(dto);
+            var isTheSameInput = this.designersService.IsTheSameInput(dto);
             if (isTheSameInput)
             {
                 this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
                 return this.View();
             }
 
-            if (this.aromaticGroupsService.ExistsByName(input.Name))
+            if (this.designersService.ExistsByName(input.Name))
             {
                 return this.View("Exists");
             }
 
-            var result = await this.aromaticGroupsService.EditAsync(dto);
+            var result = await this.designersService.EditAsync(dto);
 
             if (result == 0)
             {
@@ -126,15 +126,15 @@
 
         public IActionResult Delete(string id)
         {
-            this.ViewData["ClassName"] = GlobalConstants.AromaticGroupsClassName;
+            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
 
-            if (!this.aromaticGroupsService.ExistsById(id))
+            if (!this.designersService.ExistsById(id))
             {
                 this.ViewData["NotFoundMessage"] = $"Item with this Id : {id} is not exists!";
                 return this.View("NotFound");
             }
 
-            var dto = this.aromaticGroupsService.GetById(id);
+            var dto = this.designersService.GetById(id);
             var model = AutoMapperConfig.MapperInstance.Map<BaseViewModel>(dto);
 
             return this.View(model);
@@ -143,15 +143,15 @@
         [HttpPost]
         public async Task<IActionResult> Delete(BaseViewModel input)
         {
-            this.ViewData["ControllerName"] = GlobalConstants.AromaticGroupsControllerName;
+            this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
 
-            if (!this.aromaticGroupsService.ExistsById(input.Id))
+            if (!this.designersService.ExistsById(input.Id))
             {
                 this.ViewData["NotFoundMessage"] = $"Item with this Id : {input.Id} is not exists!";
                 return this.View("NotFound");
             }
 
-            var result = await this.aromaticGroupsService.DeleteAsync(input.Id);
+            var result = await this.designersService.DeleteAsync(input.Id);
 
             if (result == 0)
             {

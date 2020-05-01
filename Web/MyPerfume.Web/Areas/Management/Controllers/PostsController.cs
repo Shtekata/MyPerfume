@@ -1,22 +1,27 @@
-﻿namespace MyPerfume.Web.Controllers
+﻿namespace MyPerfume.Web.Areas.Management.Controllers
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyPerfume.Common;
     using MyPerfume.Services.Data;
     using MyPerfume.Services.Mapping;
+    using MyPerfume.Web.Controllers;
     using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.InputModels;
     using MyPerfume.Web.ViewModels.ViewModels;
 
-    public class DesignersController : BaseController
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
+    [Authorize]
+    [Area("Management")]
+    public class PostsController : BaseController
     {
-        private readonly IDesignersService designersService;
+        private readonly IPostsService postsService;
 
-        public DesignersController(IDesignersService designersService)
+        public PostsController(IPostsService postsService)
         {
-            this.designersService = designersService;
+            this.postsService = postsService;
         }
 
         public IActionResult Add()
@@ -36,13 +41,13 @@
                 return this.View(input);
             }
 
-            if (this.designersService.ExistsByName(input.Name))
+            if (this.postsService.ExistsByTitle(input.Name))
             {
                 return this.View("Exists");
             }
 
             var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
-            var result = await this.designersService.AddAsync(dto);
+            var result = await this.postsService.AddAsync(dto);
             if (result == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not add {this.ViewData["ClassName"]} with Id : {input.Id}!";
@@ -57,7 +62,7 @@
             this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
             this.ViewData["ClassNames"] = GlobalConstants.DesignersClassNames;
 
-            var model = await this.designersService.GetAll<BaseViewModel>();
+            var model = await this.postsService.GetAll<BaseViewModel>();
 
             return this.View(model);
         }
@@ -66,13 +71,13 @@
         {
             this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
 
-            if (!this.designersService.ExistsById(id))
+            if (!this.postsService.ExistsById(id))
             {
                 this.ViewData["NotFoundMessage"] = $"Item with this Id : {id} is not exists!";
                 return this.View("NotFound");
             }
 
-            var dto = this.designersService.GetById(id);
+            var dto = this.postsService.GetById(id);
             var model = AutoMapperConfig.MapperInstance.Map<BaseInputModel>(dto);
 
             return this.View(model);
@@ -89,26 +94,26 @@
                 return this.View(input);
             }
 
-            if (!this.designersService.ExistsById(input.Id))
+            if (!this.postsService.ExistsById(input.Id))
             {
                 this.ViewData["NotFoundMessage"] = $"Item with this Id : {input.Id} is not exists!";
                 return this.View("NotFound");
             }
 
             var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
-            var isTheSameInput = this.designersService.IsTheSameInput(dto);
+            var isTheSameInput = this.postsService.IsTheSameInput(dto);
             if (isTheSameInput)
             {
                 this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
                 return this.View();
             }
 
-            if (this.designersService.ExistsByName(input.Name))
+            if (this.postsService.ExistsByTitle(input.Name))
             {
                 return this.View("Exists");
             }
 
-            var result = await this.designersService.EditAsync(dto);
+            var result = await this.postsService.EditAsync(dto);
 
             if (result == 0)
             {
@@ -123,13 +128,13 @@
         {
             this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
 
-            if (!this.designersService.ExistsById(id))
+            if (!this.postsService.ExistsById(id))
             {
                 this.ViewData["NotFoundMessage"] = $"Item with this Id : {id} is not exists!";
                 return this.View("NotFound");
             }
 
-            var dto = this.designersService.GetById(id);
+            var dto = this.postsService.GetById(id);
             var model = AutoMapperConfig.MapperInstance.Map<BaseViewModel>(dto);
 
             return this.View(model);
@@ -140,13 +145,13 @@
         {
             this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
 
-            if (!this.designersService.ExistsById(input.Id))
+            if (!this.postsService.ExistsById(input.Id))
             {
                 this.ViewData["NotFoundMessage"] = $"Item with this Id : {input.Id} is not exists!";
                 return this.View("NotFound");
             }
 
-            var result = await this.designersService.DeleteAsync(input.Id);
+            var result = await this.postsService.DeleteAsync(input.Id);
 
             if (result == 0)
             {

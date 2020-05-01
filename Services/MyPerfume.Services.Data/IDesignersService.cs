@@ -18,7 +18,7 @@
 
         Task<int> EditAsync(BaseDto input);
 
-        Designer GetByIdDesigner(string id);
+        Designer GetByIdModel(string id);
 
         BaseDto GetById(string id);
 

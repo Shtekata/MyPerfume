@@ -81,7 +81,7 @@
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
-        public Country GetByIdCountry(string id)
+        public Country GetByIdModel(string id)
         {
             return this.deletableEntityRepository.AllAsNoTracking()
                 .FirstOrDefault(x => x.Id == id);
@@ -89,7 +89,7 @@
 
         public BaseDto GetById(string id)
         {
-            var model = this.GetByIdCountry(id);
+            var model = this.GetByIdModel(id);
 
             var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(model);
             return dto;

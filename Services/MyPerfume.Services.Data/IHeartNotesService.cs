@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
+    using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Dtos;
 
     public interface IHeartNotesService
@@ -16,6 +17,8 @@
         bool ExistsByName(string name);
 
         Task<int> EditAsync(BaseDto input);
+
+        HeartNote GetByIdModel(string id);
 
         BaseDto GetById(string id);
 

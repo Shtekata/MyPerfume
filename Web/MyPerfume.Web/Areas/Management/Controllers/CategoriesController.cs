@@ -1,15 +1,20 @@
-﻿namespace MyPerfume.Web.Controllers
+﻿namespace MyPerfume.Web.Areas.Management.Controllers
 {
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MyPerfume.Common;
     using MyPerfume.Services.Data;
     using MyPerfume.Services.Mapping;
+    using MyPerfume.Web.Controllers;
     using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.InputModels;
     using MyPerfume.Web.ViewModels.ViewModels;
 
+    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
+    [Authorize]
+    [Area("Management")]
     public class CategoriesController : BaseController
     {
         private readonly ICategoriesService categoriesService;

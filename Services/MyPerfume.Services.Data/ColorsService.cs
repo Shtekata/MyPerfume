@@ -87,9 +87,15 @@
                 .FirstOrDefault(x => x.Id == id);
         }
 
+        public Color GetByIdModel(string id)
+        {
+            return this.deletableEntityRepository.AllAsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
+        }
+
         public BaseDto GetById(string id)
         {
-            var model = this.GetByIdColor(id);
+            var model = this.GetByIdModel(id);
 
             var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(model);
             return dto;

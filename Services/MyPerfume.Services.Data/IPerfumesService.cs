@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Dtos;
 
     public interface IPerfumesService
@@ -17,6 +18,8 @@
         bool ExistsByName(string name);
 
         Task<int> EditAsync(PerfumeDto input);
+
+        Perfume GetByIdModel(string id);
 
         PerfumeDto GetById(string id);
 

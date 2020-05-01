@@ -141,10 +141,15 @@
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
+        public Perfume GetByIdModel(string id)
+        {
+            return this.deletableEntityRepository.AllAsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
+        }
+
         public PerfumeDto GetById(string id)
         {
-            var model = this.deletableEntityRepository.All()
-                 .FirstOrDefault(x => x.Id == id);
+            var model = this.GetByIdModel(id);
 
             var customDto = this.deletableEntityRepository.All()
                 .Where(x => x.Id == id)

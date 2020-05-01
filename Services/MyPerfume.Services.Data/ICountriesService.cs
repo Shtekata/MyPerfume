@@ -18,7 +18,7 @@
 
         Task<int> EditAsync(BaseDto input);
 
-        Country GetByIdCountry(string id);
+        Country GetByIdModel(string id);
 
         BaseDto GetById(string id);
 

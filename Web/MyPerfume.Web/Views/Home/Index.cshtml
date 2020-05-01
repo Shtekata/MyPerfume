@@ -86,8 +86,13 @@
                     </div>
                 }
                 <hr />
-                <div>
-                    <p>Постове: @perfume.PostsCount</p>
+                <div class="form-row">
+                    <div class="col-md-1">
+                        <p>Постове: @perfume.PostsCount</p>
+                    </div>
+                    <div class="col-md-11 text-right">
+                        <a class="btn btn-info" asp-controller="Posts" asp-action="Create">Създай нов пост !</a>
+                    </div>
                 </div>
                 <hr />
             </div>

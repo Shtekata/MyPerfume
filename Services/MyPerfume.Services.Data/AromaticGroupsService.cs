@@ -81,13 +81,17 @@
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
+        public AromaticGroup GetByIdModel(string id)
+        {
+            return this.deletableEntityRepository.AllAsNoTracking()
+                .FirstOrDefault(x => x.Id == id);
+        }
+
         public BaseDto GetById(string id)
         {
-            var model = this.deletableEntityRepository.AllAsNoTracking()
-                 .FirstOrDefault(x => x.Id == id);
+            var model = this.GetByIdModel(id);
 
             var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(model);
-
             return dto;
         }
 

@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.InputModels;
 
@@ -20,6 +21,8 @@
         Task<int> EditAsync(PictureUrlDto dto);
 
         Task<int> EditAsync(PerfumeDto input);
+
+        PictureUrl GetByIdModel(string id);
 
         PictureUrlDto GetById(string id);
 

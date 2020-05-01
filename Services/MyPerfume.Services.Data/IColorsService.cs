@@ -18,7 +18,7 @@
 
         Task<int> EditAsync(BaseDto input);
 
-        Color GetByIdColor(string id);
+        Color GetByIdModel(string id);
 
         BaseDto GetById(string id);
 
