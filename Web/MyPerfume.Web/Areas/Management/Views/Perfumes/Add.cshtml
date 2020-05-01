@@ -87,7 +87,10 @@
                     <div class="form-group col-md-1">
                         <input asp-for="@Model.PictureUrls[i].PictureNumber" disabled class="form-control" placeholder="@Model.PictureUrls[i].PictureNumber" />
                     </div>
-                    <div class="form-group col-md-3">
+                    <div class="form-group col-md-1">
+                        <input asp-for="@Model.PictureUrls[i].PictureShowNumber" disabled class="form-control" placeholder="@Model.PictureUrls[i].PictureShowNumber" />
+                    </div>
+                    <div class="form-group col-md-4">
                         <div class="form-check m-1">
                             <input type="hidden" asp-for="@Model.PictureUrls[i].Id" />
                             <input type="hidden" asp-for="@Model.PictureUrls[i].Url" />

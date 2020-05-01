@@ -1,5 +1,6 @@
 ﻿namespace MyPerfume.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -19,9 +20,10 @@
             this.deletableEntityRepository = deletableEntityRepository;
         }
 
-        public async Task<int> AddAsync(BaseDto input)
+        public async Task<int> AddAsync(PostDto input)
         {
-            var model = new Post { Title = input.Name };
+            var model = AutoMapperConfig.MapperInstance.Map<Post>(input);
+            model.Id = Guid.NewGuid().ToString();
             await this.deletableEntityRepository.AddAsync(model);
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
@@ -29,7 +31,7 @@
         public async Task<IEnumerable<T>> GetAll<T>(int? count = null)
         {
             IQueryable<Post> query = this.deletableEntityRepository.AllAsNoTracking()
-            .OrderBy(x => x.Title);
+            .OrderBy(x => x.CreatedOn);
             if (count.HasValue)
             {
                 query = query.Take(count.Value);
@@ -67,7 +69,7 @@
             }
         }
 
-        public async Task<int> EditAsync(BaseDto input)
+        public async Task<int> EditAsync(PostDto input)
         {
             var model = this.deletableEntityRepository.All()
                  .FirstOrDefault(x => x.Id == input.Id);
@@ -77,7 +79,8 @@
                 return 0;
             }
 
-            model.Title = input.Name;
+            model.Title = input.Title;
+            model.Content = input.Content;
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
@@ -87,11 +90,11 @@
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public BaseDto GetById(string id)
+        public PostDto GetById(string id)
         {
             var model = this.GetByIdModel(id);
 
-            var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(model);
+            var dto = AutoMapperConfig.MapperInstance.Map<PostDto>(model);
             return dto;
         }
 
@@ -109,13 +112,13 @@
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
-        public bool IsTheSameInput(BaseDto input)
+        public bool IsTheSameInput(PostDto input)
         {
             var model = this.deletableEntityRepository.All()
                 .Where(x => x.Id == input.Id)
                 .FirstOrDefault();
 
-            return input.Name == model.Title;
+            return input.Title == model.Title && input.Content == model.Content;
         }
 
         public int GetCount()

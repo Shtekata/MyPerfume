@@ -1,0 +1,30 @@
+﻿@using MyPerfume.Web.ViewModels.InputModels
+@model PostInputModel
+@{ 
+    this.ViewData["Title"] = "Add Post";
+}
+<h1><strong>@this.ViewData["PerfumeName"]</strong></h1>
+<h1>Попълни заглавието и съдържанието на твоя пост!</h1>
+
+<form method="post" enctype="multipart/form-data">
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <input hidden asp-for="@Model.PerfumeId" />
+    <input hidden asp-for="@Model.PerfumeName" />
+    <div class="form-group">
+        <label asp-for="@Model.Title">Заглавие</label>
+        <input asp-for="@Model.Title" class="form-control" placeholder="Въдеди заглавие..." />
+        <span asp-validation-for="@Model.Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Content">Съдържание</label>
+        <textarea asp-for="@Model.Content" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="@Model.Content" class="text-danger"></span>
+    </div>
+    <hr />
+
+    <button type="submit" class="btn btn-primary" asp-action="Create">Потвърди</button>
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Върни се обратно</a>
+</form>
+

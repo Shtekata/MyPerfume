@@ -9,11 +9,6 @@
 
     public class BaseDto : IMapFrom<BaseInputModel>, IMapTo<BaseInputModel>, IMapTo<BaseViewModel>, IMapFrom<Designer>, IMapFrom<AromaticGroup>, IMapFrom<BaseNote>, IMapFrom<Category>, IMapFrom<Color>, IMapFrom<Country>, IMapFrom<HeartNote>, IMapFrom<Perfumer>, IMapFrom<TopNote>
     {
-        public BaseDto()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
         public string Id { get; set; }
 
         public string Name { get; set; }

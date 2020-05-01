@@ -8,7 +8,8 @@
 <head>
     <style>
         body {
-            background-image: url(~/images/NotFound.png)
+            background-image: url("/images/NotFound.png");
+            background-color: #e9da15;
         }
     </style>
 </head>
@@ -17,7 +18,14 @@
     <form>
         <h2>@ViewData["NotFoundMessage"]</h2>
     </form>
-    <a asp-area="" asp-controller="Home" asp-action="Index">Натисни тук за да се върнеш на началната страница.</a>
+    <hr />
+    <br />
+    <br />
+    <a asp-area="" asp-controller="Home" asp-action="Index">
+        <h2>
+            <strong>Натисни тук за да се върнеш на началната страница.</strong>
+        </h2>
+    </a>
 </body>
 </html>
 

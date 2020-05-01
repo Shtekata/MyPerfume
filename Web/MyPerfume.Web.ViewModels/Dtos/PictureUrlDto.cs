@@ -8,11 +8,6 @@
 
     public class PictureUrlDto : IMapFrom<PictureUrlInputModel>, IMapTo<PictureUrlInputModel>, IMapFrom<PictureUrl>, IMapTo<PictureUrl>
     {
-        public PictureUrlDto()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
         public string Id { get; set; }
 
         public string Url { get; set; }

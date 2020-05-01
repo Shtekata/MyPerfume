@@ -86,6 +86,7 @@
             services.AddTransient<IPerfumersService, PerfumersService>();
             services.AddTransient<ITopNotesService, TopNotesService>();
             services.AddTransient<IPictureUrlsService, PictureUrlsService>();
+            services.AddTransient<IPostsService, PostsService>();
             services.AddApplicationInsightsTelemetry();
         }
 
@@ -131,7 +132,7 @@
             app.UseEndpoints(
                 endpoints =>
                     {
-                        endpoints.MapControllerRoute("perfume", "perfume/{name:length(3,20)}", new { controller = "Perfumes", action = "ByName" });
+                        endpoints.MapControllerRoute("perfume", "perfume/{name:length(3,20)}", new { area = "Management", controller = "Perfumes", action = "ByName" });
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();

@@ -12,11 +12,6 @@
 
     public class PerfumeViewModel : IMapFrom<Perfume>, IMapFrom<PerfumeDto>
     {
-        public PerfumeViewModel()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
         public string Id { get; set; }
 
         public string Name { get; set; }

@@ -73,5 +73,11 @@
         public const string PerfumesControllerName = "Perfumes";
 
         public const string HomeWelcome = "Тук ще можете да се потопите във вълшебният свят на ароматите!";
+
+        public const string PostsClassName = "post";
+
+        public const string PostsClassNames = "posts";
+
+        public const string PostsControllerName = "Posts";
     }
 }

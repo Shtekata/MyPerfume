@@ -8,7 +8,7 @@
 
     public interface IPostsService
     {
-        Task<int> AddAsync(BaseDto input);
+        Task<int> AddAsync(PostDto input);
 
         Task<IEnumerable<T>> GetAll<T>(int? count = null);
 
@@ -16,15 +16,15 @@
 
         bool ExistsByTitle(string title);
 
-        Task<int> EditAsync(BaseDto input);
+        Task<int> EditAsync(PostDto input);
 
         Post GetByIdModel(string id);
 
-        BaseDto GetById(string id);
+        PostDto GetById(string id);
 
         Task<int> DeleteAsync(string id);
 
-        bool IsTheSameInput(BaseDto input);
+        bool IsTheSameInput(PostDto input);
 
         int GetCount();
     }

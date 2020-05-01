@@ -1,10 +1,8 @@
 ﻿namespace MyPerfume.Web.ViewModels.InputModels
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using Ganss.XSS;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using MyPerfume.Data.Models.Enums;
     using MyPerfume.Services.Mapping;
@@ -12,11 +10,6 @@
 
     public class PerfumeInputModel : IMapFrom<PerfumeDto>
     {
-        public PerfumeInputModel()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
         public string Id { get; set; }
 
         [Required]

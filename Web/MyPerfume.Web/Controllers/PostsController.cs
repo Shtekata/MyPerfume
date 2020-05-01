@@ -1,75 +1,84 @@
-﻿namespace MyPerfume.Web.Areas.Management.Controllers
+﻿namespace MyPerfume.Web.Controllers
 {
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using MyPerfume.Common;
+    using MyPerfume.Data.Models;
     using MyPerfume.Services.Data;
     using MyPerfume.Services.Mapping;
-    using MyPerfume.Web.Controllers;
     using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.InputModels;
     using MyPerfume.Web.ViewModels.ViewModels;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
     [Authorize]
-    [Area("Management")]
     public class PostsController : BaseController
     {
         private readonly IPostsService postsService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public PostsController(IPostsService postsService)
+        public PostsController(IPostsService postsService, UserManager<ApplicationUser> userManager)
         {
             this.postsService = postsService;
+            this.userManager = userManager;
         }
 
-        public IActionResult Add()
+        public IActionResult Create(string id, string name)
         {
-            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
+            this.ViewData["PerfumeName"] = name;
 
-            return this.View();
+            var model = new PostInputModel
+            {
+                PerfumeName = name,
+                PerfumeId = id,
+            };
+            return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(BaseInputModel input)
+        public async Task<IActionResult> Create(PostInputModel input)
         {
-            this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
+            this.ViewData["ControllerName"] = GlobalConstants.PostsControllerName;
 
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            if (this.postsService.ExistsByTitle(input.Name))
+            if (this.postsService.ExistsByTitle(input.Title))
             {
                 return this.View("Exists");
             }
 
-            var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
+            var dto = AutoMapperConfig.MapperInstance.Map<PostDto>(input);
+            var user = await this.userManager.GetUserAsync(this.User);
+            dto.UserId = user.Id;
             var result = await this.postsService.AddAsync(dto);
             if (result == 0)
             {
-                this.ViewData["ErrorMessage"] = $"Can not add {this.ViewData["ClassName"]} with Id : {input.Id}!";
+                this.ViewData["ErrorMessage"] = $"Can not add {this.ViewData["ClassName"]} with Id : {input.Title}!";
                 return this.View("Error");
             }
 
-            return this.View("OperationIsOk");
+            return this.Redirect($"/perfume/{input.PerfumeName}");
         }
 
         public async Task<IActionResult> All()
         {
-            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
-            this.ViewData["ClassNames"] = GlobalConstants.DesignersClassNames;
+            this.ViewData["ClassName"] = GlobalConstants.PostsClassName;
+            this.ViewData["ClassNames"] = GlobalConstants.PostsClassNames;
 
             var model = await this.postsService.GetAll<BaseViewModel>();
 
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
         public IActionResult Edit(string id)
         {
-            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
+            this.ViewData["ClassName"] = GlobalConstants.PostsClassName;
 
             if (!this.postsService.ExistsById(id))
             {
@@ -83,11 +92,12 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(BaseInputModel input)
         {
-            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
-            this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
+            this.ViewData["ClassName"] = GlobalConstants.PostsClassName;
+            this.ViewData["ControllerName"] = GlobalConstants.PostsControllerName;
 
             if (!this.ModelState.IsValid)
             {
@@ -100,7 +110,7 @@
                 return this.View("NotFound");
             }
 
-            var dto = AutoMapperConfig.MapperInstance.Map<BaseDto>(input);
+            var dto = AutoMapperConfig.MapperInstance.Map<PostDto>(input);
             var isTheSameInput = this.postsService.IsTheSameInput(dto);
             if (isTheSameInput)
             {
@@ -124,9 +134,10 @@
             return this.View("OperationIsOk");
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
         public IActionResult Delete(string id)
         {
-            this.ViewData["ClassName"] = GlobalConstants.DesignersClassName;
+            this.ViewData["ClassName"] = GlobalConstants.PostsClassName;
 
             if (!this.postsService.ExistsById(id))
             {
@@ -140,10 +151,11 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
         [HttpPost]
         public async Task<IActionResult> Delete(BaseViewModel input)
         {
-            this.ViewData["ControllerName"] = GlobalConstants.DesignersControllerName;
+            this.ViewData["ControllerName"] = GlobalConstants.PostsControllerName;
 
             if (!this.postsService.ExistsById(input.Id))
             {

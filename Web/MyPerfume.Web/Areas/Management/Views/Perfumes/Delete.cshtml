@@ -35,7 +35,7 @@
     <div class="form-group">
         <input type="hidden" asp-for="@Model.Description" />
         <label asp-for="@Model.Description"></label>
-        <input asp-for="@Model.Description" disabled class="form-control" placeholder="@Model.Description" />
+        <input asp-for="@Model.Description" disabled class="form-control" placeholder="@Html.Raw(Model.Description)" />
     </div>
     <button type="submit" class="btn btn-danger" asp-action="Delete">Delete</button>
     <a class="btn btn-primary" asp-action="All">Back</a>

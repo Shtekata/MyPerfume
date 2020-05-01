@@ -13,7 +13,6 @@
     using MyPerfume.Web.ViewModels.InputModels;
     using MyPerfume.Web.ViewModels.ViewModels;
 
-    [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
     [Authorize]
     [Area("Management")]
     public class PerfumesController : BaseController
@@ -29,6 +28,7 @@
             this.pictureUrlsService = pictureUrlsService;
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
         public async Task<IActionResult> Add()
         {
             this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
@@ -40,6 +40,7 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
         [HttpPost]
         public async Task<IActionResult> Add(PerfumeInputModel input)
         {
@@ -91,6 +92,7 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
@@ -120,6 +122,7 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
         [HttpPost]
         public async Task<IActionResult> Edit(PerfumeInputModel input)
         {
@@ -159,6 +162,7 @@
             return this.View("OperationIsOk");
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
         public IActionResult Delete(string id)
         {
             this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
@@ -176,6 +180,7 @@
             return this.View(model);
         }
 
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName + "," + "Admin")]
         [HttpPost]
         public async Task<IActionResult> Delete(PerfumeInputModel input)
         {
@@ -200,6 +205,14 @@
 
         public IActionResult ByName(string name)
         {
+            this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
+
+            if (!this.perfumesService.ExistsByName(name))
+            {
+                this.ViewData["NotFoundMessage"] = $"Парфюм с такова име : {name} нямаме в нашия регистър!";
+                return this.View("NotFound");
+            }
+
             var perfumDto = this.perfumesService.GetByName<PerfumeDto>(name);
             var viewModel = AutoMapperConfig.MapperInstance.Map<PerfumeViewModel>(perfumDto);
             return this.View(viewModel);
