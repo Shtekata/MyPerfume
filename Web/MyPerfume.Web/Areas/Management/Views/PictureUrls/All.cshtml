@@ -4,14 +4,12 @@
     this.ViewData["Title"] = "All Picture Urls";
 }
 
-<h1>This is all @this.ViewData["ClassNames"]!</h1>
-
 <section class="py-5">
     <div class="container">
-        <h1 style="margin: 2%; text-align: center;">All @this.ViewData["ClassNames"]</h1>
+        <h2 style="margin: 1%; text-align: center;">All @this.ViewData["ClassNames"]</h2>
         <div class="form-row">
             <div class="col-md-2">
-                <a class="btn btn-primary" asp-action="Add">Add @this.ViewData["ClassName"]</a>
+                <a class="btn btn-success" asp-action="Add">Add @this.ViewData["ClassName"]</a>
             </div>
             <div class="col-md-10">
                 <nav aria-label="...">

@@ -35,37 +35,14 @@
             this.pictureUrlsService = pictureUrlsService;
         }
 
-        public async Task<PerfumeDto> AddAsync(PerfumeDto input)
+        public async Task<string> AddAsync(PerfumeAddDto input)
         {
-            // var model = AutoMapperConfig.MapperInstance.Map<Perfume>(input);
-            // model.Id = Guid.NewGuid().ToString();
-            var model = new Perfume
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = input.Name,
-                ColorId = input.ColorId,
-                CountryId = input.CountryId,
-                DesignerId = input.DesignerId,
-                CustomerType = input.CustomerType,
-                Niche = input.Niche,
-                YearOfManifacture = input.YearOfManifacture,
-                Description = input.Description,
-
-                // PictureUrls = input.PictureUrls.Where(x => x.IsSelected == true)
-                // .Select(x => new PictureUrl
-                // {
-                //    Id = x.Id,
-                //    DesignerAndPerfumeNames = x.DesignerAndPerfumeNames,
-                //    Url = x.Url,
-                // }),
-            };
+            var model = AutoMapperConfig.MapperInstance.Map<Perfume>(input);
+            model.Id = Guid.NewGuid().ToString();
 
             await this.deletableEntityRepository.AddAsync(model);
             await this.deletableEntityRepository.SaveChangesAsync();
-            var perfumDto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(model);
-            perfumDto.PictureUrls = input.PictureUrls;
-
-            return perfumDto;
+            return model.Id;
         }
 
         public async Task<IEnumerable<T>> GetAll<T>(int? count = null)

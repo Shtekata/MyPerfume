@@ -56,13 +56,15 @@
                 return this.View("Exists");
             }
 
-            var dto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(input);
-            var perfumeDto = await this.perfumesService.AddAsync(dto);
+            var dto = AutoMapperConfig.MapperInstance.Map<PerfumeAddDto>(input);
+            var modelId = await this.perfumesService.AddAsync(dto);
+            var dtoPerfume = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(input);
+            dtoPerfume.Id = modelId;
 
-            var result = await this.pictureUrlsService.EditAsync(perfumeDto);
+            var result = await this.pictureUrlsService.EditAsync(dtoPerfume);
             if (result == 0)
             {
-                this.ViewData["errormessage"] = $"can not add {this.ViewData["classname"]} with id : {input.Id}!";
+                this.ViewData["errormessage"] = $"Can not add pictures to {this.ViewData["classname"]} with id : {input.Id}!";
                 return this.View("Error");
             }
 

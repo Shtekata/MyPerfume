@@ -5,7 +5,14 @@
 }
 
 <h1 class="display-3">@Model.Name</h1>
-<a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Върни се обратно</a>
+<div class="form-row">
+    <div class="col-md-2">
+        <a class="btn btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Върни се обратно</a>
+    </div>
+    <div class="col-md-10 text-right">
+        <a class="btn btn-primary" asp-area="" asp-controller="Posts" asp-action="Create" asp-route-id="@Model.Id" asp-route-name="@Model.Name">Създай нов пост !</a>
+    </div>
+</div>
 <br />
 <br />
 <div class="alert alert-info">

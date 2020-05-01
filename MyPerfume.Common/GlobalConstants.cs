@@ -62,7 +62,7 @@
 
         public const string PictureUrlsClassName = "picture";
 
-        public const string PictureUrlsClassNames = "pictures";
+        public const string PictureUrlsClassNames = "PICTURES";
 
         public const string PictureUrlsControllerName = "PictureUrls";
 
