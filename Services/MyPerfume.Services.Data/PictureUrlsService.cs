@@ -86,13 +86,13 @@
         public async Task<int> EditAsync(PerfumeDto input)
         {
             var perfumId = input.Id;
-            var pictureUrls = input.PictureUrls.ToArray();
+            var pictureUrls = input.Extensions["PictureUrls"];
             for (var i = 0; i < pictureUrls.Count(); i++)
             {
                 var result = 0;
 
                 var pictureUrlModel = this.deletableEntityRepository.All()
-                    .FirstOrDefault(x => x.Id == pictureUrls[i].Id);
+                    .FirstOrDefault(x => x.Id == input.Extensions["PictureUrls"][i].Value);
 
                 if (pictureUrlModel == null)
                 {
@@ -100,12 +100,12 @@
                 }
 
                 var isAlreadyHaveThisPicture = pictureUrlModel.PerfumeId == perfumId;
-                if (pictureUrls[i].IsSelected && !isAlreadyHaveThisPicture)
+                if (pictureUrls[i].Selected && !isAlreadyHaveThisPicture)
                 {
                     pictureUrlModel.PerfumeId = perfumId;
                     result = await this.deletableEntityRepository.SaveChangesAsync();
                 }
-                else if (!pictureUrls[i].IsSelected && isAlreadyHaveThisPicture)
+                else if (!pictureUrls[i].Selected && isAlreadyHaveThisPicture)
                 {
                     pictureUrlModel.PerfumeId = null;
                     result = await this.deletableEntityRepository.SaveChangesAsync();
@@ -117,7 +117,7 @@
 
                 if (result == 1)
                 {
-                    if (i < input.PictureUrls.Count())
+                    if (i < pictureUrls.Count())
                     {
                         continue;
                     }
@@ -171,24 +171,24 @@
                 input.PictureShowNumber == model.PictureShowNumber;
         }
 
-        public bool GetByPerfumeAndPictureUrlId(string perfumeId, string pictureUrlIdInput)
-        {
-            var result = this.deletableEntityRepository.All()
-                .Any(x => x.PerfumeId == perfumeId && x.Id == pictureUrlIdInput);
+        //public bool GetByPerfumeAndPictureUrlId(string perfumeId, string pictureUrlIdInput)
+        //{
+        //    var result = this.deletableEntityRepository.All()
+        //        .Any(x => x.PerfumeId == perfumeId && x.Id == pictureUrlIdInput);
 
-            return result;
-        }
+        //    return result;
+        //}
 
-        public IList<T> GetPerfumePictures<T>()
-        {
-            var pictureUrls = this.deletableEntityRepository.AllAsNoTracking()
-                .OrderBy(x => x.DesignerAndPerfumeNames)
-                .ThenBy(x => x.PictureNumber)
-                .To<T>()
-                .ToList();
+        //public IList<T> GetPerfumePictures<T>()
+        //{
+        //    var pictureUrls = this.deletableEntityRepository.AllAsNoTracking()
+        //        .OrderBy(x => x.DesignerAndPerfumeNames)
+        //        .ThenBy(x => x.PictureNumber)
+        //        .To<T>()
+        //        .ToList();
 
-            return pictureUrls;
-        }
+        //    return pictureUrls;
+        //}
 
         public List<SelectListItem> PictureNumbers()
         {

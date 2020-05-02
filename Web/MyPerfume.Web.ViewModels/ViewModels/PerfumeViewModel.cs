@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Linq;
     using Ganss.XSS;
     using MyPerfume.Data.Models;
     using MyPerfume.Data.Models.Enums;
@@ -46,7 +46,9 @@
 
         public int PostsCount { get; set; }
 
-        public IList<PictureUrlCollectionModel> PictureUrls { get; set; }
+        public IList<PictureUrlViewModel> PictureUrls { get; set; }
+
+        public IList<PictureUrlViewModel> OrderedPictureUrls => this.PictureUrls.OrderBy(x => x.DesignerAndPerfumeNames).ThenBy(x => x.PictureNumber).ToList();
 
         public IEnumerable<PostDto> Posts { get; set; }
 

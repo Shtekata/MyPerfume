@@ -1,9 +1,12 @@
-﻿namespace MyPerfume.Web.ViewModels.InputModels
+﻿namespace MyPerfume.Web.ViewModels.ViewModels
 {
+    using System;
+
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
+    using MyPerfume.Web.ViewModels.Dtos;
 
-    public class PictureUrlCollectionModel : IMapFrom<PictureUrl>, IMapTo<PictureUrl>, IMapFrom<Perfume>
+    public class PictureUrlViewModelWithTime : IMapFrom<PictureUrl>
     {
         public string Id { get; set; }
 
@@ -16,5 +19,9 @@
         public int PictureNumber { get; set; }
 
         public int PictureShowNumber { get; set; }
+
+        public DateTime CreatedOn { get; set; }
+
+        public DateTime ModifiedOn { get; set; }
     }
 }

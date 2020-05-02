@@ -139,9 +139,9 @@
             var result = await service.EditAsync(new PerfumeDto
             {
                 Id = "3",
-                PictureUrls = new List<PictureUrlCollectionModel>
+                PictureUrls = new List<PictureUrlViewModel>
                 {
-                    new PictureUrlCollectionModel
+                    new PictureUrlViewModel
                     {
                         Id = "A",
                         Url = "E",
@@ -169,9 +169,9 @@
             var result = await service.EditAsync(new PerfumeDto
             {
                 Id = "3",
-                PictureUrls = new List<PictureUrlCollectionModel>
+                PictureUrls = new List<PictureUrlViewModel>
                 {
-                    new PictureUrlCollectionModel
+                    new PictureUrlViewModel
                     {
                         Id = "D",
                         Url = "E",

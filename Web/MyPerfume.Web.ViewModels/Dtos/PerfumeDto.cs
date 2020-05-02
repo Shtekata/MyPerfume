@@ -5,10 +5,12 @@
     using System.Linq;
 
     using AutoMapper;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using MyPerfume.Data.Models;
     using MyPerfume.Data.Models.Enums;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.InputModels;
+    using MyPerfume.Web.ViewModels.ViewModels;
 
     public class PerfumeDto : IMapFrom<PerfumeInputModel>, IMapFrom<Perfume>, IMapTo<Perfume>, IHaveCustomMappings
     {
@@ -44,7 +46,7 @@
 
         public int PostsCount { get; set; }
 
-        public IEnumerable<PictureUrlCollectionModel> PictureUrls { get; set; }
+        public IEnumerable<PictureUrlViewModel> PictureUrls { get; set; }
 
         public IEnumerable<string> TopNotes { get; set; }
 
@@ -63,10 +65,12 @@
 
         public IEnumerable<PostDto> Posts { get; set; }
 
+        public Dictionary<string, List<SelectListItem>> Extensions { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Perfume, PerfumeDto>()
-                .ForMember(x => x.PictureUrls, y => y.MapFrom(z => z.PictureUrls.Select(v => new PictureUrlCollectionModel
+                .ForMember(x => x.PictureUrls, y => y.MapFrom(z => z.PictureUrls.Select(v => new PictureUrlViewModel
                 {
                     Id = v.Id,
                     DesignerAndPerfumeNames = v.DesignerAndPerfumeNames,

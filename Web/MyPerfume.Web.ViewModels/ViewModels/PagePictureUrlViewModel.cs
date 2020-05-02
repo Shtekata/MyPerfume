@@ -8,6 +8,6 @@
 
         public int PagesCount { get; set; }
 
-        public IEnumerable<PictureUrlViewModel> PictureUrls { get; set; }
+        public IEnumerable<PictureUrlViewModelWithTime> PictureUrls { get; set; }
     }
 }

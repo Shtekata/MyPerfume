@@ -7,8 +7,9 @@
     using MyPerfume.Data.Models.Enums;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
+    using MyPerfume.Web.ViewModels.ViewModels;
 
-    public class PerfumeInputModel : IMapFrom<PerfumeDto>
+    public class PerfumeInputModel : IMapFrom<PerfumeDto>, IMapTo<PerfumeDto>
     {
         public string Id { get; set; }
 
@@ -41,8 +42,6 @@
 
         [Display(Name = "Picture")]
         public string PictureUrlId { get; set; }
-
-        public IList<PictureUrlCollectionModel> PictureUrls { get; set; }
 
         public Dictionary<string, List<SelectListItem>> Extensions { get; set; }
     }

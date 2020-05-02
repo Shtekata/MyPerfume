@@ -12,6 +12,7 @@
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.InputModels;
+    using MyPerfume.Web.ViewModels.ViewModels;
 
     public class PerfumesService : IPerfumesService
     {
@@ -120,39 +121,18 @@
 
         public Perfume GetByIdModel(string id)
         {
-            return this.deletableEntityRepository.AllAsNoTracking()
+            return this.deletableEntityRepository.All()
                 .FirstOrDefault(x => x.Id == id);
         }
 
-        public PerfumeDto GetById(string id)
+        public T GetById<T>(string id)
         {
-            var model = this.GetByIdModel(id);
-
-            var customDto = this.deletableEntityRepository.All()
+            var model = this.deletableEntityRepository.All()
                 .Where(x => x.Id == id)
-                .Select(x => new PerfumeDto
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    ColorId = x.ColorId,
-                    CountryId = x.CountryId,
-                    DesignerId = x.DesignerId,
-                    CustomerType = x.CustomerType,
-                    YearOfManifacture = (int)x.YearOfManifacture,
-                    ColorName = x.Color.Name,
-                    DesignerName = x.Designer.Name,
-                    CountryName = x.Country.Name,
-                    Niche = x.Niche,
-                    Description = x.Description,
-                    PictureUrls = x.PictureUrls.Select(y => new PictureUrlCollectionModel
-                    {
-                        Id = y.Id,
-                        DesignerAndPerfumeNames = y.DesignerAndPerfumeNames,
-                    }),
-                }).FirstOrDefault();
+                .To<T>()
+                .FirstOrDefault();
 
-            var dto = AutoMapperConfig.MapperInstance.Map<PerfumeDto>(model);
-            return customDto;
+            return model;
         }
 
         public T GetByName<T>(string name)
@@ -186,19 +166,23 @@
                 .Where(x => x.Id == input.Id)
                 .FirstOrDefault();
 
-            var inputPictureUrls = input.PictureUrls.Where(x => x.IsSelected == true)
-                .OrderBy(x => x.Id)
-                .ToArray();
+            var inputPictureUrls = input.Extensions["PictureUrls"].Where(x => x.Selected == true)
+                .OrderBy(x => x.Value)
+                .Select(x => x.Value)
+                .ToList();
             var modelUrls = this.deletableEntityRepository.All()
                 .Where(x => x.Id == input.Id)
                 .Select(x => new PerfumeDto
                 {
-                    PictureUrls = x.PictureUrls.Select(y => new PictureUrlCollectionModel
+                    PictureUrls = x.PictureUrls.Select(y => new PictureUrlViewModel
                     {
                         Id = y.Id,
                     }),
                 }).FirstOrDefault();
-            var modelPictureUrls = modelUrls.PictureUrls.OrderBy(x => x.Id).ToArray();
+            var modelPictureUrls = modelUrls.PictureUrls
+                .OrderBy(x => x.Id)
+                .Select(x => x.Id)
+                .ToList();
 
             if (inputPictureUrls.Count() != modelPictureUrls.Count())
             {
@@ -207,7 +191,7 @@
 
             for (int i = 0; i < inputPictureUrls.Count(); i++)
             {
-                if (inputPictureUrls[i].Id != modelPictureUrls[i].Id)
+                if (inputPictureUrls[i] != modelPictureUrls[i])
                 {
                     return false;
                 }
@@ -257,10 +241,14 @@
             }).ToList();
 
             var pictureUrlsModel = await this.pictureUrlsService.GetAll<PictureUrlDto>();
-            var pictureUrls = pictureUrlsModel.Select(x => new SelectListItem
+            var pictureUrls = pictureUrlsModel
+                .OrderBy(x => x.DesignerAndPerfumeNames)
+                .ThenBy(x => x.PictureNumber)
+                .ThenBy(x => x.PictureShowNumber)
+                .Select(x => new SelectListItem
             {
                 Value = x.Id.ToString(),
-                Text = $"{x.DesignerAndPerfumeNames} : снимка № {x.PictureNumber}",
+                Text = $"{x.DesignerAndPerfumeNames}/Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
             }).ToList();
 
             var years = new List<SelectListItem>();
@@ -282,6 +270,42 @@
             result["PictureUrls"] = pictureUrls;
 
             return result;
+        }
+
+        public async Task<Dictionary<string, List<SelectListItem>>> Extensions(string id)
+        {
+            var extensions = await this.Extensions();
+
+            var pictureUrlsAll = await this.pictureUrlsService.GetAll<PictureUrlDto>();
+            var pictureUrlsPerfumeModel = this.GetById<PictureUrlServiceModel>(id);
+            var pictureUrlsPerfume = string.Empty;
+
+            foreach (var pictureId in pictureUrlsPerfumeModel.PictureUrls)
+            {
+                pictureUrlsPerfume = pictureUrlsPerfume + pictureId + ',';
+            }
+
+            foreach (var picture in pictureUrlsAll)
+            {
+                if (pictureUrlsPerfume.Contains(picture.Id))
+                {
+                    picture.IsSelected = true;
+                }
+            }
+
+            var pictureUrls = pictureUrlsAll
+                .OrderBy(x => x.DesignerAndPerfumeNames)
+                .ThenBy(x => x.PictureNumber)
+                .ThenBy(x => x.PictureShowNumber)
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = $"{x.DesignerAndPerfumeNames}/Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
+                    Selected = x.IsSelected,
+                }).ToList();
+            extensions["PictureUrls"] = pictureUrls;
+
+            return extensions;
         }
 
         public int GetCount()

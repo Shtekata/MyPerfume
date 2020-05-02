@@ -69,7 +69,6 @@
                                     <table class="table-sm table-bordered">
                                         <thead class="thead-light">
                                             <tr>
-                                                <th scope="col">Name</th>
                                                 <th scope="col">Designer</th>
                                                 <th scope="col">Customer Type</th>
                                                 <th scope="col">Country</th>
@@ -79,8 +78,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th scope="row">@perfume.Name</th>
-                                                <td>@perfume.DesignerName</td>
+                                                <th scope="row">@perfume.DesignerName</th>
                                                 <td>@perfume.CustomerType</td>
                                                 <td>@perfume.CountryName</td>
                                                 <td>@perfume.YearOfManifacture</td>
@@ -109,23 +107,17 @@
                     </div>
                 </div>
                 <br />
-                @if (perfume.PictureUrls?.Count() > 0)
+                @if (perfume.OrderedPictureUrls?.Count() > 0)
                 {
                     <div class="form-group">
                         <div class="form-row">
-                            @foreach (var pictureUrl in perfume.PictureUrls.OrderBy(x => x.DesignerAndPerfumeNames).ThenBy(x => x.PictureNumber))
+                            @for (int i = 0; i < perfume.OrderedPictureUrls.Count(); i++)
                             {
-                                <div class="form-group col-md-1">
-                                    <input asp-for="@pictureUrl.PictureNumber" disabled class="form-control" placeholder="@pictureUrl.PictureNumber" />
-                                </div>
-                                <div class="form-group col-md-1">
-                                    <input asp-for="@pictureUrl.PictureShowNumber" disabled class="form-control" placeholder="@pictureUrl.PictureShowNumber" />
-                                </div>
                                 <div class="form-group col-md-4">
                                     <div class="form-check m-1">
-                                        <input asp-for="@pictureUrl.IsSelected" disabled class="form-check-input" />
-                                        <label class="form-check-label" asp-for="@pictureUrl.IsSelected">
-                                            @pictureUrl.DesignerAndPerfumeNames
+                                        <input asp-for="@perfume.OrderedPictureUrls[i].IsSelected" disabled class="form-check-input" />
+                                        <label class="form-check-label" asp-for="@perfume.OrderedPictureUrls[i].IsSelected">
+                                            @perfume.OrderedPictureUrls[i].DesignerAndPerfumeNames/Picture № @perfume.OrderedPictureUrls[i].PictureNumber/PShow № @perfume.OrderedPictureUrls[i].PictureShowNumber"
                                         </label>
                                     </div>
                                 </div>

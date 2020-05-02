@@ -30,9 +30,9 @@
 
         bool IsTheSameInput(PictureUrlDto input);
 
-        bool GetByPerfumeAndPictureUrlId(string perfumeId, string pictureUrlId);
+        //bool GetByPerfumeAndPictureUrlId(string perfumeId, string pictureUrlId);
 
-        IList<T> GetPerfumePictures<T>();
+        //IList<T> GetPerfumePictures<T>();
 
         List<SelectListItem> PictureNumbers();
 

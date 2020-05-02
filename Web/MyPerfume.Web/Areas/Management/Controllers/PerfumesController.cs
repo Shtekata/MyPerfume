@@ -4,11 +4,13 @@
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity.UI.V4.Pages.Internal;
     using Microsoft.AspNetCore.Mvc;
     using MyPerfume.Common;
     using MyPerfume.Services.Data;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.Controllers;
+    using MyPerfume.Web.ViewModels;
     using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.InputModels;
     using MyPerfume.Web.ViewModels.ViewModels;
@@ -35,7 +37,6 @@
 
             var model = new PerfumeInputModel();
             model.Extensions = await this.perfumesService.Extensions();
-            model.PictureUrls = this.pictureUrlsService.GetPerfumePictures<PictureUrlCollectionModel>();
 
             return this.View(model);
         }
@@ -65,7 +66,7 @@
             if (result == 0)
             {
                 this.ViewData["errormessage"] = $"Can not add pictures to {this.ViewData["classname"]} with id : {input.Id}!";
-                return this.View("Error");
+                return this.View("Error", new ErrorViewModel { RequestId = input.Id });
             }
 
             return this.View("OperationIsOk");
@@ -76,7 +77,6 @@
             this.ViewData["ClassName"] = GlobalConstants.PerfumesClassName;
             this.ViewData["ClassNames"] = GlobalConstants.PerfumesClassNames;
 
-            // var model = await this.perfumesService.GetAll<PerfumeViewModel>();
             var count = this.perfumesService.GetCount();
             var model = new PagePerfumeViewModel
             {
@@ -105,21 +105,9 @@
                 return this.View("NotFound");
             }
 
-            var dto = this.perfumesService.GetById(id);
+            var dto = this.perfumesService.GetById<PerfumeDto>(id);
             var model = AutoMapperConfig.MapperInstance.Map<PerfumeInputModel>(dto);
-            model.Extensions = await this.perfumesService.Extensions();
-            model.PictureUrls = this.pictureUrlsService.GetPerfumePictures<PictureUrlCollectionModel>();
-            foreach (var pictureUrl in model.PictureUrls)
-            {
-                if (this.pictureUrlsService.GetByPerfumeAndPictureUrlId(id, pictureUrl.Id))
-                {
-                    pictureUrl.IsSelected = true;
-                }
-                else
-                {
-                    pictureUrl.IsSelected = false;
-                }
-            }
+            model.Extensions = await this.perfumesService.Extensions(dto.Id);
 
             return this.View(model);
         }
@@ -148,7 +136,7 @@
             if (isTheSameInput)
             {
                 this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
-                input.Extensions = await this.perfumesService.Extensions();
+                input.Extensions = await this.perfumesService.Extensions(input.Id);
                 return this.View(input);
             }
 
@@ -158,7 +146,7 @@
             if (result1 == 0 && result2 == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
-                return this.View("Error");
+                return this.View("Error", new ErrorViewModel { RequestId = input.Id });
             }
 
             return this.View("OperationIsOk");
@@ -175,7 +163,7 @@
                 return this.View("NotFound");
             }
 
-            var dto = this.perfumesService.GetById(id);
+            var dto = this.perfumesService.GetById<PerfumeDto>(id);
 
             var model = AutoMapperConfig.MapperInstance.Map<PerfumeViewModel>(dto);
 
@@ -199,7 +187,7 @@
             if (result == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {input.Id}!";
-                return this.View("Error");
+                return this.View("Error", new ErrorViewModel { RequestId = input.Id });
             }
 
             return this.View("OperationIsOk");

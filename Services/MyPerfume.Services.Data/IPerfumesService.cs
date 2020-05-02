@@ -21,7 +21,7 @@
 
         Perfume GetByIdModel(string id);
 
-        PerfumeDto GetById(string id);
+        T GetById<T>(string id);
 
         T GetByName<T>(string name);
 
@@ -30,6 +30,9 @@
         bool IsTheSameInput(PerfumeDto input);
 
         Task<Dictionary<string, List<SelectListItem>>> Extensions();
+
+        Task<Dictionary<string, List<SelectListItem>>> Extensions(string id);
+
 
         int GetCount();
 

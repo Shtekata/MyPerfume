@@ -9,6 +9,7 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Data;
     using MyPerfume.Services.Mapping;
+    using MyPerfume.Web.ViewModels;
     using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.InputModels;
     using MyPerfume.Web.ViewModels.ViewModels;
@@ -59,7 +60,7 @@
             if (result == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not add {this.ViewData["ClassName"]} with Id : {input.Title}!";
-                return this.View("Error");
+                return this.View("Error", new ErrorViewModel { RequestId = input.Title });
             }
 
             return this.Redirect($"/perfume/{input.PerfumeName}");
@@ -128,7 +129,7 @@
             if (result == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not edit {this.ViewData["ClassName"]} with Id : {input.Id}!";
-                return this.View("Error");
+                return this.View("Error", new ErrorViewModel { RequestId = input.Id });
             }
 
             return this.View("OperationIsOk");
@@ -168,7 +169,7 @@
             if (result == 0)
             {
                 this.ViewData["ErrorMessage"] = $"Can not delete {this.ViewData["ClassName"]} with Id : {input.Id}!";
-                return this.View("Error");
+                return this.View("Error", new ErrorViewModel { RequestId = input.Id });
             }
 
             return this.View("OperationIsOk");
