@@ -4,14 +4,15 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Moq;
     using MyPerfume.Data;
     using MyPerfume.Data.Common.Repositories;
     using MyPerfume.Data.Models;
     using MyPerfume.Data.Repositories;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.InputModels;
     using Xunit;
 
     public class PictureUrlsServiceTests
@@ -98,7 +99,7 @@
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
             var service = new PictureUrlsService(repository);
-            var result = service.ExistsByUrl("E");
+            var result = service.ExistsByUrl("B", "E");
 
             Assert.True(result);
             return result;
@@ -117,21 +118,21 @@
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
             var service = new PictureUrlsService(repository);
-            var result = service.ExistsByUrl("H");
+            var result = service.ExistsByUrl("B", "F");
 
             Assert.False(result);
             return result;
         }
 
         [Fact]
-        public async Task<int> EditAsyncShouldReturnTrueWithCorrectInputUsingDbContext()
+        public async Task<int> EditAsyncShouldReturnTrueWithCorrectInputUsingPerfumeDtoAndDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PictureUrlsTest6Db").Options;
             var dbContext = new ApplicationDbContext(options);
-            dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", Url = "E", PerfumeId = "1" });
-            dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", Url = "F", PerfumeId = "2" });
-            dbContext.PicturesUrls.Add(new PictureUrl { Id = "C", Url = "G", PerfumeId = "3" });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", PerfumeId = "1" });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", PerfumeId = "2" });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "C", PerfumeId = "3" });
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
@@ -139,14 +140,77 @@
             var result = await service.EditAsync(new PerfumeDto
             {
                 Id = "3",
-                PictureUrls = new List<PictureUrlViewModel>
+                Extensions = new Dictionary<string, List<SelectListItem>>()
                 {
-                    new PictureUrlViewModel
                     {
-                        Id = "A",
-                        Url = "E",
+                        "PictureUrls", new List<SelectListItem>
+                    {
+                        new SelectListItem
+                        {
+                            Value = "A",
+                            Selected = true,
+                        },
+                    }
                     },
                 },
+            });
+
+            Assert.Equal(1, result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<int> EditAsyncShouldReturnFalseWithIncorrectInputUsingPerfumeDtoAndDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "PictureUrlsTest7Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", PerfumeId = "1" });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", PerfumeId = "2" });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "C", PerfumeId = "3" });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
+            var service = new PictureUrlsService(repository);
+            var result = await service.EditAsync(new PerfumeDto
+            {
+                Id = "3",
+                Extensions = new Dictionary<string, List<SelectListItem>>()
+                {
+                    {
+                        "PictureUrls", new List<SelectListItem>
+                    {
+                        new SelectListItem
+                        {
+                            Value = "D",
+                            Selected = true,
+                        },
+                    }
+                    },
+                },
+            });
+
+            Assert.Equal(0, result);
+            return result;
+        }
+
+        [Fact]
+        public async Task<int> EditAsyncShouldReturnTrueWithCorrectInputUsingDbContext()
+        {
+            var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+               .UseInMemoryDatabase(databaseName: "PictureUrlsTest8Db").Options;
+            var dbContext = new ApplicationDbContext(options);
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", PictureShowNumber = 1 });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", PictureShowNumber = 2 });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "C", PictureShowNumber = 3 });
+            await dbContext.SaveChangesAsync();
+
+            var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
+            var service = new PictureUrlsService(repository);
+            var result = await service.EditAsync(new PictureUrlDto
+            {
+                Id = "A",
+                PictureShowNumber = 5,
             });
 
             Assert.Equal(1, result);
@@ -157,26 +221,19 @@
         public async Task<int> EditAsyncShouldReturnFalseWithIncorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "PictureUrlsTest7Db").Options;
+               .UseInMemoryDatabase(databaseName: "PictureUrlsTest9Db").Options;
             var dbContext = new ApplicationDbContext(options);
-            dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", Url = "E", PerfumeId = "1" });
-            dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", Url = "F", PerfumeId = "2" });
-            dbContext.PicturesUrls.Add(new PictureUrl { Id = "C", Url = "G", PerfumeId = "3" });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", PictureShowNumber = 1 });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", PictureShowNumber = 2 });
+            dbContext.PicturesUrls.Add(new PictureUrl { Id = "C", PictureShowNumber = 3 });
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
             var service = new PictureUrlsService(repository);
-            var result = await service.EditAsync(new PerfumeDto
+            var result = await service.EditAsync(new PictureUrlDto
             {
-                Id = "3",
-                PictureUrls = new List<PictureUrlViewModel>
-                {
-                    new PictureUrlViewModel
-                    {
-                        Id = "D",
-                        Url = "E",
-                    },
-                },
+                Id = "D",
+                PictureShowNumber = 5,
             });
 
             Assert.Equal(0, result);
@@ -187,7 +244,7 @@
         public async Task DeleteAsyncShouldReturnTrueWithCorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "PictureUrlsTest8Db").Options;
+                .UseInMemoryDatabase(databaseName: "PictureUrlsTest10Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", });
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", });
@@ -205,7 +262,7 @@
         public async Task DeleteAsyncShouldReturnFalseWithIncorrectInputIdUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase(databaseName: "PictureUrlsTest9Db").Options;
+                .UseInMemoryDatabase(databaseName: "PictureUrlsTest11Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", });
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", });
@@ -223,7 +280,7 @@
         public async Task<bool> IsTheSameInputShouldReturnTrueWithCorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "PictureUrlsTest10Db").Options;
+               .UseInMemoryDatabase(databaseName: "PictureUrlsTest12Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", DesignerAndPerfumeNames = "E" });
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", DesignerAndPerfumeNames = "F" });
@@ -247,7 +304,7 @@
         public async Task<bool> IsTheSameInputShouldReturnFalseWithIncorrectInputUsingDbContext()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-               .UseInMemoryDatabase(databaseName: "PictureUrlsTest11Db").Options;
+               .UseInMemoryDatabase(databaseName: "PictureUrlsTest13Db").Options;
             var dbContext = new ApplicationDbContext(options);
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "A", DesignerAndPerfumeNames = "E" });
             dbContext.PicturesUrls.Add(new PictureUrl { Id = "B", DesignerAndPerfumeNames = "F" });

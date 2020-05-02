@@ -1,6 +1,5 @@
 ﻿namespace MyPerfume.Web.ViewModels.InputModels
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -27,8 +26,6 @@
             set => this.designerAndPerfumeNames = value.Replace(" ", string.Empty);
         }
 
-        [Required]
-        [Range(1, 10000)]
         public int PictureNumber { get; set; }
 
         public int PictureShowNumber { get; set; }

@@ -16,7 +16,7 @@
 
         bool ExistsById(string id);
 
-        bool ExistsByUrl(string url);
+        bool ExistsByUrl(string id, string url);
 
         Task<int> EditAsync(PictureUrlDto dto);
 
@@ -29,10 +29,6 @@
         Task<int> DeleteAsync(string id);
 
         bool IsTheSameInput(PictureUrlDto input);
-
-        //bool GetByPerfumeAndPictureUrlId(string perfumeId, string pictureUrlId);
-
-        //IList<T> GetPerfumePictures<T>();
 
         List<SelectListItem> PictureNumbers();
 

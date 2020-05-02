@@ -33,7 +33,6 @@
 
         Task<Dictionary<string, List<SelectListItem>>> Extensions(string id);
 
-
         int GetCount();
 
         Task<IEnumerable<T>> GetPage<T>(int? take = null, int skip = 0);

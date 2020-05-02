@@ -73,7 +73,7 @@
                 return this.View(input);
             }
 
-            if (this.pictureUrlsService.ExistsByUrl(input.Url))
+            if (this.pictureUrlsService.ExistsByUrl(input.Id, input.Url))
             {
                 return this.View("Exists");
             }
@@ -152,7 +152,7 @@
                 return this.View("NotFound");
             }
 
-            if (this.pictureUrlsService.ExistsByUrl(input.DesignerAndPerfumeNames))
+            if (this.pictureUrlsService.ExistsByUrl(input.Id, input.Url))
             {
                 return this.View("Exists");
             }

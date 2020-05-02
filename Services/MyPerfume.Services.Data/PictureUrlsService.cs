@@ -57,11 +57,11 @@
             }
         }
 
-        public bool ExistsByUrl(string url)
+        public bool ExistsByUrl(string id, string url)
         {
             var model = this.deletableEntityRepository.AllAsNoTracking()
                  .FirstOrDefault(x => x.Url == url);
-            if (model != null)
+            if (model != null && model.Id != id)
             {
                 return true;
             }
@@ -76,9 +76,11 @@
             var model = this.deletableEntityRepository.All()
                 .Where(x => x.Id == dto.Id)
                 .FirstOrDefault();
-            model.DesignerAndPerfumeNames = dto.DesignerAndPerfumeNames;
-            model.PictureNumber = dto.PictureNumber;
-            model.Url = dto.Url;
+            if (model == null)
+            {
+                return 0;
+            }
+
             model.PictureShowNumber = dto.PictureShowNumber;
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
@@ -170,25 +172,6 @@
                 input.PictureNumber == model.PictureNumber &&
                 input.PictureShowNumber == model.PictureShowNumber;
         }
-
-        //public bool GetByPerfumeAndPictureUrlId(string perfumeId, string pictureUrlIdInput)
-        //{
-        //    var result = this.deletableEntityRepository.All()
-        //        .Any(x => x.PerfumeId == perfumeId && x.Id == pictureUrlIdInput);
-
-        //    return result;
-        //}
-
-        //public IList<T> GetPerfumePictures<T>()
-        //{
-        //    var pictureUrls = this.deletableEntityRepository.AllAsNoTracking()
-        //        .OrderBy(x => x.DesignerAndPerfumeNames)
-        //        .ThenBy(x => x.PictureNumber)
-        //        .To<T>()
-        //        .ToList();
-
-        //    return pictureUrls;
-        //}
 
         public List<SelectListItem> PictureNumbers()
         {
