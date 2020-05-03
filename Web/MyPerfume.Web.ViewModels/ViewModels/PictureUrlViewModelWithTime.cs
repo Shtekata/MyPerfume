@@ -4,7 +4,6 @@
 
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
-    using MyPerfume.Web.ViewModels.Dtos;
 
     public class PictureUrlViewModelWithTime : IMapFrom<PictureUrl>
     {
@@ -14,7 +13,9 @@
 
         public bool IsSelected { get; set; }
 
-        public string DesignerAndPerfumeNames { get; set; }
+        public string DesignerName { get; set; }
+
+        public string PerfumeName { get; set; }
 
         public int PictureNumber { get; set; }
 

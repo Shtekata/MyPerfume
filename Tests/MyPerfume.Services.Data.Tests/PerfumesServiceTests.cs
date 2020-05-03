@@ -28,10 +28,12 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
-            var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
-            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
-
             var repository = new Mock<IDeletableEntityRepository<Perfume>>();
+            var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+
+            var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object, perfumePictureUrlRepository.Object, repository.Object);
+
             repository.Setup(r => r.All()).Returns(new List<Perfume>
                                                         {
                                                             new Perfume(),
@@ -55,8 +57,11 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
+            var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+
             var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
-            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "PerfumesTest1Db").Options;
@@ -83,8 +88,11 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
+            var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+
             var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
-            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PerfumesTest2Db").Options;
@@ -114,8 +122,11 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
+            var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+
             var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
-            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PerfumesTest3Db").Options;
@@ -145,8 +156,11 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
+            var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+
             var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
-            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PerfumesTest4Db").Options;
@@ -176,8 +190,11 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
+            var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+
             var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
-            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PerfumesTest5Db").Options;
@@ -207,8 +224,11 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
+            var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+
             var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
-            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PerfumesTest6Db").Options;
@@ -242,8 +262,11 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
+            var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+
             var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
-            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PerfumesTest7Db").Options;
@@ -277,8 +300,11 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
+            var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+
             var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
-            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "PerfumesTest8Db").Options;
@@ -307,8 +333,11 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
+            var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+
             var pictureUrlRepository = new Mock<IDeletableEntityRepository<PictureUrl>>();
-            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object);
+            var pictureUrlService = new PictureUrlsService(pictureUrlRepository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object);
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "PerfumesTest9Db").Options;

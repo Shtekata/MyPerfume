@@ -11,15 +11,22 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.InputModels;
+    using MyPerfume.Web.ViewModels.ViewModels;
 
     public class PictureUrlsService : IPictureUrlsService
     {
         private readonly IDeletableEntityRepository<PictureUrl> deletableEntityRepository;
+        private readonly IDeletableEntityRepository<PerfumePictureUrl> deletablePerfumePictureUrlRepository;
+        private readonly IDeletableEntityRepository<Perfume> deletablePerfumeEntityRepository;
 
-        public PictureUrlsService(IDeletableEntityRepository<PictureUrl> deletableEntityRepository)
+        public PictureUrlsService(
+            IDeletableEntityRepository<PictureUrl> deletableEntityRepository,
+            IDeletableEntityRepository<PerfumePictureUrl> deletablePerfumePictureUrlRepository,
+            IDeletableEntityRepository<Perfume> deletablePerfumeEntityRepository)
         {
             this.deletableEntityRepository = deletableEntityRepository;
+            this.deletablePerfumePictureUrlRepository = deletablePerfumePictureUrlRepository;
+            this.deletablePerfumeEntityRepository = deletablePerfumeEntityRepository;
         }
 
         public async Task<int> AddAsync(PictureUrlDto input)
@@ -33,7 +40,8 @@
         public async Task<IEnumerable<T>> GetAll<T>(int? count = null)
         {
             IQueryable<PictureUrl> query = this.deletableEntityRepository.AllAsNoTracking()
-            .OrderBy(x => x.DesignerAndPerfumeNames);
+            .OrderBy(x => x.DesignerName)
+            .ThenBy(x => x.PerfumeName);
             if (count.HasValue)
             {
                 query = query.Take(count.Value);
@@ -81,36 +89,48 @@
                 return 0;
             }
 
+            model.DesignerName = dto.DesignerName;
+            model.PerfumeName = dto.PerfumeName;
             model.PictureShowNumber = dto.PictureShowNumber;
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
 
         public async Task<int> EditAsync(PerfumeDto input)
         {
-            var perfumId = input.Id;
             var pictureUrls = input.Extensions["PictureUrls"];
+
+            var perfumPictureUrls = this.deletablePerfumeEntityRepository.All()
+                .Where(x => x.Id == input.Id)
+                .To<PictureUrlServiceModel>()
+                .FirstOrDefault();
+            var perfumPictureUrlsString = string.Empty;
+            foreach (var pictureId in perfumPictureUrls.PictureUrls)
+            {
+                perfumPictureUrlsString = perfumPictureUrlsString + pictureId + ',';
+            }
+
             for (var i = 0; i < pictureUrls.Count(); i++)
             {
                 var result = 0;
 
-                var pictureUrlModel = this.deletableEntityRepository.All()
-                    .FirstOrDefault(x => x.Id == input.Extensions["PictureUrls"][i].Value);
-
-                if (pictureUrlModel == null)
-                {
-                    return 0;
-                }
-
-                var isAlreadyHaveThisPicture = pictureUrlModel.PerfumeId == perfumId;
+                var isAlreadyHaveThisPicture = perfumPictureUrlsString.Contains(pictureUrls[i].Value);
                 if (pictureUrls[i].Selected && !isAlreadyHaveThisPicture)
                 {
-                    pictureUrlModel.PerfumeId = perfumId;
-                    result = await this.deletableEntityRepository.SaveChangesAsync();
+                    var perfumePictureUrl = new PerfumePictureUrl
+                    {
+                        PerfumeId = input.Id,
+                        PictureUrlId = pictureUrls[i].Value,
+                    };
+                    await this.deletablePerfumePictureUrlRepository.AddAsync(perfumePictureUrl);
+                    result = await this.deletablePerfumePictureUrlRepository.SaveChangesAsync();
                 }
                 else if (!pictureUrls[i].Selected && isAlreadyHaveThisPicture)
                 {
-                    pictureUrlModel.PerfumeId = null;
-                    result = await this.deletableEntityRepository.SaveChangesAsync();
+                    var perfumePictureUrl = this.deletablePerfumePictureUrlRepository.All()
+                        .FirstOrDefault(x => x.PerfumeId == input.Id && x.PictureUrlId == pictureUrls[i].Value);
+                    this.deletablePerfumePictureUrlRepository.Delete(perfumePictureUrl);
+
+                    result = await this.deletablePerfumePictureUrlRepository.SaveChangesAsync();
                 }
                 else
                 {
@@ -168,7 +188,8 @@
                 .FirstOrDefault();
 
             return
-                input.DesignerAndPerfumeNames == model.DesignerAndPerfumeNames &&
+                input.DesignerName == model.DesignerName &&
+                input.PerfumeName == model.PerfumeName &&
                 input.PictureNumber == model.PictureNumber &&
                 input.PictureShowNumber == model.PictureShowNumber;
         }
@@ -215,7 +236,8 @@
         public async Task<IEnumerable<T>> GetPage<T>(int? take = null, int skip = 0)
         {
             var query = this.deletableEntityRepository.All()
-                .OrderBy(x => x.DesignerAndPerfumeNames)
+                .OrderBy(x => x.DesignerName)
+                .ThenBy(x => x.PerfumeName)
                 .Skip(skip);
             if (take.HasValue)
             {

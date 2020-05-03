@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,7 +12,6 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.InputModels;
     using MyPerfume.Web.ViewModels.ViewModels;
 
     public class PerfumesService : IPerfumesService
@@ -174,9 +174,9 @@
                 .Where(x => x.Id == input.Id)
                 .Select(x => new PerfumeDto
                 {
-                    PictureUrls = x.PictureUrls.Select(y => new PictureUrlViewModel
+                    PictureUrls = x.PerfumesPictureUrls.Select(y => new PictureUrlViewModel
                     {
-                        Id = y.Id,
+                        Id = y.PictureUrlId,
                     }),
                 }).FirstOrDefault();
             var modelPictureUrls = modelUrls.PictureUrls
@@ -242,14 +242,15 @@
 
             var pictureUrlsModel = await this.pictureUrlsService.GetAll<PictureUrlDto>();
             var pictureUrls = pictureUrlsModel
-                .OrderBy(x => x.DesignerAndPerfumeNames)
+                .OrderBy(x => x.DesignerName)
+                .ThenBy(x => x.PerfumeName)
                 .ThenBy(x => x.PictureNumber)
                 .ThenBy(x => x.PictureShowNumber)
                 .Select(x => new SelectListItem
-            {
-                Value = x.Id.ToString(),
-                Text = $"{x.DesignerAndPerfumeNames}/Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
-            }).ToList();
+                {
+                    Value = x.Id.ToString(),
+                    Text = $"{x.DesignerName}/{x.PerfumeName}/Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
+                }).ToList();
 
             var years = new List<SelectListItem>();
             for (int i = 1900; i < 2050; i++)
@@ -294,13 +295,14 @@
             }
 
             var pictureUrls = pictureUrlsAll
-                .OrderBy(x => x.DesignerAndPerfumeNames)
+                .OrderBy(x => x.DesignerName)
+                .ThenBy(x => x.PerfumeName)
                 .ThenBy(x => x.PictureNumber)
                 .ThenBy(x => x.PictureShowNumber)
                 .Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),
-                    Text = $"{x.DesignerAndPerfumeNames}/Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
+                    Text = $"{x.DesignerName}/{x.PerfumeName}/Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
                     Selected = x.IsSelected,
                 }).ToList();
             extensions["PictureUrls"] = pictureUrls;

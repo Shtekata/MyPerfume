@@ -1,6 +1,7 @@
 ﻿namespace MyPerfume.Data.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using MyPerfume.Data.Common.Models;
@@ -10,6 +11,8 @@
         public PictureUrl()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.PerfumesPictureUrls = new HashSet<PerfumePictureUrl>();
+            this.ProductsPictureUrls = new HashSet<ProductPictureUrl>();
         }
 
         [Required]
@@ -17,19 +20,19 @@
         public string Url { get; set; }
 
         [Required]
-        [MaxLength(100)]
-        public string DesignerAndPerfumeNames { get; set; }
+        [MaxLength(50)]
+        public string DesignerName { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string PerfumeName { get; set; }
 
         public int PictureNumber { get; set; }
 
         public int PictureShowNumber { get; set; }
 
-        public string PerfumeId { get; set; }
+        public virtual ICollection<PerfumePictureUrl> PerfumesPictureUrls { get; set; }
 
-        public virtual Perfume Perfume { get; set; }
-
-        public string ProductId { get; set; }
-
-        public virtual Product Product { get; set; }
+        public virtual ICollection<ProductPictureUrl> ProductsPictureUrls { get; set; }
     }
 }

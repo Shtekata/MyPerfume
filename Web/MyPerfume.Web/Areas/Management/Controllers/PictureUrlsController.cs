@@ -158,12 +158,12 @@
             }
 
             var dto = AutoMapperConfig.MapperInstance.Map<PictureUrlDto>(input);
-            var isTheSameInput = this.pictureUrlsService.IsTheSameInput(dto);
-            if (isTheSameInput)
-            {
-                this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
-                return this.View(input);
-            }
+            //var isTheSameInput = this.pictureUrlsService.IsTheSameInput(dto);
+            //if (isTheSameInput)
+            //{
+            //    this.ModelState.AddModelError(string.Empty, "You mast enter a different value!");
+            //    return this.View(input);
+            //}
 
             var result = await this.pictureUrlsService.EditAsync(dto);
 

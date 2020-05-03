@@ -4,7 +4,7 @@
 
     using MyPerfume.Data.Common.Models;
 
-    public class PerfumeTopNote : BaseDeletableModel<int>
+    public class PerfumePictureUrl : BaseDeletableModel<int>
     {
         [Key]
         [Required]
@@ -14,8 +14,8 @@
 
         [Key]
         [Required]
-        public string TopNoteId { get; set; }
+        public string PictureUrlId { get; set; }
 
-        public virtual TopNote TopNote { get; set; }
+        public virtual PictureUrl PictureUrl { get; set; }
     }
 }

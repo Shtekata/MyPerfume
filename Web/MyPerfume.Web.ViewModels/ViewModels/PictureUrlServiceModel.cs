@@ -15,7 +15,7 @@
         {
             configuration.CreateMap<Perfume, PictureUrlServiceModel>().ForMember(
                m => m.PictureUrls,
-               opt => opt.MapFrom(x => x.PictureUrls.Select(y => y.Id)));
+               opt => opt.MapFrom(x => x.PerfumesPictureUrls.Select(y => y.PictureUrlId)));
         }
     }
 }

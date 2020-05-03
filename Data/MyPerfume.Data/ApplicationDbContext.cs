@@ -33,11 +33,13 @@
 
         public DbSet<Country> Countries { get; set; }
 
-        public DbSet<PictureUrl> PicturesUrls { get; set; }
-
         public DbSet<PerfumeSeason> PerfumesSeasons { get; set; }
 
         public DbSet<PerfumePurpose> PerfumesPurposes { get; set; }
+
+        public DbSet<PictureUrl> PictureUrls { get; set; }
+
+        public DbSet<PerfumePictureUrl> PerfumesPictureUrls { get; set; }
 
         public DbSet<Perfumer> Perfumers { get; set; }
 
@@ -64,6 +66,8 @@
         public DbSet<PerfumeAromaticGroup> PerfumesAromaticGroups { get; set; }
 
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<ProductPictureUrl> ProductsPictureUrls { get; set; }
 
         public DbSet<Sale> Sales { get; set; }
 
@@ -138,6 +142,16 @@
             builder.Entity<PerfumeAromaticGroup>(x =>
             {
                 x.HasKey(x => new { x.PerfumeId, x.AromaticGroupId });
+            });
+
+            builder.Entity<PerfumePictureUrl>(x =>
+            {
+                x.HasKey(x => new { x.PerfumeId, x.PictureUrlId });
+            });
+
+            builder.Entity<ProductPictureUrl>(x =>
+            {
+                x.HasKey(x => new { x.ProductId, x.PictureUrlId });
             });
 
             builder.Entity<Product>()

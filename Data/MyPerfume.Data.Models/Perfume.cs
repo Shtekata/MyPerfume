@@ -12,7 +12,7 @@
         public Perfume()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.PictureUrls = new HashSet<PictureUrl>();
+            this.PerfumesPictureUrls = new HashSet<PerfumePictureUrl>();
             this.PerfumesSeasons = new HashSet<PerfumeSeason>();
             this.PerfumesPurposes = new HashSet<PerfumePurpose>();
             this.PerfumesPerfumers = new HashSet<PerfumePerfumer>();
@@ -52,7 +52,7 @@
 
         public virtual Country Country { get; set; }
 
-        public virtual ICollection<PictureUrl> PictureUrls { get; set; }
+        public virtual ICollection<PerfumePictureUrl> PerfumesPictureUrls { get; set; }
 
         public virtual ICollection<PerfumeSeason> PerfumesSeasons { get; set; }
 

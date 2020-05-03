@@ -12,7 +12,7 @@
         public Product()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.PictureUrls = new List<PictureUrl>();
+            this.ProductsPictureUrls = new HashSet<ProductPictureUrl>();
             this.Sales = new HashSet<Sale>();
         }
 
@@ -38,7 +38,7 @@
 
         public bool InStock { get; set; }
 
-        public virtual ICollection<PictureUrl> PictureUrls { get; set; }
+        public virtual ICollection<ProductPictureUrl> ProductsPictureUrls { get; set; }
 
         public virtual ICollection<Sale> Sales { get; set; }
     }

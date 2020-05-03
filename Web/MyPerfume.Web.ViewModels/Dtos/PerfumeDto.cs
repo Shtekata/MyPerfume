@@ -46,6 +46,7 @@
 
         public int PostsCount { get; set; }
 
+        // public IEnumerable<PerfumePictureUrl> PerfumesPictureUrls { get; set; }
         public IEnumerable<PictureUrlViewModel> PictureUrls { get; set; }
 
         public IEnumerable<string> TopNotes { get; set; }
@@ -70,11 +71,14 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Perfume, PerfumeDto>()
-                .ForMember(x => x.PictureUrls, y => y.MapFrom(z => z.PictureUrls.Select(v => new PictureUrlViewModel
+                .ForMember(x => x.PictureUrls, y => y.MapFrom(z => z.PerfumesPictureUrls.Select(v => new PictureUrlViewModel
                 {
-                    Id = v.Id,
-                    DesignerAndPerfumeNames = v.DesignerAndPerfumeNames,
-                    IsSelected = true,
+                    Id = v.PictureUrlId,
+                    DesignerName = v.PictureUrl.DesignerName,
+                    PerfumeName = v.PictureUrl.PerfumeName,
+                    PictureNumber = v.PictureUrl.PictureNumber,
+                    PictureShowNumber = v.PictureUrl.PictureShowNumber,
+                    Url = v.PictureUrl.Url,
                 })));
         }
     }

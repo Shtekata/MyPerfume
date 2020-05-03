@@ -15,7 +15,9 @@
 
         public bool IsSelected { get; set; }
 
-        public string DesignerAndPerfumeNames { get; set; }
+        public string DesignerName { get; set; }
+
+        public string PerfumeName { get; set; }
 
         public int PictureNumber { get; set; }
 

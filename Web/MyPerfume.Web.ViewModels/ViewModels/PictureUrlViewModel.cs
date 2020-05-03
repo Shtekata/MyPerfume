@@ -3,7 +3,7 @@
     using MyPerfume.Data.Models;
     using MyPerfume.Services.Mapping;
 
-    public class PictureUrlViewModel : IMapFrom<PictureUrl>, IMapTo<PictureUrl>, IMapFrom<Perfume>
+    public class PictureUrlViewModel : IMapFrom<PictureUrl>, IMapTo<PictureUrl>, IMapFrom<PerfumePictureUrl>, IMapTo<PerfumePictureUrl>
     {
         public string Id { get; set; }
 
@@ -11,7 +11,9 @@
 
         public bool IsSelected { get; set; }
 
-        public string DesignerAndPerfumeNames { get; set; }
+        public string DesignerName { get; set; }
+
+        public string PerfumeName { get; set; }
 
         public int PictureNumber { get; set; }
 
