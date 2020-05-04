@@ -250,6 +250,11 @@
                     Value = x.Name,
                     Text = x.Name,
                 }).ToList();
+            result["Perfumes"].Add(new SelectListItem
+            {
+                Value = "Common",
+                Text = "Common",
+            });
 
             return result;
         }
