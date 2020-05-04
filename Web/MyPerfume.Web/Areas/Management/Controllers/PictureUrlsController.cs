@@ -54,7 +54,7 @@
             this.cloudBlobContainer = this.cloudBlobClient.GetContainerReference("pictures");
         }
 
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             this.ViewData["ClassName"] = GlobalConstants.PictureUrlsClassName;
 
@@ -118,7 +118,7 @@
             return this.View(model);
         }
 
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             this.ViewData["ClassName"] = GlobalConstants.PictureUrlsClassName;
 

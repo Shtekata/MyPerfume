@@ -27,6 +27,9 @@
         [MaxLength(50)]
         public string PerfumeName { get; set; }
 
+        [MaxLength(50)]
+        public string AdditionalInformation { get; set; }
+
         public int PictureNumber { get; set; }
 
         public int PictureShowNumber { get; set; }

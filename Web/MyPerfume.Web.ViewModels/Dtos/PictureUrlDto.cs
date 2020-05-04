@@ -19,6 +19,8 @@
 
         public string PerfumeName { get; set; }
 
+        public string AdditionalInformation { get; set; }
+
         public int PictureNumber { get; set; }
 
         public int PictureShowNumber { get; set; }

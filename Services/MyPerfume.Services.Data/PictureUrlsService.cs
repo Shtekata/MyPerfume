@@ -94,6 +94,7 @@
 
             model.DesignerName = dto.DesignerName;
             model.PerfumeName = dto.PerfumeName;
+            model.AdditionalInformation = dto.AdditionalInformation;
             model.PictureShowNumber = dto.PictureShowNumber;
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
