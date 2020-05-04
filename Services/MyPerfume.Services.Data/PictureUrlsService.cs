@@ -18,15 +18,18 @@
         private readonly IDeletableEntityRepository<PictureUrl> deletableEntityRepository;
         private readonly IDeletableEntityRepository<PerfumePictureUrl> deletablePerfumePictureUrlRepository;
         private readonly IDeletableEntityRepository<Perfume> deletablePerfumeEntityRepository;
+        private readonly IDeletableEntityRepository<Designer> deletableDesignerEntityRepository;
 
         public PictureUrlsService(
             IDeletableEntityRepository<PictureUrl> deletableEntityRepository,
             IDeletableEntityRepository<PerfumePictureUrl> deletablePerfumePictureUrlRepository,
-            IDeletableEntityRepository<Perfume> deletablePerfumeEntityRepository)
+            IDeletableEntityRepository<Perfume> deletablePerfumeEntityRepository,
+            IDeletableEntityRepository<Designer> deletableDesignerEntityRepository)
         {
             this.deletableEntityRepository = deletableEntityRepository;
             this.deletablePerfumePictureUrlRepository = deletablePerfumePictureUrlRepository;
             this.deletablePerfumeEntityRepository = deletablePerfumeEntityRepository;
+            this.deletableDesignerEntityRepository = deletableDesignerEntityRepository;
         }
 
         public async Task<int> AddAsync(PictureUrlDto input)
@@ -226,6 +229,29 @@
             }
 
             return pictureNumbers;
+        }
+
+        public Dictionary<string, List<SelectListItem>> Extensions()
+        {
+            var result = new Dictionary<string, List<SelectListItem>>();
+            result["PictureNumbers"] = this.PictureNumbers();
+            result["PictureShowNumbers"] = this.PictureShowNumbers();
+            result["Designers"] = this.deletableDesignerEntityRepository.AllAsNoTracking()
+                .OrderBy(x => x.Name)
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Name,
+                    Text = x.Name,
+                }).ToList();
+            result["Perfumes"] = this.deletablePerfumeEntityRepository.AllAsNoTracking()
+                .OrderBy(x => x.Name)
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Name,
+                    Text = x.Name,
+                }).ToList();
+
+            return result;
         }
 
         public int GetCount()

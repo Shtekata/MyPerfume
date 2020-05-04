@@ -219,27 +219,31 @@
 
         public async Task<Dictionary<string, List<SelectListItem>>> Extensions()
         {
-            var designersModel = await this.designersService.GetAll<BaseDto>();
-            var designers = designersModel.Select(x => new SelectListItem
-            {
-                Value = x.Id,
-                Text = x.Name,
-            }).ToList();
+            var result = new Dictionary<string, List<SelectListItem>>();
+            result["Designers"] = await this.GetDesignersAsync();
+            result["Colors"] = await this.GetColorsAsync();
+            result["Countries"] = await this.GetCountriesAsync();
+            result["Years"] = this.GetYears();
+            result["PictureUrls"] = await this.GetPictureUrlsAsync();
 
-            var colorsModel = await this.colorsService.GetAll<BaseDto>();
-            var colors = colorsModel.Select(x => new SelectListItem
-            {
-                Value = x.Id,
-                Text = x.Name,
-            }).ToList();
+            return result;
+        }
 
-            var countriesModel = await this.countriesService.GetAll<BaseDto>();
-            var countries = countriesModel.Select(x => new SelectListItem
-            {
-                Value = x.Id.ToString(),
-                Text = x.Name,
-            }).ToList();
+        public List<SelectListItem> GetPerfumes()
+        {
+            var perfumes = this.deletableEntityRepository.AllAsNoTracking()
+                .OrderBy(x => x.Name)
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = $"{x.Name}",
+                }).ToList();
 
+            return perfumes;
+        }
+
+        public async Task<List<SelectListItem>> GetPictureUrlsAsync()
+        {
             var pictureUrlsModel = await this.pictureUrlsService.GetAll<PictureUrlDto>();
             var pictureUrls = pictureUrlsModel
                 .OrderBy(x => x.DesignerName)
@@ -252,6 +256,11 @@
                     Text = $"{x.DesignerName}/{x.PerfumeName}/Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
                 }).ToList();
 
+            return pictureUrls;
+        }
+
+        public List<SelectListItem> GetYears()
+        {
             var years = new List<SelectListItem>();
             for (int i = 1900; i < 2050; i++)
             {
@@ -263,14 +272,43 @@
                 years.Add(year);
             }
 
-            var result = new Dictionary<string, List<SelectListItem>>();
-            result["Designers"] = designers;
-            result["Colors"] = colors;
-            result["Countries"] = countries;
-            result["Years"] = years;
-            result["PictureUrls"] = pictureUrls;
+            return years;
+        }
 
-            return result;
+        public async Task<List<SelectListItem>> GetCountriesAsync()
+        {
+            var countriesModel = await this.countriesService.GetAll<BaseDto>();
+            var countries = countriesModel.Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name,
+            }).ToList();
+
+            return countries;
+        }
+
+        public async Task<List<SelectListItem>> GetColorsAsync()
+        {
+            var colorsModel = await this.colorsService.GetAll<BaseDto>();
+            var colors = colorsModel.Select(x => new SelectListItem
+            {
+                Value = x.Id,
+                Text = x.Name,
+            }).ToList();
+
+            return colors;
+        }
+
+        public async Task<List<SelectListItem>> GetDesignersAsync()
+        {
+            var designersModel = await this.designersService.GetAll<BaseDto>();
+            var designers = designersModel.Select(x => new SelectListItem
+            {
+                Value = x.Id,
+                Text = x.Name,
+            }).ToList();
+
+            return designers;
         }
 
         public async Task<Dictionary<string, List<SelectListItem>>> Extensions(string id)

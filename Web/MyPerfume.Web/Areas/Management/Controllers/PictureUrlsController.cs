@@ -31,6 +31,7 @@
         private const int ItemsPerPage = 10;
 
         private readonly IPictureUrlsService pictureUrlsService;
+        private readonly IPerfumesService perfumesService;
         private readonly IWebHostEnvironment env;
         private StorageCredentials storageCredentials;
         private CloudStorageAccount cloudStorageAccount;
@@ -40,10 +41,12 @@
 
         public PictureUrlsController(
             IPictureUrlsService pictureUrlsService,
+            IPerfumesService perfumesService,
             IWebHostEnvironment env,
             IConfiguration configuration)
         {
             this.pictureUrlsService = pictureUrlsService;
+            this.perfumesService = perfumesService;
             this.env = env;
             this.storageCredentials = new StorageCredentials(configuration["BlobStorageName"], configuration["BlobKey"]);
             this.cloudStorageAccount = new CloudStorageAccount(this.storageCredentials, true);
@@ -51,13 +54,13 @@
             this.cloudBlobContainer = this.cloudBlobClient.GetContainerReference("pictures");
         }
 
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
             this.ViewData["ClassName"] = GlobalConstants.PictureUrlsClassName;
 
             var model = new PictureUrlInputModel();
-            model.PictureNumbers = this.pictureUrlsService.PictureNumbers();
-            model.PictureShowNumbers = this.pictureUrlsService.PictureShowNumbers();
+            model.Extensions = this.pictureUrlsService.Extensions();
+
             return this.View(model);
         }
 
@@ -66,10 +69,10 @@
         {
             this.ViewData["ControllerName"] = GlobalConstants.PictureUrlsControllerName;
 
-            input.PictureNumbers = this.pictureUrlsService.PictureNumbers();
-            input.PictureShowNumbers = this.pictureUrlsService.PictureShowNumbers();
             if (!this.ModelState.IsValid)
             {
+                input.Extensions = this.pictureUrlsService.Extensions();
+
                 return this.View(input);
             }
 
@@ -115,7 +118,7 @@
             return this.View(model);
         }
 
-        public IActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
             this.ViewData["ClassName"] = GlobalConstants.PictureUrlsClassName;
 
@@ -127,8 +130,7 @@
 
             var dto = this.pictureUrlsService.GetById(id);
             var model = AutoMapperConfig.MapperInstance.Map<PictureUrlInputModel>(dto);
-            model.PictureNumbers = this.pictureUrlsService.PictureNumbers();
-            model.PictureShowNumbers = this.pictureUrlsService.PictureShowNumbers();
+            model.Extensions = this.pictureUrlsService.Extensions();
 
             return this.View(model);
         }
@@ -138,8 +140,7 @@
         {
             this.ViewData["ClassName"] = GlobalConstants.PictureUrlsClassName;
             this.ViewData["ControllerName"] = GlobalConstants.PictureUrlsControllerName;
-            input.PictureNumbers = this.pictureUrlsService.PictureNumbers();
-            input.PictureShowNumbers = this.pictureUrlsService.PictureShowNumbers();
+            input.Extensions = this.pictureUrlsService.Extensions();
 
             if (!this.ModelState.IsValid)
             {

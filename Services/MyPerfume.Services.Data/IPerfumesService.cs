@@ -31,6 +31,18 @@
 
         Task<Dictionary<string, List<SelectListItem>>> Extensions();
 
+        List<SelectListItem> GetPerfumes();
+
+        Task<List<SelectListItem>> GetPictureUrlsAsync();
+
+        List<SelectListItem> GetYears();
+
+        Task<List<SelectListItem>> GetCountriesAsync();
+
+        Task<List<SelectListItem>> GetColorsAsync();
+
+        Task<List<SelectListItem>> GetDesignersAsync();
+
         Task<Dictionary<string, List<SelectListItem>>> Extensions(string id);
 
         int GetCount();

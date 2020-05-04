@@ -6,7 +6,6 @@
     using Microsoft.AspNetCore.Mvc.Rendering;
     using MyPerfume.Data.Models;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.InputModels;
 
     public interface IPictureUrlsService
     {
@@ -33,6 +32,8 @@
         List<SelectListItem> PictureNumbers();
 
         List<SelectListItem> PictureShowNumbers();
+
+        public Dictionary<string, List<SelectListItem>> Extensions();
 
         int GetCount();
 

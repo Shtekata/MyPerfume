@@ -11,37 +11,38 @@
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-group col-sm-6">
-        <label asp-for="@Model.Url"></label>
-        <input asp-for="@Model.Url" class="form-control" placeholder="@Model?.Url" disabled />
+        <label asp-for="@Model.Url">Url</label>
+        <input asp-for="@Model.Url" class="form-control" placeholder="@Model.Url" disabled />
         <span asp-validation-for="@Model.Url" class="text-danger"></span>
     </div>
     <div class="form-group col-sm-6">
-        <label asp-for="@Model.DesignerName"></label>
-        <input asp-for="@Model.DesignerName" class="form-control" placeholder="@Model.DesignerName" />
+        <label asp-for="@Model.DesignerName">Designer Name</label>
+        <select asp-for="@Model.DesignerName" class="form-control" asp-items="@Model.Extensions["Designers"]" placeholder="@Model.DesignerName"></select>
         <span asp-validation-for="@Model.DesignerName" class="text-danger"></span>
     </div>
     <div class="form-group col-sm-6">
-        <label asp-for="@Model.PerfumeName"></label>
-        <input asp-for="@Model.PerfumeName" class="form-control" placeholder="@Model.PerfumeName" />
+        <label asp-for="@Model.PerfumeName">Perfume Name</label>
+        <select asp-for="@Model.PerfumeName" class="form-control" asp-items="@Model.Extensions["Perfumes"]" placeholder="@Model.PerfumeName"></select>
         <span asp-validation-for="@Model.PerfumeName" class="text-danger"></span>
     </div>
+    <div class="form-group col-sm-6">
+        <label asp-for="@Model.AdditionalInformation">Additional Information</label>
+        <input asp-for="@Model.AdditionalInformation" class="form-control" placeholder="@Model.PerfumeName" />
+        <span asp-validation-for="@Model.AdditionalInformation" class="text-danger"></span>
+    </div>
     <div class="form-group col-sm-3">
-        <label asp-for="@Model.PictureNumber"></label>
-        <select asp-for="@Model.PictureNumber" class="form-control" asp-items="@Model.PictureNumbers" placeholder="@Model.PictureNumbers">
-        </select>
+        <label asp-for="@Model.PictureNumber">Picture Number</label>
+        <select asp-for="@Model.PictureNumber" class="form-control" asp-items="@Model.Extensions["PictureNumbers"]" placeholder="@Model.PictureNumber"></select>
         <span asp-validation-for="@Model.PictureNumber" class="text-danger"></span>
     </div>
     <div class="form-group col-sm-3">
-        <label asp-for="@Model.PictureShowNumber"></label>
-        <select asp-for="@Model.PictureShowNumber" class="form-control" asp-items="@Model.PictureShowNumbers" placeholder="@Model.PictureShowNumbers">
-        </select>
+        <label asp-for="@Model.PictureShowNumber">Picture Show Number</label>
+        <select asp-for="@Model.PictureShowNumber" class="form-control" asp-items="@Model.Extensions["PictureShowNumbers"]" placeholder="@Model.PictureShowNumber"></select>
         <span asp-validation-for="@Model.PictureShowNumber" class="text-danger"></span>
     </div>
     <div class="form-group col-md-3">
         <input type="file" name="files" />
     </div>
-    <br />
-    <br />
     <hr />
     <div class="form-group col-sm-6">
         <button type="submit" class="btn btn-primary" asp-action="Add">Apply</button>

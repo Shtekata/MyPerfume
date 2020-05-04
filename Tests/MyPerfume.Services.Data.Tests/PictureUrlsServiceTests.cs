@@ -3,8 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using AutoMapper;
-    using Microsoft.AspNetCore.Mvc.Rendering;
+
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
     using Moq;
@@ -12,9 +11,7 @@
     using MyPerfume.Data.Common.Repositories;
     using MyPerfume.Data.Models;
     using MyPerfume.Data.Repositories;
-    using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
-    using MyPerfume.Web.ViewModels.ViewModels;
     using Xunit;
 
     public class PictureUrlsServiceTests
@@ -24,6 +21,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var repository = new Mock<IDeletableEntityRepository<PictureUrl>>();
             repository.Setup(r => r.All()).Returns(new List<PictureUrl>
@@ -32,7 +30,7 @@
                                                             new PictureUrl(),
                                                             new PictureUrl(),
                                                         }.AsQueryable());
-            var service = new PictureUrlsService(repository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository.Object, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             Assert.Equal(3, service.GetCount());
             repository.Verify(x => x.All(), Times.Once);
         }
@@ -42,6 +40,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "PictureUrlsTest1Db").Options;
@@ -52,7 +51,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             Assert.Equal(3, service.GetCount());
         }
 
@@ -61,6 +60,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PictureUrlsTest2Db").Options;
@@ -71,7 +71,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             var result = service.ExistsById("A");
 
             Assert.True(result);
@@ -83,6 +83,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PictureUrlsTest3Db").Options;
@@ -93,7 +94,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             var result = service.ExistsById("D");
 
             Assert.False(result);
@@ -105,6 +106,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PictureUrlsTest4Db").Options;
@@ -115,7 +117,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             var result = service.ExistsByUrl("B", "E");
 
             Assert.True(result);
@@ -127,6 +129,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PictureUrlsTest5Db").Options;
@@ -137,7 +140,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             var result = service.ExistsByUrl("B", "F");
 
             Assert.False(result);
@@ -242,6 +245,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PictureUrlsTest8Db").Options;
@@ -252,7 +256,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             var result = await service.EditAsync(new PictureUrlDto
             {
                 Id = "A",
@@ -268,6 +272,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PictureUrlsTest9Db").Options;
@@ -278,7 +283,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             var result = await service.EditAsync(new PictureUrlDto
             {
                 Id = "D",
@@ -294,6 +299,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "PictureUrlsTest10Db").Options;
@@ -304,7 +310,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             var result = await service.DeleteAsync("A");
 
             Assert.Equal(1, result);
@@ -315,6 +321,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase(databaseName: "PictureUrlsTest11Db").Options;
@@ -325,7 +332,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             var result = await service.DeleteAsync("D");
 
             Assert.Equal(0, result);
@@ -336,6 +343,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PictureUrlsTest12Db").Options;
@@ -346,7 +354,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             var input = new PictureUrlDto
             {
                 Id = "A",
@@ -363,6 +371,7 @@
         {
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
+            var designerRepository = new Mock<IDeletableEntityRepository<Designer>>();
 
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
                .UseInMemoryDatabase(databaseName: "PictureUrlsTest13Db").Options;
@@ -373,7 +382,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<PictureUrl>(dbContext);
-            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object);
+            var service = new PictureUrlsService(repository, perfumePictureUrlRepository.Object, perfumeRepository.Object, designerRepository.Object);
             var input = new PictureUrlDto
             {
                 Id = "A",
