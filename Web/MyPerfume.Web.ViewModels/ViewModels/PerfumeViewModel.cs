@@ -63,6 +63,7 @@
                  {
                      DesignerName = x.PictureUrl.DesignerName,
                      PerfumeName = x.PictureUrl.PerfumeName,
+                     AdditionalInformation = x.PictureUrl.AdditionalInformation,
                      PictureNumber = x.PictureUrl.PictureNumber,
                      PictureShowNumber = x.PictureUrl.PictureShowNumber,
                      Url = x.PictureUrl.Url,

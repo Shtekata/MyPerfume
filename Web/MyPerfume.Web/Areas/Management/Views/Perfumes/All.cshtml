@@ -117,7 +117,7 @@
                                     <div class="form-check m-1">
                                         <input asp-for="@perfume.OrderedPictureUrls[i].IsSelected" disabled class="form-check-input" />
                                         <label class="form-check-label" asp-for="@perfume.OrderedPictureUrls[i].IsSelected">
-                                            @perfume.OrderedPictureUrls[i].DesignerName/@perfume.OrderedPictureUrls[i].PerfumeName/Picture № @perfume.OrderedPictureUrls[i].PictureNumber/PShow № @perfume.OrderedPictureUrls[i].PictureShowNumber"
+                                            @perfume.OrderedPictureUrls[i].DesignerName/@perfume.OrderedPictureUrls[i].PerfumeName/@(perfume.OrderedPictureUrls[i].AdditionalInformation!=null?perfume.OrderedPictureUrls[i].AdditionalInformation+"/":"")Picture № @perfume.OrderedPictureUrls[i].PictureNumber/PShow № @perfume.OrderedPictureUrls[i].PictureShowNumber"
                                         </label>
                                     </div>
                                 </div>

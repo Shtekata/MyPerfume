@@ -58,3 +58,6 @@ body {
     background-image: url("/images/WhiteBackground.jpg");
     background-color: #95aca6;
 }
+.management-background {
+    background: url("/images/backgraundyellowpink.jpg")
+}

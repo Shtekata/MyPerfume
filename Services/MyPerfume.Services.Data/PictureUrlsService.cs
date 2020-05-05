@@ -92,9 +92,11 @@
                 return 0;
             }
 
+            model.Url = dto.Url;
             model.DesignerName = dto.DesignerName;
             model.PerfumeName = dto.PerfumeName;
             model.AdditionalInformation = dto.AdditionalInformation;
+            model.PictureNumber = dto.PictureNumber;
             model.PictureShowNumber = dto.PictureShowNumber;
             return await this.deletableEntityRepository.SaveChangesAsync();
         }
@@ -270,6 +272,8 @@
             var query = this.deletableEntityRepository.All()
                 .OrderBy(x => x.DesignerName)
                 .ThenBy(x => x.PerfumeName)
+                .ThenBy(x => x.AdditionalInformation)
+                .ThenBy(x => x.PictureNumber)
                 .Skip(skip);
             if (take.HasValue)
             {

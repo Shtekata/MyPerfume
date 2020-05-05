@@ -253,7 +253,7 @@
                 .Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),
-                    Text = $"{x.DesignerName}/{x.PerfumeName}/Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
+                    Text = $"{x.DesignerName}/{x.PerfumeName}/{(x.AdditionalInformation != null ? x.AdditionalInformation + "/" : string.Empty)}Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
                 }).ToList();
 
             return pictureUrls;
@@ -340,7 +340,7 @@
                 .Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),
-                    Text = $"{x.DesignerName}/{x.PerfumeName}/Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
+                    Text = $"{x.DesignerName}/{x.PerfumeName}/{(x.AdditionalInformation != null ? x.AdditionalInformation + "/" : string.Empty)}Picture № {x.PictureNumber}/PShow № {x.PictureShowNumber}",
                     Selected = x.IsSelected,
                 }).ToList();
             extensions["PictureUrls"] = pictureUrls;
