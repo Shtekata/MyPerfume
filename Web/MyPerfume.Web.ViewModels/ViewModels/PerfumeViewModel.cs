@@ -3,14 +3,12 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoMapper;
     using Ganss.XSS;
-    using MyPerfume.Data.Models;
     using MyPerfume.Data.Models.Enums;
     using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels.Dtos;
 
-    public class PerfumeViewModel : IMapFrom<Perfume>, IMapFrom<PerfumeDto>, IHaveCustomMappings
+    public class PerfumeViewModel
     {
         public string Id { get; set; }
 
@@ -50,25 +48,9 @@
 
         public IList<PictureUrlViewModel> PictureUrls { get; set; }
 
-        // public IList<PictureUrlViewModel> PictureUrls { get; set; }
         public IList<PictureUrlViewModel> OrderedPictureUrls => this.PictureUrls.OrderBy(x => x.DesignerName).ThenBy(x => x.PerfumeName).ThenBy(x => x.PictureNumber).ToList();
 
         public IEnumerable<PostDto> Posts { get; set; }
-
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<Perfume, PerfumeViewModel>().ForMember(
-                 m => m.PictureUrls,
-                 opt => opt.MapFrom(x => x.PerfumesPictureUrls.Select(x => new PictureUrlViewModel
-                 {
-                     DesignerName = x.PictureUrl.DesignerName,
-                     PerfumeName = x.PictureUrl.PerfumeName,
-                     AdditionalInformation = x.PictureUrl.AdditionalInformation,
-                     PictureNumber = x.PictureUrl.PictureNumber,
-                     PictureShowNumber = x.PictureUrl.PictureShowNumber,
-                     Url = x.PictureUrl.Url,
-                 })));
-        }
 
         // public virtual ICollection<PerfumeSeason> PerfumesSeasons { get; set; }
 

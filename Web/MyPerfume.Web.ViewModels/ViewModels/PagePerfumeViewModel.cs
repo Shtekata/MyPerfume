@@ -2,6 +2,9 @@
 {
     using System.Collections.Generic;
 
+    using MyPerfume.Services.Mapping;
+    using MyPerfume.Web.ViewModels.Dtos;
+
     public class PagePerfumeViewModel
     {
         public int CurrentPage { get; set; }

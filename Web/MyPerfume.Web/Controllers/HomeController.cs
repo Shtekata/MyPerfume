@@ -7,7 +7,9 @@
     using Microsoft.AspNetCore.Mvc;
     using MyPerfume.Common;
     using MyPerfume.Services.Data;
+    using MyPerfume.Services.Mapping;
     using MyPerfume.Web.ViewModels;
+    using MyPerfume.Web.ViewModels.Dtos;
     using MyPerfume.Web.ViewModels.ViewModels;
 
     public class HomeController : BaseController
@@ -26,11 +28,13 @@
             this.ViewData["HomeWelcome"] = GlobalConstants.HomeWelcome;
 
             var count = this.perfumesService.GetCount();
-            var model = new PagePerfumeViewModel
+            var modelDto = new PagePerfumeDto
             {
                 PagesCount = (int)Math.Ceiling((double)count / ItemsPerPage),
-                Perfumes = await this.perfumesService.GetPage<PerfumeViewModel>(ItemsPerPage, (id - 1) * ItemsPerPage),
+                Perfumes = await this.perfumesService.GetPage<PerfumeDto>(ItemsPerPage, (id - 1) * ItemsPerPage),
             };
+
+            var model = AutoMapperConfig.MapperInstance.Map<PagePerfumeViewModel>(modelDto);
 
             if (model.PagesCount == 0)
             {

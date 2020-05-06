@@ -21,19 +21,22 @@
         private readonly ICountriesService countriesService;
         private readonly IColorsService colorsService;
         private readonly IPictureUrlsService pictureUrlsService;
+        private readonly ITopNotesService topNotesService;
 
         public PerfumesService(
             IDeletableEntityRepository<Perfume> deletableEntityRepository,
             IDesignersService designersService,
             ICountriesService countriesService,
             IColorsService colorsService,
-            IPictureUrlsService pictureUrlsService)
+            IPictureUrlsService pictureUrlsService,
+            ITopNotesService topNotesService)
         {
             this.deletableEntityRepository = deletableEntityRepository;
             this.designersService = designersService;
             this.countriesService = countriesService;
             this.colorsService = colorsService;
             this.pictureUrlsService = pictureUrlsService;
+            this.topNotesService = topNotesService;
         }
 
         public async Task<string> AddAsync(PerfumeAddDto input)
@@ -174,7 +177,7 @@
                 .Where(x => x.Id == input.Id)
                 .Select(x => new PerfumeDto
                 {
-                    PictureUrls = x.PerfumesPictureUrls.Select(y => new PictureUrlViewModel
+                    PictureUrls = x.PerfumesPictureUrls.Select(y => new PictureUrlDto
                     {
                         Id = y.PictureUrlId,
                     }),
@@ -225,8 +228,23 @@
             result["Countries"] = await this.GetCountriesAsync();
             result["Years"] = this.GetYears();
             result["PictureUrls"] = await this.GetPictureUrlsAsync();
+            result["TopNotes"] = await this.GetTopNotesAsync();
 
             return result;
+        }
+
+        public async Task<List<SelectListItem>> GetTopNotesAsync()
+        {
+            var topNotesModel = await this.topNotesService.GetAll<BaseDto>();
+            var topNotes = topNotesModel
+                .OrderBy(x => x.Name)
+                .Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = $"{x.Name}",
+                }).ToList();
+
+            return topNotes;
         }
 
         public List<SelectListItem> GetPerfumes()
@@ -246,10 +264,6 @@
         {
             var pictureUrlsModel = await this.pictureUrlsService.GetAll<PictureUrlDto>();
             var pictureUrls = pictureUrlsModel
-                .OrderBy(x => x.DesignerName)
-                .ThenBy(x => x.PerfumeName)
-                .ThenBy(x => x.PictureNumber)
-                .ThenBy(x => x.PictureShowNumber)
                 .Select(x => new SelectListItem
                 {
                     Value = x.Id.ToString(),

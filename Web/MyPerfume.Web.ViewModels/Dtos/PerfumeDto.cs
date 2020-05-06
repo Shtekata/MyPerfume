@@ -12,7 +12,7 @@
     using MyPerfume.Web.ViewModels.InputModels;
     using MyPerfume.Web.ViewModels.ViewModels;
 
-    public class PerfumeDto : IMapFrom<PerfumeInputModel>, IMapFrom<Perfume>, IMapTo<Perfume>, IHaveCustomMappings
+    public class PerfumeDto : IMapFrom<Perfume>, IMapTo<Perfume>, IMapFrom<PerfumeInputModel>, IMapTo<PerfumeViewModel>, IHaveCustomMappings
     {
         public string Id { get; set; }
 
@@ -46,10 +46,9 @@
 
         public int PostsCount { get; set; }
 
-        // public IEnumerable<PerfumePictureUrl> PerfumesPictureUrls { get; set; }
-        public IEnumerable<PictureUrlViewModel> PictureUrls { get; set; }
+        public IEnumerable<PictureUrlDto> PictureUrls { get; set; }
 
-        public IEnumerable<string> TopNotes { get; set; }
+        public IEnumerable<PerfumeTopNote> TopNotes { get; set; }
 
         public IEnumerable<string> HeartNotes { get; set; }
 
@@ -70,15 +69,17 @@
 
         public void CreateMappings(IProfileExpression configuration)
         {
-            configuration.CreateMap<Perfume, PerfumeDto>()
-                .ForMember(x => x.PictureUrls, y => y.MapFrom(z => z.PerfumesPictureUrls.Select(v => new PictureUrlViewModel
+            configuration.CreateMap<Perfume, PerfumeDto>().ForMember(
+                m => m.PictureUrls,
+                opt => opt.MapFrom(z => z.PerfumesPictureUrls.Select(x => new PictureUrlDto
                 {
-                    Id = v.PictureUrlId,
-                    DesignerName = v.PictureUrl.DesignerName,
-                    PerfumeName = v.PictureUrl.PerfumeName,
-                    PictureNumber = v.PictureUrl.PictureNumber,
-                    PictureShowNumber = v.PictureUrl.PictureShowNumber,
-                    Url = v.PictureUrl.Url,
+                    Id = x.PictureUrlId,
+                    DesignerName = x.PictureUrl.DesignerName,
+                    PerfumeName = x.PictureUrl.PerfumeName,
+                    AdditionalInformation = x.PictureUrl.AdditionalInformation,
+                    PictureNumber = x.PictureUrl.PictureNumber,
+                    PictureShowNumber = x.PictureUrl.PictureShowNumber,
+                    Url = x.PictureUrl.Url,
                 })));
         }
     }

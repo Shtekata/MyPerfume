@@ -44,7 +44,10 @@
         {
             IQueryable<PictureUrl> query = this.deletableEntityRepository.AllAsNoTracking()
             .OrderBy(x => x.DesignerName)
-            .ThenBy(x => x.PerfumeName);
+            .ThenBy(x => x.PerfumeName)
+            .ThenBy(x => x.AdditionalInformation)
+            .ThenBy(x => x.PictureNumber)
+            .ThenBy(x => x.PictureShowNumber);
             if (count.HasValue)
             {
                 query = query.Take(count.Value);
