@@ -45,7 +45,8 @@
             IQueryable<PictureUrl> query = this.deletableEntityRepository.AllAsNoTracking()
             .OrderBy(x => x.DesignerName)
             .ThenBy(x => x.PerfumeName)
-            .ThenBy(x => x.AdditionalInformation)
+            .ThenBy(x => x.AdditionalInfo)
+            .ThenBy(x => x.SecondAdditionalInfo)
             .ThenBy(x => x.PictureNumber)
             .ThenBy(x => x.PictureShowNumber);
             if (count.HasValue)
@@ -98,7 +99,8 @@
             model.Url = dto.Url;
             model.DesignerName = dto.DesignerName;
             model.PerfumeName = dto.PerfumeName;
-            model.AdditionalInformation = dto.AdditionalInformation;
+            model.AdditionalInfo = dto.AdditionalInfo;
+            model.SecondAdditionalInfo = dto.SecondAdditionalInfo;
             model.PictureNumber = dto.PictureNumber;
             model.PictureShowNumber = dto.PictureShowNumber;
             return await this.deletableEntityRepository.SaveChangesAsync();
@@ -275,7 +277,8 @@
             var query = this.deletableEntityRepository.All()
                 .OrderBy(x => x.DesignerName)
                 .ThenBy(x => x.PerfumeName)
-                .ThenBy(x => x.AdditionalInformation)
+                .ThenBy(x => x.AdditionalInfo)
+                .ThenBy(x => x.SecondAdditionalInfo)
                 .ThenBy(x => x.PictureNumber)
                 .Skip(skip);
             if (take.HasValue)

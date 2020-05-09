@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <None Remove="Areas\Admin\Views\Administration\ConfirmDeleteUser.cshtml~RF8deb0b1.TMP" />
+    <None Remove="Areas\Management\Views\PictureUrls\All.cshtml~RF1a5ec06.TMP" />
   </ItemGroup>
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />

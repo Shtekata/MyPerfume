@@ -10,22 +10,32 @@
     <div class="form-group">
         <input type="hidden" asp-for="@Model.Url" />
         <label asp-for="@Model.Url"></label>
-        <input asp-for="@Model.Url" disabled class="form-control" placeholder="Enter name" />
+        <input asp-for="@Model.Url" disabled class="form-control" placeholder="@Model.Url" />
     </div>
     <div class="form-group">
         <input type="hidden" asp-for="@Model.DesignerName" />
         <label asp-for="@Model.DesignerName"></label>
-        <input asp-for="@Model.DesignerName" disabled class="form-control" placeholder="Enter name" />
+        <input asp-for="@Model.DesignerName" disabled class="form-control" placeholder="@Model.DesignerName" />
     </div>
     <div class="form-group">
         <input type="hidden" asp-for="@Model.PerfumeName" />
         <label asp-for="@Model.PerfumeName"></label>
-        <input asp-for="@Model.PerfumeName" disabled class="form-control" placeholder="Enter name" />
+        <input asp-for="@Model.PerfumeName" disabled class="form-control" placeholder="@Model.PerfumeName" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="@Model.AdditionalInfo" />
+        <label asp-for="@Model.AdditionalInfo"></label>
+        <input asp-for="@Model.AdditionalInfo" disabled class="form-control" placeholder="@Model.AdditionalInfo" />
+    </div>
+    <div class="form-group">
+        <input type="hidden" asp-for="@Model.SecondAdditionalInfo" />
+        <label asp-for="@Model.SecondAdditionalInfo"></label>
+        <input asp-for="@Model.SecondAdditionalInfo" disabled class="form-control" placeholder="@Model.SecondAdditionalInfo" />
     </div>
     <div class="form-group">
         <input type="hidden" asp-for="@Model.PictureNumber" />
         <label asp-for="@Model.PictureNumber"></label>
-        <input asp-for="@Model.PictureNumber" disabled class="form-control" placeholder="Enter name" />
+        <input asp-for="@Model.PictureNumber" disabled class="form-control" placeholder="@Model.PictureNumber" />
     </div>
     <button type="submit" class="btn btn-danger" asp-action="Delete">Delete</button>
     <a class="btn btn-primary" asp-action="All">Back</a>

@@ -28,6 +28,9 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var topNoteRepository = new Mock<IDeletableEntityRepository<TopNote>>();
+            var topNoteService = new TopNotesService(topNoteRepository.Object);
+
             var repository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
 
@@ -40,7 +43,7 @@
                                                             new Perfume(),
                                                             new Perfume(),
                                                         }.AsQueryable());
-            var service = new PerfumesService(repository.Object, designerService, countriesService, colorsService, pictureUrlService);
+            var service = new PerfumesService(repository.Object, designerService, countriesService, colorsService, pictureUrlService, topNoteService);
             Assert.Equal(3, service.GetCount());
             repository.Verify(x => x.All(), Times.Once);
         }
@@ -57,6 +60,9 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var topNoteRepository = new Mock<IDeletableEntityRepository<TopNote>>();
+            var topNoteService = new TopNotesService(topNoteRepository.Object);
+
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
 
@@ -72,7 +78,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
-            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService, topNoteService);
             Assert.Equal(3, service.GetCount());
         }
 
@@ -87,6 +93,9 @@
 
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
+
+            var topNoteRepository = new Mock<IDeletableEntityRepository<TopNote>>();
+            var topNoteService = new TopNotesService(topNoteRepository.Object);
 
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
@@ -103,7 +112,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
-            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService, topNoteService);
             var result = service.ExistsById("A");
 
             Assert.True(result);
@@ -122,6 +131,9 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var topNoteRepository = new Mock<IDeletableEntityRepository<TopNote>>();
+            var topNoteService = new TopNotesService(topNoteRepository.Object);
+
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
 
@@ -137,7 +149,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
-            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService, topNoteService);
             var result = service.ExistsById("D");
 
             Assert.False(result);
@@ -156,6 +168,9 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var topNoteRepository = new Mock<IDeletableEntityRepository<TopNote>>();
+            var topNoteService = new TopNotesService(topNoteRepository.Object);
+
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
 
@@ -171,7 +186,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
-            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService, topNoteService);
             var result = service.ExistsByName("E");
 
             Assert.True(result);
@@ -190,6 +205,9 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var topNoteRepository = new Mock<IDeletableEntityRepository<TopNote>>();
+            var topNoteService = new TopNotesService(topNoteRepository.Object);
+
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
 
@@ -205,7 +223,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
-            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService, topNoteService);
             var result = service.ExistsByName("H");
 
             Assert.False(result);
@@ -224,6 +242,9 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var topNoteRepository = new Mock<IDeletableEntityRepository<TopNote>>();
+            var topNoteService = new TopNotesService(topNoteRepository.Object);
+
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
 
@@ -239,7 +260,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
-            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService, topNoteService);
             var result = await service.EditAsync(new PerfumeDto
             {
                 Id = "A",
@@ -262,6 +283,9 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var topNoteRepository = new Mock<IDeletableEntityRepository<TopNote>>();
+            var topNoteService = new TopNotesService(topNoteRepository.Object);
+
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
 
@@ -277,7 +301,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
-            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService, topNoteService);
             var result = await service.EditAsync(new PerfumeDto
             {
                 Id = "H",
@@ -300,6 +324,9 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var topNoteRepository = new Mock<IDeletableEntityRepository<TopNote>>();
+            var topNoteService = new TopNotesService(topNoteRepository.Object);
+
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
 
@@ -315,7 +342,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
-            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService, topNoteService);
             var result = await service.DeleteAsync("A");
 
             Assert.Equal(1, result);
@@ -333,6 +360,9 @@
             var colorRepository = new Mock<IDeletableEntityRepository<Color>>();
             var colorsService = new ColorsService(colorRepository.Object);
 
+            var topNoteRepository = new Mock<IDeletableEntityRepository<TopNote>>();
+            var topNoteService = new TopNotesService(topNoteRepository.Object);
+
             var perfumeRepository = new Mock<IDeletableEntityRepository<Perfume>>();
             var perfumePictureUrlRepository = new Mock<IDeletableEntityRepository<PerfumePictureUrl>>();
 
@@ -348,7 +378,7 @@
             await dbContext.SaveChangesAsync();
 
             var repository = new EfDeletableEntityRepository<Perfume>(dbContext);
-            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService);
+            var service = new PerfumesService(repository, designerService, countriesService, colorsService, pictureUrlService, topNoteService);
             var result = await service.DeleteAsync("D");
 
             Assert.Equal(0, result);

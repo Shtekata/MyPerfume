@@ -2,8 +2,10 @@
 {
     using System;
     using System.Diagnostics;
+    using System.IO;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using MyPerfume.Common;
     using MyPerfume.Services.Data;

@@ -26,9 +26,14 @@
         <span asp-validation-for="@Model.PerfumeName" class="text-danger"></span>
     </div>
     <div class="form-group col-sm-4">
-        <label asp-for="@Model.AdditionalInformation">Additional Information</label>
-        <input asp-for="@Model.AdditionalInformation" class="form-control" placeholder="@Model.PerfumeName" />
-        <span asp-validation-for="@Model.AdditionalInformation" class="text-danger"></span>
+        <label asp-for="@Model.AdditionalInfo">Additional Info</label>
+        <input asp-for="@Model.AdditionalInfo" class="form-control" placeholder="@Model.AdditionalInfo" />
+        <span asp-validation-for="@Model.AdditionalInfo" class="text-danger"></span>
+    </div>
+    <div class="form-group col-sm-4">
+        <label asp-for="@Model.SecondAdditionalInfo">Second Additional Info</label>
+        <input asp-for="@Model.SecondAdditionalInfo" class="form-control" placeholder="@Model.SecondAdditionalInfo" />
+        <span asp-validation-for="@Model.SecondAdditionalInfo" class="text-danger"></span>
     </div>
     <div class="form-group col-sm-3">
         <label asp-for="@Model.PictureNumber">Picture Number</label>

@@ -6,7 +6,8 @@
 
     public class PictureUrlInputModel
     {
-        private string additionalInformation;
+        private string additionalInfo;
+        private string secondAdditionalInfo;
 
         public string Id { get; set; }
 
@@ -14,9 +15,19 @@
         {
             get
             {
-                if (this.additionalInformation != null)
+                if (this.additionalInfo == null && this.secondAdditionalInfo != null)
                 {
-                    return $"https://geshevalstorage.blob.core.windows.net/pictures/{this.DesignerName}/{this.PerfumeName}/{this.AdditionalInformation}/{this.PictureNumber}.jpg";
+                    this.additionalInfo = this.secondAdditionalInfo;
+                    this.secondAdditionalInfo = null;
+                }
+
+                if (this.additionalInfo != null && this.secondAdditionalInfo != null)
+                {
+                    return $"https://geshevalstorage.blob.core.windows.net/pictures/{this.DesignerName}/{this.PerfumeName}/{this.AdditionalInfo}/{this.SecondAdditionalInfo}/{this.PictureNumber}.jpg";
+                }
+                else if (this.additionalInfo != null && this.secondAdditionalInfo == null)
+                {
+                    return $"https://geshevalstorage.blob.core.windows.net/pictures/{this.DesignerName}/{this.PerfumeName}/{this.AdditionalInfo}/{this.PictureNumber}.jpg";
                 }
                 else
                 {
@@ -29,11 +40,18 @@
 
         public string PerfumeName { get; set; }
 
-        public string AdditionalInformation
+        public string AdditionalInfo
         {
-            get => this.additionalInformation;
+            get => this.additionalInfo;
 
-            set => this.additionalInformation = value?.Replace(" ", string.Empty);
+            set => this.additionalInfo = value?.Replace(" ", string.Empty);
+        }
+
+        public string SecondAdditionalInfo
+        {
+            get => this.secondAdditionalInfo;
+
+            set => this.secondAdditionalInfo = value?.Replace(" ", string.Empty);
         }
 
         public int PictureNumber { get; set; }
