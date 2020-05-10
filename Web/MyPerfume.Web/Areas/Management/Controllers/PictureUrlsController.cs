@@ -31,22 +31,18 @@
         private const int ItemsPerPage = 10;
 
         private readonly IPictureUrlsService pictureUrlsService;
-        private readonly IPerfumesService perfumesService;
         private readonly IWebHostEnvironment env;
         private StorageCredentials storageCredentials;
         private CloudStorageAccount cloudStorageAccount;
         private CloudBlobClient cloudBlobClient;
         private CloudBlobContainer cloudBlobContainer;
-        private IWebHostEnvironment hostingEnvironment;
 
         public PictureUrlsController(
             IPictureUrlsService pictureUrlsService,
-            IPerfumesService perfumesService,
             IWebHostEnvironment env,
             IConfiguration configuration)
         {
             this.pictureUrlsService = pictureUrlsService;
-            this.perfumesService = perfumesService;
             this.env = env;
             this.storageCredentials = new StorageCredentials(configuration["BlobStorageName"], configuration["BlobKey"]);
             this.cloudStorageAccount = new CloudStorageAccount(this.storageCredentials, true);

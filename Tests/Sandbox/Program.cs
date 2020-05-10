@@ -25,7 +25,7 @@
         {
             Console.WriteLine($"{typeof(Program).Namespace} ({string.Join(" ", args)}) starts working...");
             var serviceCollection = new ServiceCollection();
-            ConfigureServices(serviceCollection);
+            var configuration = ConfigureServices(serviceCollection);
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider(true);
 
             // Seed data on application startup
@@ -33,7 +33,7 @@
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 dbContext.Database.Migrate();
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider, configuration).GetAwaiter().GetResult();
             }
 
             using (var serviceScope = serviceProvider.CreateScope())
@@ -57,7 +57,7 @@
             return await Task.FromResult(0);
         }
 
-        private static void ConfigureServices(ServiceCollection services)
+        private static IConfiguration ConfigureServices(ServiceCollection services)
         {
             var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", false, true)
@@ -80,6 +80,8 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+
+            return configuration;
         }
     }
 }

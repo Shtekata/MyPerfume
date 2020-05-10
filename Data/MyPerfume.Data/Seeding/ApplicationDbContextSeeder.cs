@@ -5,12 +5,13 @@
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore.Internal;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
 
     public class ApplicationDbContextSeeder : ISeeder
     {
-        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider, IConfiguration configuration)
         {
             if (dbContext == null)
             {
@@ -35,12 +36,16 @@
                               new AromaticGroupsSeeder(),
                               new CountriesSeeder(),
                               new ColorsSeeder(),
-                              new PicturesSeeder(),
+
+                              // new PictureUrlsSeeder(),
+                              new PictureUrlsTestSeeder(),
+
+                              // new PerfumePictureUrlsSeeder(),
                           };
 
             foreach (var seeder in seeders)
             {
-                await seeder.SeedAsync(dbContext, serviceProvider);
+                await seeder.SeedAsync(dbContext, serviceProvider, configuration);
                 await dbContext.SaveChangesAsync();
                 logger.LogInformation($"Seeder {seeder.GetType().Name} done.");
             }

@@ -4,11 +4,12 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.Extensions.Configuration;
     using MyPerfume.Data.Models;
 
     internal class SettingsSeeder : ISeeder
     {
-        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider, IConfiguration configuration)
         {
             if (dbContext.Settings.Any())
             {

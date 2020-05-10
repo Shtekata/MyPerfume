@@ -6,11 +6,12 @@
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
+    using Microsoft.Extensions.Configuration;
     using MyPerfume.Data.Models;
 
-    public class PicturesSeeder : ISeeder
+    public class PictureUrlsSeeder : ISeeder
     {
-        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
+        public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider, IConfiguration configuration)
         {
             if (dbContext.PictureUrls.Any())
             {

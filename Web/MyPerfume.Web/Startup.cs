@@ -105,7 +105,7 @@
                     dbContext.Database.Migrate();
                 }
 
-                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
+                new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider, this.configuration).GetAwaiter().GetResult();
             }
 
             if (env.IsDevelopment())
