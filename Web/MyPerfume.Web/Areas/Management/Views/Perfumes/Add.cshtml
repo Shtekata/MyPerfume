@@ -4,6 +4,7 @@
 @{
     this.ViewData["Title"] = "Add Perfume";
 }
+<br id="topOfPage">
 <hr />
 <h2>Fill the name of @this.ViewData["ClassName"], please!</h2>
 <hr />
@@ -68,54 +69,80 @@
         </div>
         <div class="form-group">
             <label asp-for="@Model.Description"></label>
-            <textarea asp-for="@Model.Description" class="form-control"></textarea>
+            <textarea asp-for="@Model.Description" class="form-control" rows="10"></textarea>
             <span asp-validation-for="@Model.Description" class="text-danger"></span>
         </div>
     </div>
     <hr />
-    <button type="submit" class="btn btn-primary" asp-action="Add">Apply</button>
-    <a class="btn btn-primary" asp-action="All">Back</a>
+    <nav>
+        <button type="submit" class="btn btn-primary" asp-action="Add">Apply</button>
+        <a class="btn btn-primary" asp-action="All">Back</a>
+    </nav>
     <hr />
-    <h2>Pictures</h2>
-    <br />
-    @if (Model.Extensions["PictureUrls"]?.Count() > 0)
-    {
-        <div class="form-group">
-            <div class="form-row">
-                @for (int i = 0; i < Model.Extensions["PictureUrls"].Count(); i++)
-                {
-                    <div class="form-group col-md-6">
-                        <div class="form-check m-1">
-                            <input type="hidden" asp-for="@Model.Extensions["PictureUrls"][i].Value" />
-                            <input asp-for="@Model.Extensions["PictureUrls"][i].Selected" class="form-check-input" />
-                            <label class="form-check-label" asp-for="@Model.Extensions["PictureUrls"][i].Selected">
-                                @Model.Extensions["PictureUrls"][i].Text
-                            </label>
-                        </div>
-                    </div>
-                }
+    <section id="pictureUrls">
+        @if (Model.Extensions["PictureUrls"]?.Count() > 0)
+        {
+            <br />
+            <nav class="row blueMenu">
+                <ul>
+                    <li><a class="col-md-2" href="#topOfPage">Top of page</a></li>
+                    <li><a class="col-md-2" href="#topNotes">Top Notes</a></li>
+                </ul>
+            </nav>
+            <div>
+                <h2 class="text-center">Pictures</h2>
             </div>
-        </div>
-    }
+            <br />
+            <div class="form-group">
+                <div class="form-row">
+                    @for (int i = 0; i < Model.Extensions["PictureUrls"].Count(); i++)
+                    {
+                        <div class="form-group col-md-6">
+                            <div class="form-check m-1">
+                                <input type="hidden" asp-for="@Model.Extensions["PictureUrls"][i].Value" />
+                                <input asp-for="@Model.Extensions["PictureUrls"][i].Selected" class="form-check-input" />
+                                <label class="form-check-label" asp-for="@Model.Extensions["PictureUrls"][i].Selected">
+                                    @Model.Extensions["PictureUrls"][i].Text
+                                </label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </section>
     <hr />
-    @if (Model.Extensions["TopNotes"]?.Count() > 0)
-    {
-        <div class="form-group">
-            <div class="form-row">
-                @for (int i = 0; i < Model.Extensions["TopNotes"].Count(); i++)
-                {
-                    <div class="form-group col-md-6">
-                        <div class="form-check m-1">
-                            <input type="hidden" asp-for="@Model.Extensions["TopNotes"][i].Value" />
-                            <input asp-for="@Model.Extensions["TopNotes"][i].Selected" class="form-check-input" />
-                            <label class="form-check-label" asp-for="@Model.Extensions["TopNotes"][i].Selected">
-                                @Model.Extensions["TopNotes"][i].Text
-                            </label>
-                        </div>
-                    </div>
-                }
+    <section id="topNotes">
+        @if (Model.Extensions["TopNotes"]?.Count() > 0)
+        {
+            <br />
+            <nav class="row blueMenu">
+                <ul>
+                    <li><a class="col-md-2" href="#topOfPage">Top of page</a></li>
+                    <li><a class="col-md-2" href="#pictureUrls">Pictures</a></li>
+                </ul>
+            </nav>
+            <div>
+                <h2 class="text-center">Top Notes</h2>
             </div>
-        </div>
-    }
+            <br />
+            <div class="form-group">
+                <div class="form-row">
+                    @for (int i = 0; i < Model.Extensions["TopNotes"].Count(); i++)
+                    {
+                        <div class="form-group col-md-3">
+                            <div class="form-check m-1">
+                                <input type="hidden" asp-for="@Model.Extensions["TopNotes"][i].Value" />
+                                <input asp-for="@Model.Extensions["TopNotes"][i].Selected" class="form-check-input" />
+                                <label class="form-check-label" asp-for="@Model.Extensions["TopNotes"][i].Selected">
+                                    @Model.Extensions["TopNotes"][i].Text
+                                </label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </section>
 </form>
 

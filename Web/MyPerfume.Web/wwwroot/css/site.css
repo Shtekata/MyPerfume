@@ -57,7 +57,22 @@ body {
 body {
     background-image: url("/images/WhiteBackground.jpg");
     background-color: #95aca6;
+    margin: 0;
 }
 .management-background {
     background: url("/images/backgraundyellowpink.jpg")
+}
+.blueMenu {
+    background: #234465;
+    padding: 5px;
+    width: 95%;
+    margin: 0 auto;
+    font-family: "Helvetica", sans-serif;
+}
+nav ul li {
+    display: inline-block;
+}
+nav li a {
+    color: white;
+    text-decoration: none;
 }

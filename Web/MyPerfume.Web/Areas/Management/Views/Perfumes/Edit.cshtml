@@ -77,10 +77,12 @@
     <button type="submit" class="btn btn-primary" asp-action="Edit">Apply</button>
     <a class="btn btn-primary" asp-action="All">Back</a>
     <hr />
-    <h2>Pictures</h2>
-    <br />
     @if (Model.Extensions["PictureUrls"]?.Count() > 0)
     {
+        <div class="text-center">
+            <h2>Pictures</h2>
+        </div>
+        <br />
         <div class="form-group">
             <div class="form-row">
                 @for (int i = 0; i < Model.Extensions["PictureUrls"].Count(); i++)
@@ -99,4 +101,26 @@
         </div>
     }
     <hr />
+    @if (Model.Extensions["TopNotes"]?.Count() > 0)
+    {
+        <div>
+            <h2 class="text-center">Top Notes</h2>
+        </div>
+        <div class="form-group">
+            <div class="form-row">
+                @for (int i = 0; i < Model.Extensions["TopNotes"].Count(); i++)
+                {
+                    <div class="form-group col-md-3">
+                        <div class="form-check m-1">
+                            <input type="hidden" asp-for="@Model.Extensions["TopNotes"][i].Value" />
+                            <input asp-for="@Model.Extensions["TopNotes"][i].Selected" class="form-check-input" />
+                            <label class="form-check-label" asp-for="@Model.Extensions["TopNotes"][i].Selected">
+                                @Model.Extensions["TopNotes"][i].Text
+                            </label>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
 </form>

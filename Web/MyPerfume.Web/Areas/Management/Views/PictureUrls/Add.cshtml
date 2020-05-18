@@ -6,8 +6,8 @@
 
 <h1>Fill the name of @this.ViewData["ClassName"], please!</h1>
 
-<form method="post" enctype="multipart/form-data">
-
+<form class="management-background" method="post" enctype="multipart/form-data">
+    <br />
     <div asp-validation-summary="All" class="text-danger"></div>
 
     <div class="form-group col-sm-8">
@@ -53,5 +53,6 @@
         <button type="submit" class="btn btn-primary" asp-action="Add">Apply</button>
         <a class="btn btn-primary" asp-action="All">Back</a>
     </div>
+    <br />
 </form>
 
